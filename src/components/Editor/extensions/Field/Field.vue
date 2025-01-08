@@ -1,10 +1,9 @@
 <script lang="tsx" setup>
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
 import { inject } from 'vue'
+import { EDITOR_CONTEXT } from '../../constants'
 
-const focus = inject('focus')
-
-console.log(focus)
+const editorContext = inject(EDITOR_CONTEXT)
 </script>
 
 <template>
