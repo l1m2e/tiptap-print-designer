@@ -2,7 +2,7 @@
 import type { EditProps } from './index'
 import SwaggerParser from '@apidevtools/swagger-parser'
 import { EditorContent, useEditor } from '@tiptap/vue-3'
-import EditTopMenu from './components/EditTopMenu.vue'
+import EditTopMenu from './components/EditTopMenu/EditTopMenu.vue'
 import { EDITOR_CONTEXT } from './constants'
 import extensions from './extensions'
 
@@ -33,21 +33,21 @@ function focus() {
   editor.value?.commands.focus()
 }
 
-const DOCURl = ref('http://127.0.0.1:4523/export/openapi/2?version=3.0')
+const DOCURl = ref('http://127.0.0.1:4523/export/openapi?projectId=4895776&version=3.0')
 const MOCKURL = ref('http://127.0.0.1:4523/m1/4895776-4551570-default')
 const swaggerParser = new SwaggerParser()
 
 const { state: doc } = useAsyncState(async () => {
-  const doc: any = await swaggerParser.dereference(DOCURl.value)
+  const doc = await swaggerParser.dereference(DOCURl.value)
   return doc
 }, null)
 
-const schema = ref<any>()
+const schemaTree = ref<any>()
 const data = ref<any>()
 
 provide(EDITOR_CONTEXT, {
   openapiDoc: doc,
-  schema,
+  schemaTree,
   data,
 })
 

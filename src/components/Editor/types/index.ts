@@ -4,4 +4,5 @@ export type ApiSchema = {
   properties?: Record<string, ApiSchema>
   description: string
   items?: ApiSchema
+  responses: any
 }

@@ -2,7 +2,7 @@
 import { ComboboxVirtualizer } from 'reka-ui'
 import { Combobox, ComboboxAnchor, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from '~/components/ui/combobox'
 import { Input } from '~/components/ui/input'
-import { EDITOR_CONTEXT } from '../constants'
+import { EDITOR_CONTEXT } from '../../constants'
 
 const editorContext = inject(EDITOR_CONTEXT)
 
