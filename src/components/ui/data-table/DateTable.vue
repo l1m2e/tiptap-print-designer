@@ -20,8 +20,22 @@ const props = defineProps<{
   data: TData[]
 }>()
 
+const tableData = ref<any[]>([])
+
+watchImmediate(() => props.data, (val: TData[]) => {
+  tableData.value = val.map((item) => {
+    if (item.rowKey) {
+      console.log(item)
+      return item
+    }
+    else {
+      return { rowKey: Symbol('rowKey'), ...item }
+    }
+  })
+}, { deep: true })
+
 const table = useVueTable({
-  data: computed(() => props.data),
+  get data() { return tableData.value },
   get columns() { return props.columns },
   getCoreRowModel: getCoreRowModel(),
 })
@@ -43,7 +57,7 @@ const table = useVueTable({
       <TableBody>
         <template v-if="table.getRowModel().rows?.length">
           <TableRow
-            v-for="row in table.getRowModel().rows" :key="row.id"
+            v-for="row in table.getRowModel().rows" :key="row.original.rowKey"
             :data-state="row.getIsSelected() ? 'selected' : undefined"
           >
             <TableCell v-for="cell in row.getVisibleCells()" :key="cell.id">
