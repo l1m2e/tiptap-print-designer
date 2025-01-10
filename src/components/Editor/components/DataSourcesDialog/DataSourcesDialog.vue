@@ -16,7 +16,8 @@ function open() {
 }
 
 const data = ref<DataSchema[]>([
-  { key: 'userInfo', api: null, schemaTree: null },
+  { key: 'userInfo', api: null, schemaTree: null,  },
+  { key: 'systemInfo', api: null, schemaTree: null },
 ])
 
 const columns = ref<ColumnDef<DataSchema>[]>([
@@ -55,24 +56,17 @@ const columns = ref<ColumnDef<DataSchema>[]>([
 ])
 
 function addRow(index: number) {
-  data.value = [
-    ...data.value.slice(0, index + 1),
-    { key: '', api: null, schemaTree: null },
-    ...data.value.slice(index + 1),
-  ]
+  const newRow = { key: '', api: null, schemaTree: null }
+  data.value.splice(index + 1, 0, newRow)
 }
 
 function removeRow(index: number) {
-  data.value = data.value.filter((_, i) => i !== index)
+  data.value.splice(index, 1)
 }
 
 function resetSchemaTree(key: string, tree: Schema) {
-  data.value = data.value?.map((item) => {
-    if (item.key === key) {
-      item.schemaTree = tree
-    }
-    return item
-  })
+  const api = data.value.find(item => item.key === key)
+  api && (api.schemaTree = tree)
 }
 
 defineExpose({
@@ -88,7 +82,7 @@ defineExpose({
       </DialogHeader>
       <DateTable :data="data" :columns="columns" class="mt-sm rounded-none">
         <template #no-data>
-          <Button class="w-lg" variant="outline" @click="addRow(0)">
+          <Button class="w-lg" variant="outline" @click="() => addRow(0)">
             添加一行
           </Button>
         </template>
