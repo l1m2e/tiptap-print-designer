@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="TData, TValue">
-import type { ColumnDef } from '@tanstack/vue-table'
+import type { ColumnDef, RowModel, Table } from '@tanstack/vue-table'
 import {
   Table,
   TableBody,
@@ -15,28 +15,20 @@ import {
   useVueTable,
 } from '@tanstack/vue-table'
 
-const props = defineProps<{
+const { columns, data, rowId = 'id' } = defineProps<{
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  rowId?: string
 }>()
 
 const tableData = ref<any[]>([])
 
-watchImmediate(() => props.data, (val: TData[]) => {
-  tableData.value = val.map((item) => {
-    if (item.rowKey) {
-      console.log(item)
-      return item
-    }
-    else {
-      return { rowKey: Symbol('rowKey'), ...item }
-    }
-  })
-}, { deep: true })
+watchImmediate(() => data, (val: TData[]) => tableData.value = [...val], { deep: true })
 
 const table = useVueTable({
   get data() { return tableData.value },
-  get columns() { return props.columns },
+  get columns() { return columns },
+  getRowId: originalRow => originalRow[rowId],
   getCoreRowModel: getCoreRowModel(),
 })
 </script>
@@ -57,10 +49,12 @@ const table = useVueTable({
       <TableBody>
         <template v-if="table.getRowModel().rows?.length">
           <TableRow
-            v-for="row in table.getRowModel().rows" :key="row.original.rowKey"
+            v-for="row in table.getRowModel().rows" :key="row.id"
             :data-state="row.getIsSelected() ? 'selected' : undefined"
           >
+            {{ row.id }}
             <TableCell v-for="cell in row.getVisibleCells()" :key="cell.id">
+              {{ cell.id }}
               <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
             </TableCell>
           </TableRow>
