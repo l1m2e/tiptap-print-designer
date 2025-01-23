@@ -5,4 +5,5 @@ export interface DataSchema {
   key: string
   api: ApiSchema | null
   schemaTree: Schema | null
+  id: string
 }
