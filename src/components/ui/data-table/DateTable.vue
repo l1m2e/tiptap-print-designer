@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="TData, TValue">
-import type { ColumnDef, RowModel, Table } from '@tanstack/vue-table'
+import type { ColumnDef } from '@tanstack/vue-table'
 import {
   Table,
   TableBody,
@@ -52,9 +52,7 @@ const table = useVueTable({
             v-for="row in table.getRowModel().rows" :key="row.id"
             :data-state="row.getIsSelected() ? 'selected' : undefined"
           >
-            {{ row.id }}
             <TableCell v-for="cell in row.getVisibleCells()" :key="cell.id">
-              {{ cell.id }}
               <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
             </TableCell>
           </TableRow>

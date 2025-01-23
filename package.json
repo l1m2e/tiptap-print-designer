@@ -36,6 +36,7 @@
     "tailwind-merge": "^2.3.0",
     "unocss-preset-animations": "^1.1.0",
     "unocss-preset-shadcn": "^0.3.1",
+    "uuid": "^11.0.5",
     "vite-plugin-node-polyfills": "^0.22.0",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"

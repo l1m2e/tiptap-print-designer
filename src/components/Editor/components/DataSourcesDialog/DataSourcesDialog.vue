@@ -3,6 +3,7 @@ import type { ColumnDef } from '@tanstack/vue-table'
 import type { DataSchema } from '.'
 
 import type { Schema } from '../SchemaTree'
+import { v4 as uuidv4 } from 'uuid'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import ApiSelect from '../ApiSelect/ApiSelect.vue'
@@ -16,8 +17,8 @@ function open() {
 }
 
 const data = ref<DataSchema[]>([
-  { key: 'userInfo', api: null, schemaTree: null,  },
-  { key: 'systemInfo', api: null, schemaTree: null },
+  { key: 'userInfo', api: null, schemaTree: null, id: uuidv4() },
+  { key: 'systemInfo', api: null, schemaTree: null, id: uuidv4() },
 ])
 
 const columns = ref<ColumnDef<DataSchema>[]>([
@@ -56,7 +57,7 @@ const columns = ref<ColumnDef<DataSchema>[]>([
 ])
 
 function addRow(index: number) {
-  const newRow = { key: '', api: null, schemaTree: null }
+  const newRow = { key: '', api: null, schemaTree: null, id: uuidv4() }
   data.value.splice(index + 1, 0, newRow)
 }
 
