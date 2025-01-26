@@ -1,24 +1,23 @@
 <script lang="ts" setup>
 import type { DataSchema } from '.'
 import type { ApiSchema } from '../../types'
-import type { SchemaTree } from '../SchemaTree'
+import type { Schema } from '../SchemaTree'
 import { useToast } from '~/components/ui/toast/use-toast'
+import { getResponsesSchema } from '../../utils/getResponsesSchema'
 import SchemaTreeView from '../SchemaTree/SchemaTree.vue'
 
-const emits = defineEmits<{ resetSchemaTree: [key: string, tree: SchemaTree] }>()
+const emits = defineEmits<{ resetSchemaTree: [key: string, tree: Schema] }>()
 const { toast } = useToast()
 const show = ref(false)
 const schema = ref<ApiSchema>()
 
-let schemaTree: SchemaTree | null
+let schemaTree: Schema | null
 let key: string | null
 
 function open(row: DataSchema) {
   if (row) {
-    const { responses } = row.api || {}
-    if (responses) {
-      const content = responses['200'].content
-      schema.value = Object.keys(content).map(contentType => content[contentType].schema)[0]
+    schema.value = row.api ? getResponsesSchema(row.api) : null
+    if (schema.value) {
       show.value = true
       key = row.key
     }
@@ -38,7 +37,7 @@ function beforeClose(val: boolean) {
   }
 }
 
-function schemaTreeSelect(val: SchemaTree) {
+function schemaTreeSelect(val: Schema) {
   schemaTree = val
 }
 

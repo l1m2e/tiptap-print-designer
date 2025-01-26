@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { Editor } from '@tiptap/vue-3'
+import SelectFieldDialog from '../SelectFieldDialog/SelectFieldDialog.vue'
 
 const { editor } = defineProps<{ editor: Editor | undefined }>()
 
