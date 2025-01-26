@@ -9,6 +9,7 @@ export type Schema = {
   description: string
   children?: SchemaTree
   parentType: FieldType | ''
+  id: string
 }
 
 export type SchemaTree = Schema[]
@@ -19,5 +20,5 @@ export type SchemaTreeProps = {
 }
 
 export type SchemaTreeEmits = {
-  select: [val: SchemaTree]
+  select: [val: Schema]
 }

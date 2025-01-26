@@ -14,6 +14,12 @@ export default Node.create({
   renderHTML({ HTMLAttributes }) {
     return ['field', mergeAttributes(HTMLAttributes), 0]
   },
+  addAttributes() {
+    return {
+      label: { default: '' },
+      path: { default: '' },
+    }
+  },
   addNodeView() {
     return VueNodeViewRenderer(Component)
   },

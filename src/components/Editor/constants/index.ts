@@ -1,9 +1,8 @@
-import type { OpenAPI } from 'openapi-types'
-import type { ApiSchema } from '../types'
+import type { SchemaTree } from '../components/SchemaTree'
 
 export interface EditorContext {
   openapiDoc: Ref<any>
-  schemaTree: Ref<any>
+  schemaTree: Ref<SchemaTree>
   data: Ref<any>
 }
 

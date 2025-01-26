@@ -1,60 +1,26 @@
 <script setup lang="ts">
-import type { ApiSchema } from '../../types'
-import type { FieldType, SchemaTree, SchemaTreeEmits, SchemaTreeProps } from './index'
+import type { Schema, SchemaTreeEmits, SchemaTreeProps } from './index'
 import { TreeItem, TreeRoot, TreeVirtualizer } from 'reka-ui'
+import { apiSchemaToApiTree } from '../../utils/apiSchemaToApiTree'
 
 const { schema, tree = [] } = defineProps<SchemaTreeProps>()
 const emits = defineEmits<SchemaTreeEmits>()
 
-function generateItems(schema: ApiSchema, path: string = '', parentType: FieldType | '' = ''): SchemaTree {
-  const nodes: SchemaTree = []
-
-  const transformApiSchema = (schema: ApiSchema) => {
-    const { properties = {}, type } = schema
-    if (type === 'object' && properties) {
-      for (const [key, value] of Object.entries(properties)) {
-        const newPath = path ? `${path}.${key}` : key
-        const node: SchemaTree[number] = {
-          type: value.type,
-          field: key,
-          path: newPath,
-          description: value.description,
-          parentType,
-        }
-        if (value.properties || value.items) {
-          const children = generateItems(value, newPath, type)
-          children.length > 0 && (node.children = children)
-        }
-        nodes.push(node)
-      }
-    }
-  }
-
-  if (schema.type === 'object') {
-    transformApiSchema(schema)
-  }
-  else if (schema.type === 'array') {
-    schema.items && transformApiSchema(schema.items)
-  }
-
-  return nodes
-}
-
-function select(val: SchemaTree) {
+function select(val: Schema) {
   emits('select', val)
 }
 
-const items = computed(() => schema ? generateItems(schema) : tree)
+const items = computed(() => schema ? apiSchemaToApiTree(schema) : tree)
 </script>
 
 <template>
   <ScrollArea class="h-500px w-full">
-    <TreeRoot :items :get-key="(item) => item.path">
+    <TreeRoot :items :get-key="(item) => item.id">
       <TreeVirtualizer v-slot="{ item }" :text-content="(opt) => opt.field">
         <TreeItem
           v-slot="{ isExpanded }" v-bind="item.bind"
           class="h-32px w-full flex items-center rounded text-sm focus:bg-accent hover:bg-accent/30"
-          @select="(val) => select(val.detail.value as SchemaTree)"
+          @select="(val) => select(val.detail.value as Schema)"
         >
           <div v-if="item.level !== 1" class="h-full flex items-center">
             <div v-for="l in item.level" :key="l" class="h-full w-3 flex items-center items-center border-l">
