@@ -34,7 +34,10 @@ export default defineConfig({
     }),
     vueJsx(),
     // https://github.com/posva/unplugin-vue-router
-    VueRouter(),
+    VueRouter({
+      routesFolder: 'src/pages/index',
+      exclude: '**/components/*.vue',
+    }),
 
     nodePolyfills(),
     // https://github.com/antfu/unplugin-auto-import
