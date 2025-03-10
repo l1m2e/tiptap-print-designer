@@ -1,9 +1,6 @@
-/// <reference types="vitest" />
-
 import path from 'node:path'
 import Vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import UnoCSS from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import VueMacros from 'unplugin-vue-macros/vite'
@@ -16,9 +13,10 @@ export default defineConfig({
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
-      '@': path.resolve(__dirname, './src'),
+      '@/': `${path.resolve(__dirname, 'src')}/`,
     },
   },
+
   plugins: [
     VueMacros({
       defineOptions: false,
@@ -32,24 +30,16 @@ export default defineConfig({
         }),
       },
     }),
-    vueJsx(),
-    // https://github.com/posva/unplugin-vue-router
-    VueRouter({
-      routesFolder: 'src/pages/index',
-      exclude: '**/components/*.vue',
-    }),
 
+    VueRouter(),
+    vueJsx(),
     nodePolyfills(),
-    // https://github.com/antfu/unplugin-auto-import
     AutoImport({
       imports: [
         'vue',
         '@vueuse/core',
         VueRouterAutoImports,
-        {
-          // add any other imports you were relying on
-          'vue-router/auto': ['useLink'],
-        },
+        { 'vue-router/auto': ['useLink'] },
       ],
       dts: true,
       dirs: [
@@ -57,20 +47,15 @@ export default defineConfig({
       ],
       vueTemplate: true,
     }),
-
-    // https://github.com/antfu/vite-plugin-components
     Components({
       dts: true,
-      include: [/\.vue$/, /\.vue\?vue/, /\.jsx$/, /\.tsx$/],
     }),
-
-    // https://github.com/antfu/unocss
-    // see uno.config.ts for config
-    UnoCSS(),
   ],
 
-  // https://github.com/vitest-dev/vitest
-  test: {
-    environment: 'jsdom',
+  server: {
+    port: 3333, // vite项目启动时自定义端口
+    open: true, // vite项目启动时自动打开浏览器
+    host: '0.0.0.0',
   },
+
 })

@@ -1,29 +1,19 @@
 <script lang="tsx" setup>
 import type { ColumnDef } from '@tanstack/vue-table'
 import type { DataSchema } from '.'
-import type { FieldType, Schema, SchemaTree } from '../SchemaTree'
+import type { Schema } from '../SchemaTree'
+import { Link } from 'lucide-vue-next'
 import { v4 as uuidv4 } from 'uuid'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
-import { EDITOR_CONTEXT } from '../../constants'
-import { apiSchemaToApiTree } from '../../utils/apiSchemaToApiTree'
-import { getApiSchemaByPath } from '../../utils/getApiSchemaByPath'
+import { getDataSource, updateDataSource } from '~/db/services/printDesigner'
 import ApiSelect from '../ApiSelect/ApiSelect.vue'
 import SelectResponsesPathDialog from './SelectResponsesPathDialog.vue'
 
-const editorContext = inject(EDITOR_CONTEXT)
-
 const show = ref(false)
-const SelectResponsesPathDialogRef = useTemplateRef('SelectResponsesPathDialogEl')
+const SelectResponsesPathDialogRef = ref<InstanceType<typeof SelectResponsesPathDialog>>()
 
-function open() {
-  show.value = true
-}
-
-const data = ref<DataSchema[]>([
-  { key: 'userInfo', api: null, path: '', id: uuidv4() },
-  { key: 'systemInfo', api: null, path: '', id: uuidv4() },
-])
+const data = ref<DataSchema[]>([])
 
 const columns = ref<ColumnDef<DataSchema>[]>([
   {
@@ -43,7 +33,7 @@ const columns = ref<ColumnDef<DataSchema>[]>([
       const path = row.original.path
       return (
         <Button variant="outline" onClick={() => SelectResponsesPathDialogRef.value?.open(row.original)}>
-          <div class="i-ri-links-line" />
+          <Link />
           {path ? `Root.${path}` : 'Root'}
         </Button>
       )
@@ -52,7 +42,7 @@ const columns = ref<ColumnDef<DataSchema>[]>([
   {
     header: '操作',
     cell: ({ row }) => (
-      <div>
+      <div class="w-[150px]">
         <Button onClick={() => addRow(row.index)} variant="outline"> 添加</Button>
         <Button onClick={() => removeRow(row.index)} class="ml-1" variant="outline"> 删除 </Button>
       </div>
@@ -74,41 +64,14 @@ function resetSchemaTree(key: string, tree: Schema) {
   api && (api.path = tree.path)
 }
 
-// 生成API树
-function generateApiTree(): SchemaTree {
-  return data.value.filter(item => item.api !== null).map((item) => {
-    const { api, key, path } = item
-    let schema = getApiSchemaByPath(api!, path)
-
-    // 在原来的schema基础上继续添加一层通过key
-    if (schema.type === 'object') {
-      schema = {
-        properties: {
-          [key]: schema,
-        },
-        type: schema.type,
-        description: schema.description,
-        required: schema.required,
-      }
-    }
-
-    const tree = apiSchemaToApiTree(schema)
-    console.log(tree)
-    return tree
-  })
+async function save() {
+  await updateDataSource(data.value!)
+  show.value = false
 }
 
-// 生成Mock数据
-function generateMockData() {
-
-}
-
-function save() {
-  if (editorContext) {
-    editorContext.schemaTree.value = generateApiTree()
-    generateMockData()
-    show.value = false
-  }
+async function open() {
+  show.value = true
+  data.value = await getDataSource()
 }
 
 defineExpose({
@@ -117,8 +80,8 @@ defineExpose({
 </script>
 
 <template>
-  <Dialog v-model:open="show">
-    <DialogContent class="max-w-1200px!">
+  <Dialog v-model:open="show" :modal="false">
+    <DialogContent class="max-w-5xl">
       <DialogHeader>
         <DialogTitle>数据源配置</DialogTitle>
       </DialogHeader>
@@ -138,6 +101,6 @@ defineExpose({
         </Button>
       </DialogFooter>
     </DialogContent>
-    <SelectResponsesPathDialog ref="SelectResponsesPathDialogEl" @reset-schema-tree="resetSchemaTree" />
+    <SelectResponsesPathDialog ref="SelectResponsesPathDialogRef" @reset-schema-tree="resetSchemaTree" />
   </Dialog>
 </template>

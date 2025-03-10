@@ -1,21 +1,22 @@
 <script lang="ts" setup>
 import type { Editor } from '@tiptap/vue-3'
-import type { Schema } from '../SchemaTree'
-import { EDITOR_CONTEXT } from '../../constants'
-import SchemaTree from '../SchemaTree/SchemaTree.vue'
+import type { Schema, SchemaTree } from '../SchemaTree'
+import Tree from '../SchemaTree/SchemaTree.vue'
+import { getApiTree } from '~/db/services/printDesigner'
 
 let editor: Editor | undefined
 const show = ref(false)
-const editorContext = inject(EDITOR_CONTEXT)
 const node = ref<Schema>()
+const tree = ref<SchemaTree>([])
 
 function insertField() {
   editor?.chain().focus().insertContent({ type: 'field', attrs: { label: node.value?.description || node.value?.field, path: node.value?.path } }).run()
   show.value = false
 }
 
-function open(openEditor: Editor | undefined) {
+async function open(openEditor: Editor | undefined) {
   editor = openEditor
+  tree.value = await getApiTree()
   show.value = true
 }
 
@@ -30,11 +31,11 @@ defineExpose({
 
 <template>
   <Dialog v-model:open="show">
-    <DialogContent class="max-w-1200px!">
+    <DialogContent class="max-w-[1200px]">
       <DialogHeader>
         <DialogTitle>插入字段</DialogTitle>
       </DialogHeader>
-      <SchemaTree :tree="editorContext?.schemaTree.value" @select="select" />
+      <Tree :tree @select="select" />
 
       <DialogFooter>
         <Button variant="outline" @click="show = false">

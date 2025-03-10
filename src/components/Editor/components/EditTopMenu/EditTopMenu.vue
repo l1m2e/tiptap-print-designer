@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import type { Editor } from '@tiptap/vue-3'
+import { AlignCenter, AlignLeft, AlignRight, Bold, Braces, Heading, Italic, List, ListOrdered, Redo, Strikethrough, Undo } from 'lucide-vue-next'
 import SelectFieldDialog from '../SelectFieldDialog/SelectFieldDialog.vue'
+import SettingDialog from '../SettingDialog/SettingDialog.vue'
 
 const { editor } = defineProps<{ editor: Editor | undefined }>()
 
@@ -15,71 +17,72 @@ const heading = [
 
 const SelectFieldDialogRef = useTemplateRef('SelectFieldDialogEl')
 const DataSourcesDialogRef = useTemplateRef('DataSourcesDialogEl')
+const SettingDialogRef = useTemplateRef('SettingDialogEl')
 
 const FnButtons = [
   {
     label: '加粗',
-    icon: 'i-ri-bold',
+    icon: Bold,
     fn: () => editor?.chain().focus().toggleBold().run(),
     isActive: () => editor?.isActive('bold'),
   },
   {
     label: '斜体',
-    icon: 'i-ri-italic',
+    icon: Italic,
     fn: () => editor?.chain().focus().toggleItalic().run(),
     isActive: () => editor?.isActive('italic'),
   },
   {
     label: '中划线',
-    icon: 'i-ri-strikethrough',
+    icon: Strikethrough,
     fn: () => editor?.chain().focus().toggleStrike().run(),
     isActive: () => editor?.isActive('strike'),
   },
   {
     label: '无序列表',
-    icon: 'i-ri-list-unordered',
+    icon: List,
     fn: () => editor?.chain().focus().toggleBulletList().run(),
     isActive: () => editor?.isActive('bulletList'),
   },
   {
     label: '有序列表',
-    icon: 'i-ri-list-ordered',
+    icon: ListOrdered,
     fn: () => editor?.chain().focus().toggleOrderedList().run(),
     isActive: () => editor?.isActive('orderedList'),
   },
   {
     label: '左对齐',
-    icon: 'i-ri-align-left',
+    icon: AlignLeft,
     fn: () => editor?.chain().focus().setTextAlign('left').run(),
     isActive: () => editor?.isActive({ textAlign: 'left' }),
   },
   {
     label: '居中对齐',
-    icon: 'i-ri-align-center',
+    icon: AlignCenter,
     fn: () => editor?.chain().focus().setTextAlign('center').run(),
     isActive: () => editor?.isActive({ textAlign: 'center' }),
   },
   {
     label: '右对齐',
-    icon: 'i-ri-align-right',
+    icon: AlignRight,
     fn: () => editor?.chain().focus().setTextAlign('right').run(),
     isActive: () => editor?.isActive({ textAlign: 'right' }),
   },
   {
     label: '撤销',
-    icon: 'i-ri-arrow-go-back-line',
+    icon: Undo,
     fn: () => editor?.chain().focus().undo().run(),
     isActive: () => editor?.can().undo(),
   },
   {
     label: '重做',
-    icon: 'i-ri-arrow-go-forward-line',
+    icon: Redo,
     fn: () => editor?.chain().focus().redo().run(),
     isActive: () => editor?.can().redo(),
   },
   {
     label: '插入字段',
-    icon: 'i-ri-text',
+    icon: Braces,
     fn: () => SelectFieldDialogRef.value?.open(editor),
   },
 ]
@@ -92,12 +95,12 @@ const position = ref(undefined)
 </script>
 
 <template>
-  <div v-if="editor" flex items-center justify-between flex-justify-between border-b border-neutral-200 p-2 dark:border-neutral-800>
+  <div v-if="editor" class="flex items-center justify-between flex-justify-between border-b border-neutral-200 p-2 dark:border-neutral-800 h-[54px]">
     <div>
       <DropdownMenu>
         <DropdownMenuTrigger>
           <Button size="icon" :variant="editor.isActive('heading') ? 'secondary' : 'ghost'">
-            <div class="i-ri-heading" />
+            <component :is="Heading" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -116,7 +119,7 @@ const position = ref(undefined)
         <Tooltip>
           <TooltipTrigger as-child>
             <Button class="ml-sm" size="icon" :variant="item?.isActive?.() ? 'secondary' : 'ghost'" @click="item.fn">
-              <div :class="item.icon" />
+              <component :is="item.icon" />
             </Button>
           </TooltipTrigger>
           <TooltipContent> {{ item.label }} </TooltipContent>
@@ -124,15 +127,16 @@ const position = ref(undefined)
       </TooltipProvider>
     </div>
 
-    <div flex items-center flex-justify-between>
-      <Button variant="outline" mr-sm @click="setDataSources">
+    <div class="flex items-center flex-justify-between">
+      <Button variant="outline" class="mr-2" @click="setDataSources">
         数据源
       </Button>
-      <Button variant="outline" size="icon" @click="toggleDark()">
-        <div i-carbon-sun dark:i-carbon-moon />
+      <Button variant="outline" @click="SettingDialogRef?.open">
+        设置
       </Button>
     </div>
 
+    <SettingDialog ref="SettingDialogEl" />
     <SelectFieldDialog ref="SelectFieldDialogEl" />
     <DataSourcesDialog ref="DataSourcesDialogEl" />
   </div>

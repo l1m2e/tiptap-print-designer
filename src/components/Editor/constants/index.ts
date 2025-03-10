@@ -1,8 +1,5 @@
-import type { SchemaTree } from '../components/SchemaTree'
-
 export interface EditorContext {
-  openapiDoc: Ref<any>
-  schemaTree: Ref<SchemaTree>
+  mode: 'designer' | 'viewer'
   data: Ref<any>
 }
 

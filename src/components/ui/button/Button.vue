@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
-import { cn } from '@/lib/utils'
-import { Loader2 } from 'lucide-vue-next'
-import { Primitive, type PrimitiveProps } from 'radix-vue'
+import { cn } from '~/lib/utils'
+import { Primitive, type PrimitiveProps } from 'reka-ui'
 import { type ButtonVariants, buttonVariants } from '.'
+import { Loader2 } from 'lucide-vue-next'
 
 interface Props extends PrimitiveProps, HTMLAttributes {
   variant?: ButtonVariants['variant']
   size?: ButtonVariants['size']
-  class?: HTMLAttributes['class']
+  class?: HTMLAttributes['class'],
   loading?: boolean
   disabled?: boolean
 }

@@ -1,52 +1,42 @@
 <script setup lang="tsx">
-import { ComboboxVirtualizer } from 'reka-ui'
-import { Combobox, ComboboxAnchor, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from '~/components/ui/combobox'
-import { Input } from '~/components/ui/input'
-import { EDITOR_CONTEXT } from '../../constants'
+import type { OpenAPIV3 } from 'openapi-types'
+import { ComboboxInput, ComboboxVirtualizer, useFilter } from 'reka-ui'
+import { getApiList } from '~/db/services/openapiDoc'
 
-const editorContext = inject(EDITOR_CONTEXT)
+const { state: apiOptions } = useAsyncState(async () => {
+  return await getApiList()
+}, [])
 
-const apiOptions = computed(() => {
-  const doc = editorContext?.openapiDoc?.value
-  return doc
-    ? Object.keys(doc.paths).flatMap(key => Object.keys(doc.paths[key]).map(item => ({
-        path: key,
-        method: item,
-        label: doc.paths[key][item].summary,
-        value: `${item}#${key}`,
-        ...doc.paths[key][item],
-      })))
-    : []
-})
-
-const value = ref()
+const value = defineModel<any>()
 const term = ref('')
-const filterOptions = computed(() => {
-  const toLowerCaseTerm = term.value.toLowerCase()
-  const data = apiOptions.value.filter(item => item.label.toLowerCase().includes(toLowerCaseTerm) || item.value.toLowerCase().includes(toLowerCaseTerm))
-  return data
-})
 
-const methodLabelColor = {
+const { contains } = useFilter({ sensitivity: 'base' })
+const filteredPeople = computed(() => apiOptions.value.filter(p => contains(p.label, term.value)))
+
+const methodLabelColor: Record<OpenAPIV3.HttpMethods, string> = {
   get: 'bg-green-500',
   post: 'bg-blue-500',
   put: 'bg-yellow-500',
   delete: 'bg-red-500',
-} as const
+  options: 'bg-purple-500',
+  head: 'bg-gray-500',
+  patch: 'bg-orange-500',
+  trace: 'bg-pink-500',
+}
 
-function Label({ method, label }: { method: 'get' | 'post' | 'put' | 'delete', label: string }) {
+function Label({ method, label }: { method: OpenAPIV3.HttpMethods, label: string }) {
   return (
     <div class="w-full flex items-center justify-start">
-      {method && <div class={`text-white text-center px-1 py-0.5 rounded-md w-80px bg-op-90 flex-shrink-0 ${methodLabelColor[method]}`}>{method}</div> }
-      <div class="ml-sm truncate">{ label }</div>
+      {method && <div class={`text-white text-center px-1 py-0.5 rounded-md w-[80px] flex-shrink-0 ${methodLabelColor[method]}`}>{method}</div> }
+      <div class="ml-2 truncate">{ label }</div>
     </div>
   )
 }
 </script>
 
 <template>
-  <Combobox v-model="value" by="label">
-    <ComboboxAnchor class="w-500px">
+  <Combobox v-model="value" by="label" class="z-100">
+    <ComboboxAnchor class="w-[500px]">
       <ComboboxTrigger as-child>
         <Button variant="outline" class="w-full">
           <Label :method="value?.method" :label="value?.label || ''" />
@@ -54,17 +44,10 @@ function Label({ method, label }: { method: 'get' | 'post' | 'put' | 'delete', l
       </ComboboxTrigger>
     </ComboboxAnchor>
 
-    <ComboboxList class="mt-2 h-400px w-500px p-1">
-      <!-- 这个一行不写回报错 写了 则 v-model 是失效状态的 -->
-      <ComboboxInput as-child />
-      <Input v-model="term" class="pos-sticky top-0 z-1 h-32px border-0 border-b rounded-none bg-popover focus-visible:ring-0" placeholder="查询接口" />
-
-      <ComboboxVirtualizer
-        v-slot="{ option }" :options="filterOptions"
-        :estimate-size="32"
-        :overscan="5"
-      >
-        <ComboboxItem :value="option" class="h-32px w-full p-1">
+    <ComboboxList class="mt-2 h-[400px] w-[500px] p-1">
+      <ComboboxInput v-model="term" class="sticky top-0 w-full z-20 h-[32px] px-2 border-0 border-b rounded-none bg-popover outline-none" placeholder="查询接口" />
+      <ComboboxVirtualizer v-slot="{ option }" :options="filteredPeople" :estimate-size="32" :overscan="5">
+        <ComboboxItem :value="option" class="h-[32px] w-full p-1">
           <Label :method="option.method" :label="option.label" />
         </ComboboxItem>
       </ComboboxVirtualizer>

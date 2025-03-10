@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { cn } from '@/lib/utils'
-import { ComboboxInput, type ComboboxInputProps, useForwardProps } from 'reka-ui'
-import { computed, type HTMLAttributes } from 'vue'
+import type { ComboboxInputProps } from 'reka-ui'
+import type { HTMLAttributes } from 'vue'
+import { ComboboxInput, useForwardProps } from 'reka-ui'
+import { computed } from 'vue'
+import { cn } from '~/lib/utils'
 
 const props = defineProps<ComboboxInputProps & {
   class?: HTMLAttributes['class']

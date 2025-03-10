@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ComboboxGroupProps } from 'reka-ui'
-import { cn } from '@/lib/utils'
+import { cn } from '~/lib/utils'
 import { ComboboxGroup, ComboboxLabel } from 'reka-ui'
 import { computed, type HTMLAttributes } from 'vue'
 
