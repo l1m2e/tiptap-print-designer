@@ -1,4 +1,6 @@
 export type EditProps = {
-  /** 只讀 */
-  onlyRead?: boolean
+  /** 模式 */
+  mode?: 'designer' | 'viewer'
+  /** 数据 */
+  data?: any
 }

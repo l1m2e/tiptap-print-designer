@@ -15,7 +15,6 @@ export type Schema = {
 export type SchemaTree = Schema[]
 
 export type SchemaTreeProps = {
-  schema?: ApiSchema
   tree?: SchemaTree
 }
 
