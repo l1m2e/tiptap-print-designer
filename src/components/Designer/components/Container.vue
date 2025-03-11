@@ -3,10 +3,10 @@ import panzoom from 'panzoom'
 import { useVueToPrint } from 'vue-to-print'
 /** 纸张大小列表 */
 const paperSizeListMap = new Map<string, [number, number]>([
-  ['A4', [210, 297]], // A4 尺寸为 210mm x 297mm
-  ['A5', [148, 210]], // A5 尺寸为 148mm x 210mm
-  ['B4', [250, 353]], // B4 尺寸为 250mm x 353mm
-  ['B5', [176, 250]], // B5 尺寸为 176mm x 250mm
+  ['A4', [210, 297]],
+  ['A5', [148, 210]],
+  ['B4', [250, 353]],
+  ['B5', [176, 250]],
 ])
 
 const zoom = ref<HTMLElement>()
@@ -51,9 +51,9 @@ onMounted(() => {
         </Button>
       </div>
     </div>
-    <div class="h-[calc(100vh-54px)] w-full overflow-hidden flex items-center justify-center">
-      <div ref="zoom" :style="size" class="bg-white">
-        <div ref="print" class="bg-white p-[6mm]">
+    <div class="h-[calc(100vh-54px)] w-full overflow-hidden flex items-center justify-center dark:bg-black/90">
+      <div ref="zoom" :style="size" class="bg-white dark:bg-black ">
+        <div ref="print" class="p-[6mm]">
           <slot />
         </div>
       </div>

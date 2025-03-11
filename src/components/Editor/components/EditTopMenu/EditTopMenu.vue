@@ -1,19 +1,12 @@
 <script lang="ts" setup>
 import type { Editor } from '@tiptap/vue-3'
-import { AlignCenter, AlignLeft, AlignRight, Bold, Braces, Heading, Italic, List, ListOrdered, Redo, Strikethrough, Undo } from 'lucide-vue-next'
+import { AlignCenter, AlignLeft, AlignRight, Bold, Braces, Database, Italic, List, ListOrdered, Redo, Settings, Strikethrough, Undo } from 'lucide-vue-next'
 import SelectFieldDialog from '../SelectFieldDialog/SelectFieldDialog.vue'
 import SettingDialog from '../SettingDialog/SettingDialog.vue'
+import FontSize from './FontSize.vue'
+import TextAndHeading from './TextAndHeading.vue'
 
-const { editor } = defineProps<{ editor: Editor | undefined }>()
-
-const heading = [
-  { label: '一级标题', value: 1 },
-  { label: '二级标题', value: 2 },
-  { label: '三级标题', value: 3 },
-  { label: '四级标题', value: 4 },
-  { label: '五级标题', value: 5 },
-  { label: '六级标题', value: 6 },
-] as const
+const { editor } = defineProps<{ editor: Editor }>()
 
 const SelectFieldDialogRef = useTemplateRef('SelectFieldDialogEl')
 const DataSourcesDialogRef = useTemplateRef('DataSourcesDialogEl')
@@ -90,30 +83,13 @@ const FnButtons = [
 function setDataSources() {
   DataSourcesDialogRef.value?.open()
 }
-
-const position = ref(undefined)
 </script>
 
 <template>
   <div v-if="editor" class="flex items-center justify-between flex-justify-between border-b border-neutral-200 p-2 dark:border-neutral-800 h-[54px]">
-    <div>
-      <DropdownMenu>
-        <DropdownMenuTrigger>
-          <Button size="icon" :variant="editor.isActive('heading') ? 'secondary' : 'ghost'">
-            <component :is="Heading" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuRadioGroup v-model="position">
-            <DropdownMenuRadioItem
-              v-for="item in heading" :key="item.value" :value="`${item.value}`"
-              @click="editor.chain().focus().toggleHeading({ level: item.value }).run()"
-            >
-              <span>{{ item.label }}</span>
-            </DropdownMenuRadioItem>
-          </DropdownMenuRadioGroup>
-        </DropdownMenuContent>
-      </DropdownMenu>
+    <div class="flex items-center">
+      <TextAndHeading :editor="editor" class="mr-sm" />
+      <FontSize :editor="editor" />
 
       <TooltipProvider v-for="item in FnButtons" :key="item.label">
         <Tooltip>
@@ -128,11 +104,11 @@ const position = ref(undefined)
     </div>
 
     <div class="flex items-center flex-justify-between">
-      <Button variant="outline" class="mr-2" @click="setDataSources">
-        数据源
+      <Button variant="outline" size="icon" class="mr-2" @click="setDataSources">
+        <Database />
       </Button>
-      <Button variant="outline" @click="SettingDialogRef?.open">
-        设置
+      <Button variant="outline" size="icon" @click="SettingDialogRef?.open">
+        <Settings />
       </Button>
     </div>
 
