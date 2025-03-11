@@ -7,10 +7,14 @@ const { editor } = defineProps<{ editor: Editor }>()
 const fontSize = ref(12)
 const fontSizeList = [8, 9, 10, 11, 12, 14, 16, 18, 20, 24]
 
-watch(fontSize, (newSize) => {
-  if (editor) {
-    editor.chain().focus().setMark('textStyle', { fontSize: `${newSize}pt` }).run()
-  }
+function onSetFontSize(size: number) {
+  editor.chain().focus().setFontSize(`${size}pt`).run()
+  fontSize.value = 12
+}
+
+const computedFontSize = computed(() => {
+  const activeFontSize = fontSizeList.find(item => editor.isActive('textStyle', { fontSize: `${item}pt` }))
+  return activeFontSize ? `${activeFontSize}pt` : '12pt'
 })
 </script>
 
@@ -18,12 +22,12 @@ watch(fontSize, (newSize) => {
   <Select v-model="fontSize">
     <SelectTrigger as-child class="w-12">
       <Button variant="ghost" class="outline-none">
-        {{ fontSize }} pt
+        {{ computedFontSize }}
       </Button>
     </SelectTrigger>
 
     <SelectContent>
-      <SelectItem v-for="item in fontSizeList" :key="item" :value="item">
+      <SelectItem v-for="item in fontSizeList" :key="item" :value="item" @select="() => onSetFontSize(item)">
         {{ item }}pt
       </SelectItem>
     </SelectContent>
