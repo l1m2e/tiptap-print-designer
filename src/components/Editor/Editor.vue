@@ -40,7 +40,7 @@ defineExpose({
 <template>
   <div v-if="editor" class="tiptap-editor" text-black dark:border-neutral-800 dark:bg-black dark:text-white>
     <EditTopMenu v-if="mode === 'designer'" :editor />
-    <EditorContent :editor />
+    <EditorContent :editor :class="mode === 'designer' && 'p-4'" />
   </div>
 </template>
 
