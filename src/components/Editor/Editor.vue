@@ -24,7 +24,7 @@ watch(content, (val) => {
   const isSame = editor.value?.getHTML() === val
   if (isSame)
     return
-  editor.value?.commands.setContent(val)
+  editor.value?.commands.setContent(mode === 'viewer' ? val.replace(/ /g, '\u00A0') : val)
 })
 
 const SelectFieldDialogRef = useTemplateRef('SelectFieldDialogEl')
@@ -36,7 +36,7 @@ provide(EDITOR_CONTEXT, {
   mode,
   data: computed(() => data),
   editor,
-  openSelectFieldDialog
+  openSelectFieldDialog,
 })
 
 defineExpose({
