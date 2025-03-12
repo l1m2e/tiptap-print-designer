@@ -1,3 +1,4 @@
+import Placeholder from '@tiptap/extension-placeholder'
 import TextStyle from '@tiptap/extension-text-style'
 import StarterKit from '@tiptap/starter-kit'
 import Commands from './Commands'
@@ -15,4 +16,5 @@ export default [
   FontSize,
   TextStyle.configure({ mergeNestedSpanStyles: true }),
   Commands.configure({ suggestion }),
+  Placeholder.configure({ placeholder: '输入 / 可打开操作面板 ...' }),
 ]
