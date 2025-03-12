@@ -5,4 +5,11 @@ import FontSize from './FontSize/FontSize'
 import Image from './Image'
 import TextAlign from './TextAlign'
 
-export default [StarterKit, TextAlign, Field, Image, TextStyle, FontSize]
+export default [
+  StarterKit,
+  TextAlign,
+  Field,
+  Image,
+  TextStyle.configure({ mergeNestedSpanStyles: true }),
+  FontSize,
+]
