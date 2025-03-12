@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Schema, SchemaTreeEmits, SchemaTreeProps } from './index'
+import { ChevronDown, ChevronRight } from 'lucide-vue-next'
 import { TreeItem, TreeRoot, TreeVirtualizer } from 'reka-ui'
-import { ChevronDown, ChevronRight  } from 'lucide-vue-next';
 
 const { tree = [] } = defineProps<SchemaTreeProps>()
 const emits = defineEmits<SchemaTreeEmits>()
@@ -9,7 +9,6 @@ const emits = defineEmits<SchemaTreeEmits>()
 function select(val: Schema) {
   emits('select', val)
 }
-
 </script>
 
 <template>
@@ -27,7 +26,7 @@ function select(val: Schema) {
             </div>
           </div>
 
-          <component v-if="item.hasChildren" :is="isExpanded ? ChevronDown : ChevronRight" class=" size-[14px]" />
+          <component :is="isExpanded ? ChevronDown : ChevronRight" v-if="item.hasChildren" class=" size-[14px]" />
 
           <div class="py-2 text-[12px]">
             <span class="border-input rounded-sm bg-[#58a6ff1f] px-2 py-0.5 text-[#58a6ff] shadow-sm">{{ item.value.field }}</span>
@@ -39,3 +38,9 @@ function select(val: Schema) {
     </TreeRoot>
   </ScrollArea>
 </template>
+
+<style scoped>
+:deep([data-reka-scroll-area-viewport]) {
+  outline: none !important;
+}
+</style>
