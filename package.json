@@ -18,6 +18,7 @@
     "@tanstack/vue-table": "^8.20.5",
     "@tiptap/extension-dropcursor": "^2.2.4",
     "@tiptap/extension-image": "^2.2.4",
+    "@tiptap/extension-placeholder": "^2.11.5",
     "@tiptap/extension-text-align": "^2.2.4",
     "@tiptap/extension-text-style": "^2.11.5",
     "@tiptap/pm": "^2.2.4",
