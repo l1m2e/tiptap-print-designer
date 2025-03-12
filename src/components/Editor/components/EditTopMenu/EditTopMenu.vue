@@ -1,14 +1,12 @@
 <script lang="ts" setup>
 import type { Editor } from '@tiptap/vue-3'
-import { AlignCenter, AlignLeft, AlignRight, Bold, Braces, Database, Italic, List, ListOrdered, Redo, Settings, Strikethrough, Undo } from 'lucide-vue-next'
-import SelectFieldDialog from '../SelectFieldDialog/SelectFieldDialog.vue'
+import { AlignCenter, AlignLeft, AlignRight, Bold, Braces, Database, Italic, Redo, Settings, Strikethrough, Undo } from 'lucide-vue-next'
 import SettingDialog from '../SettingDialog/SettingDialog.vue'
 import FontSize from './FontSize.vue'
 import TextAndHeading from './TextAndHeading.vue'
 
 const { editor } = defineProps<{ editor: Editor }>()
 
-const SelectFieldDialogRef = useTemplateRef('SelectFieldDialogEl')
 const DataSourcesDialogRef = useTemplateRef('DataSourcesDialogEl')
 const SettingDialogRef = useTemplateRef('SettingDialogEl')
 
@@ -30,18 +28,6 @@ const FnButtons = [
     icon: Strikethrough,
     fn: () => editor?.chain().focus().toggleStrike().run(),
     isActive: () => editor?.isActive('strike'),
-  },
-  {
-    label: '无序列表',
-    icon: List,
-    fn: () => editor?.chain().focus().toggleBulletList().run(),
-    isActive: () => editor?.isActive('bulletList'),
-  },
-  {
-    label: '有序列表',
-    icon: ListOrdered,
-    fn: () => editor?.chain().focus().toggleOrderedList().run(),
-    isActive: () => editor?.isActive('orderedList'),
   },
   {
     label: '左对齐',
@@ -72,11 +58,6 @@ const FnButtons = [
     icon: Redo,
     fn: () => editor?.chain().focus().redo().run(),
     isActive: () => editor?.can().redo(),
-  },
-  {
-    label: '插入字段',
-    icon: Braces,
-    fn: () => SelectFieldDialogRef.value?.open(editor),
   },
 ]
 
@@ -113,7 +94,6 @@ function setDataSources() {
     </div>
 
     <SettingDialog ref="SettingDialogEl" />
-    <SelectFieldDialog ref="SelectFieldDialogEl" />
     <DataSourcesDialog ref="DataSourcesDialogEl" />
   </div>
 </template>

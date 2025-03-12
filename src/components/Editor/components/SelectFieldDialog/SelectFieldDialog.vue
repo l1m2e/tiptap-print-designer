@@ -1,21 +1,20 @@
 <script lang="ts" setup>
-import type { Editor } from '@tiptap/vue-3'
 import type { Schema, SchemaTree } from '../SchemaTree'
-import Tree from '../SchemaTree/SchemaTree.vue'
 import { getApiTree } from '~/db/services/printDesigner'
+import { EDITOR_CONTEXT } from '../../constants'
+import Tree from '../SchemaTree/SchemaTree.vue'
 
-let editor: Editor | undefined
 const show = ref(false)
 const node = ref<Schema>()
 const tree = ref<SchemaTree>([])
+const editorContent = inject(EDITOR_CONTEXT)
 
 function insertField() {
-  editor?.chain().focus().insertContent({ type: 'field', attrs: { label: node.value?.description || node.value?.field, path: node.value?.path } }).run()
+  editorContent?.editor?.value?.chain().focus().insertContent({ type: 'field', attrs: { label: node.value?.description || node.value?.field, path: node.value?.path } }).run()
   show.value = false
 }
 
-async function open(openEditor: Editor | undefined) {
-  editor = openEditor
+async function open() {
   tree.value = await getApiTree()
   show.value = true
 }
