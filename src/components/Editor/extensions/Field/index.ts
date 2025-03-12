@@ -18,6 +18,7 @@ export default Node.create({
     return {
       label: { default: '' },
       path: { default: '' },
+      fontSize: { default: '12pt' },
     }
   },
   addNodeView() {

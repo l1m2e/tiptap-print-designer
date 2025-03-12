@@ -12,7 +12,11 @@ const text = computed(() => editorContext?.mode === 'designer' ? props.node.attr
 </script>
 
 <template>
-  <NodeViewWrapper as="span" :class="editorContext?.mode === 'designer' && 'rounded-[5px] bg-purple-500 px-[4px] py-[2px] text-white'">
+  <NodeViewWrapper
+    as="span"
+    :class="editorContext?.mode === 'designer' && 'rounded-[5px] bg-purple-500 px-[4px] py-[2px] text-white'"
+    :style="{ fontSize: props.node.attrs.fontSize }"
+  >
     {{ text }}
   </NodeViewWrapper>
 </template>
