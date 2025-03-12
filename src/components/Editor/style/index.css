@@ -9,6 +9,7 @@
       font-size: revert;
       font-style: revert;
       margin: revert;
+      white-space: pre-wrap;
     }
 
     p {

@@ -21,10 +21,7 @@ const editor = useEditor({
 })
 
 watch(content, (val) => {
-  const isSame = editor.value?.getHTML() === val
-  if (isSame)
-    return
-  editor.value?.commands.setContent(val)
+  editor.value?.commands.setContent(val, false, { preserveWhitespace: 'full' })
 })
 
 const SelectFieldDialogRef = useTemplateRef('SelectFieldDialogEl')
@@ -36,7 +33,7 @@ provide(EDITOR_CONTEXT, {
   mode,
   data: computed(() => data),
   editor,
-  openSelectFieldDialog
+  openSelectFieldDialog,
 })
 
 defineExpose({
