@@ -34,6 +34,8 @@ const commandList = [
     command: () => deletePreviousCharacter()?.toggleBulletList().run(),
   },
 ]
+
+onKeyStroke('Escape', () => deletePreviousCharacter()?.run())
 </script>
 
 <template>
