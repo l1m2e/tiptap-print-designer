@@ -1,4 +1,4 @@
-import { OpenAPIV3 } from "openapi-types"
+import type { OpenAPIV3 } from 'openapi-types'
 
 export type ApiSchema = {
   required: string[]
@@ -8,6 +8,6 @@ export type ApiSchema = {
   items?: ApiSchema
   responses?: any
   operation?: any
-  path?:string
+  path?: string
   method?: OpenAPIV3.HttpMethods
 }

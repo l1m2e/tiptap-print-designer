@@ -36,22 +36,22 @@
         margin-bottom: 0;
       }
     }
-    h1{
+    h1 {
       font-size: 22pt;
     }
-    h2{
+    h2 {
       font-size: 20pt;
     }
-    h3{
+    h3 {
       font-size: 18pt;
     }
-    h4{
+    h4 {
       font-size: 16pt;
     }
-    h5{
+    h5 {
       font-size: 14pt;
     }
-    h6{
+    h6 {
       font-size: 12pt;
     }
 
@@ -67,7 +67,7 @@
       padding-top: 5px;
     }
 
-    li>p {
+    li > p {
       margin: 0;
 
       &:first-child::before {
@@ -83,7 +83,7 @@
       }
     }
 
-    ul li>p {
+    ul li > p {
       &:first-child::before {
         content: '\2022';
         text-align: center;
@@ -93,7 +93,7 @@
     ol {
       counter-reset: center;
 
-      li>p:first-child::before {
+      li > p:first-child::before {
         counter-increment: center;
       }
     }

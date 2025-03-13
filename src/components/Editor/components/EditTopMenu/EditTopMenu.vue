@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { Editor } from '@tiptap/vue-3'
-import { AlignCenter, AlignLeft, AlignRight, Bold, Braces, Database, Italic, Redo, Settings, Strikethrough, Undo } from 'lucide-vue-next'
+import { AlignCenter, AlignLeft, AlignRight, Bold, Database, Italic, Redo, Settings, Strikethrough, Undo } from 'lucide-vue-next'
 import SettingDialog from '../SettingDialog/SettingDialog.vue'
 import FontSize from './FontSize.vue'
 import TextAndHeading from './TextAndHeading.vue'

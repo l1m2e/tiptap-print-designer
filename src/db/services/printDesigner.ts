@@ -55,7 +55,7 @@ export async function generateMockData() {
       try {
         const { path: url, method } = api!
         const mockUrl = baseMockUrl + url
-        const response = await fetch(mockUrl, {method})
+        const response = await fetch(mockUrl, { method })
 
         if (!response.ok)
           throw new Error(`HTTP error! status: ${response.status}`)
