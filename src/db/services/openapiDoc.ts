@@ -17,18 +17,19 @@ export async function getDoc(): Promise<OpenAPI.Document> {
     throw new Error('文档不存在')
   return openapiDoc.doc
 }
-  
+
 /** 获取接口列表 */
 export async function getApiList() {
   const doc = await getDoc()
-  if (!doc?.paths) return [];
+  if (!doc?.paths)
+    return []
   return Object.entries(doc.paths).flatMap(([path, pathItem]) =>
     Object.entries(pathItem).map(([method, operation]) => ({
       path,
       method: method as OpenAPIV3.HttpMethods,
       label: (operation as OpenAPIV3.OperationObject).summary || `Unnamed ${method.toUpperCase()} ${path}`,
       value: `${method.toUpperCase()}#${path}`,
-      operation
-    }))
-  );
+      operation,
+    })),
+  )
 }

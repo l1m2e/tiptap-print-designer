@@ -28,10 +28,10 @@ const { isLoading, execute: updateOpenapiDoc } = useAsyncState(
       <Input v-model="mockUrl" type="text" placeholder="Mock地址" />
     </div>
 
-   <div class="flex flex-row-reverse">
-    <Button :loading="isLoading" class="mt-4" @click="() => updateOpenapiDoc()">
-      应用
-    </Button>
-   </div>
+    <div class="flex flex-row-reverse">
+      <Button :loading="isLoading" class="mt-4" @click="() => updateOpenapiDoc()">
+        应用
+      </Button>
+    </div>
   </div>
 </template>

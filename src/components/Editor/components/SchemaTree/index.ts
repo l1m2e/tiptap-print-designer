@@ -1,5 +1,3 @@
-import type { ApiSchema } from '../../types'
-
 export type FieldType = 'object' | 'array' | 'string' | 'number' | 'integer' | 'boolean'
 
 export type Schema = {

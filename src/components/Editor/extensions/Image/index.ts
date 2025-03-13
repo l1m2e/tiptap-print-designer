@@ -4,21 +4,21 @@ const Image = TiptapImage.extend({
   addAttributes() {
     return {
       src: {
-        default: null
+        default: null,
       },
       alt: {
-        default: null
+        default: null,
       },
       style: {
-        default: 'width: 100%; height: auto; cursor: pointer;'
-      }
+        default: 'width: 100%; height: auto; cursor: pointer;',
+      },
     }
   },
   addNodeView() {
     return ({ node, editor, getPos }) => {
       const {
         view,
-        options: { editable }
+        options: { editable },
       } = editor
       const { src, alt, style } = node.attrs
       const $container = document.createElement('div')
@@ -30,13 +30,14 @@ const Image = TiptapImage.extend({
       $img.setAttribute('style', style)
       $img.setAttribute('draggable', 'true')
 
-      if (!editable) return { dom: $img }
+      if (!editable)
+        return { dom: $img }
 
       const dotsPosition = [
         'top: -4px; left: -4px; cursor: nwse-resize;',
         'top: -4px; right: -4px; cursor: nesw-resize;',
         'bottom: -4px; left: -4px; cursor: nesw-resize;',
-        'bottom: -4px; right: -4px; cursor: nwse-resize;'
+        'bottom: -4px; right: -4px; cursor: nwse-resize;',
       ]
 
       let isResizing = false
@@ -45,7 +46,7 @@ const Image = TiptapImage.extend({
       $container.addEventListener('click', () => {
         $container.setAttribute(
           'style',
-          `position: relative; border: 1px dashed #6C6C6C; ${style} cursor: pointer;`
+          `position: relative; border: 1px dashed #6C6C6C; ${style} cursor: pointer;`,
         )
 
         // eslint-disable-next-line array-callback-return
@@ -53,7 +54,7 @@ const Image = TiptapImage.extend({
           const $dot = document.createElement('div')
           $dot.setAttribute(
             'style',
-            `position: absolute; width: 9px; height: 9px; border: 1.5px solid #6C6C6C; border-radius: 50%; ${dotsPosition[index]}`
+            `position: absolute; width: 9px; height: 9px; border: 1.5px solid #6C6C6C; border-radius: 50%; ${dotsPosition[index]}`,
           )
 
           $dot.addEventListener('mousedown', (e) => {
@@ -64,7 +65,8 @@ const Image = TiptapImage.extend({
             startHeight = $container.offsetHeight
 
             const onMouseMove = (e: MouseEvent) => {
-              if (!isResizing) return
+              if (!isResizing)
+                return
 
               const deltaX = e.clientX - startX
 
@@ -86,7 +88,7 @@ const Image = TiptapImage.extend({
               if (typeof getPos === 'function') {
                 const newAttrs = {
                   ...node.attrs,
-                  style: `${$img.style.cssText}`
+                  style: `${$img.style.cssText}`,
                 }
                 view.dispatch(view.state.tr.setNodeMarkup(getPos(), null, newAttrs))
               }
@@ -114,10 +116,10 @@ const Image = TiptapImage.extend({
       })
 
       return {
-        dom: $container
+        dom: $container,
       }
     }
-  }
+  },
 })
 
 export default Image

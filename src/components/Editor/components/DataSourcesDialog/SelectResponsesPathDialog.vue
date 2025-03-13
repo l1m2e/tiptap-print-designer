@@ -2,14 +2,13 @@
 import type { DataSchema } from '.'
 import type { Schema, SchemaTree } from '../SchemaTree'
 import { useToast } from '~/components/ui/toast/use-toast'
-import { getResponsesSchema } from '../../utils/getResponsesSchema'
 import { apiSchemaToApiTree } from '../../utils/apiSchemaToApiTree'
+import { getResponsesSchema } from '../../utils/getResponsesSchema'
 import SchemaTreeView from '../SchemaTree/SchemaTree.vue'
 
 const emits = defineEmits<{ resetSchemaTree: [key: string, tree: Schema] }>()
 const { toast } = useToast()
 const show = ref(false)
-
 
 let schemaTree: Schema | null
 let key: string | null
