@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Code2Icon, List, ListOrdered } from 'lucide-vue-next'
+import { Code2Icon, List, ListOrdered, Table } from 'lucide-vue-next'
 import { inject } from 'vue'
 import { EDITOR_CONTEXT } from '../../constants'
 
@@ -22,6 +22,11 @@ const commandList = [
       deletePreviousCharacter()?.run()
       editorContent?.openSelectFieldDialog()
     },
+  },
+  {
+    title: '插入表格',
+    icon: Table,
+    command: () => deletePreviousCharacter()?.insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run(),
   },
   {
     title: '有序列表',
