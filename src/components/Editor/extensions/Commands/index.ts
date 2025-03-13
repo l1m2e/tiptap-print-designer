@@ -10,7 +10,7 @@ interface CommandProps {
 }
 
 export default Extension.create({
-  name: 'commands',
+  name: 'CommandsSlash',
 
   addOptions() {
     return {

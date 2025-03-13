@@ -17,6 +17,7 @@ interface Props extends PrimitiveProps, HTMLAttributes {
 
 const props = withDefaults(defineProps<Props>(), {
   as: 'button',
+  asChild: false,
 })
 </script>
 
