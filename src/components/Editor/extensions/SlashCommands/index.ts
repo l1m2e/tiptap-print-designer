@@ -9,15 +9,9 @@ interface RenderProps {
   clientRect: () => DOMRect
 }
 
-interface CommandProps {
-  event: KeyboardEvent
-  editor: Editor
-}
-
 export default {
   render: (): {
     onStart: (props: RenderProps) => void
-    onKeyDown: (props: CommandProps) => boolean
     onExit: () => void
   } => {
     let component: VueRenderer
@@ -43,16 +37,6 @@ export default {
           trigger: 'manual',
           placement: 'bottom-start',
         })
-      },
-
-      onKeyDown(props: CommandProps) {
-        if (props.event.key === 'Escape') {
-          popup[0].hide()
-
-          return true
-        }
-
-        return component.ref?.onKeyDown(props) ?? false
       },
 
       onExit() {
