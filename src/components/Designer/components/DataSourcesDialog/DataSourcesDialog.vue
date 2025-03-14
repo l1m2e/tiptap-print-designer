@@ -1,7 +1,6 @@
 <script lang="tsx" setup>
 import type { ColumnDef } from '@tanstack/vue-table'
-import type { DataSchema } from '.'
-import type { Schema } from '../SchemaTree'
+import type { DataSchema, Schema } from '~/db/types'
 import { Link } from 'lucide-vue-next'
 import { v4 as uuidv4 } from 'uuid'
 import { Button } from '~/components/ui/button'

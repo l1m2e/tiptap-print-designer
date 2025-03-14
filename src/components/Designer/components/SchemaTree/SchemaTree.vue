@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import type { Schema, SchemaTreeEmits, SchemaTreeProps } from './index'
+import type { SchemaTreeEmits, SchemaTreeProps } from './index'
+import type { Schema } from '~/db/types'
 import { ChevronDown, ChevronRight } from 'lucide-vue-next'
 import { TreeItem, TreeRoot, TreeVirtualizer } from 'reka-ui'
 

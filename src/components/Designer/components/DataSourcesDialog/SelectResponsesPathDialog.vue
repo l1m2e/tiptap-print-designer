@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-import type { DataSchema } from '.'
-import type { Schema, SchemaTree } from '../SchemaTree'
+import type { DataSchema, Schema, SchemaTree } from '~/db/types'
 import { useToast } from '~/components/ui/toast/use-toast'
-import { apiSchemaToApiTree } from '../../utils/apiSchemaToApiTree'
-import { getResponsesSchema } from '../../utils/getResponsesSchema'
+import { apiSchemaToApiTree } from '~/db/utils/apiSchemaToApiTree'
+import { getResponsesSchema } from '~/db/utils/getResponsesSchema'
 import SchemaTreeView from '../SchemaTree/SchemaTree.vue'
 
 const emits = defineEmits<{ resetSchemaTree: [key: string, tree: Schema] }>()
