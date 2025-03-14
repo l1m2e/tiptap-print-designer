@@ -1,8 +1,7 @@
-import type { DataSchema } from '~/components/Editor/components/DataSourcesDialog'
-import type { SchemaTree } from '~/components/Editor/components/SchemaTree'
-import { apiSchemaToApiTree } from '~/components/Editor/utils/apiSchemaToApiTree'
-import { getApiSchemaByPath } from '~/components/Editor/utils/getApiSchemaByPath'
+import type { DataSchema, SchemaTree } from '../types'
 import { db } from '../database'
+import { apiSchemaToApiTree } from '../utils/apiSchemaToApiTree'
+import { getApiSchemaByPath } from '../utils/getApiSchemaByPath'
 
 /** 更新数据源 */
 export async function updateDataSource(dataSource: DataSchema[]) {
@@ -40,7 +39,6 @@ export async function getApiTree(): Promise<SchemaTree> {
   })
 }
 
-/** 生成Mock数据 */
 /** 生成Mock数据 */
 export async function generateMockData() {
   const mockData: Record<string, any> = {}

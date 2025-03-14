@@ -1,5 +1,5 @@
-import type { FieldType, SchemaTree } from '../components/SchemaTree'
-import type { ApiSchema } from '../types'
+import type { ApiSchema, FieldType, SchemaTree } from '../types'
+
 import { v4 as uuidv4 } from 'uuid'
 
 export function apiSchemaToApiTree(schema: ApiSchema, path: string = '', parentType: FieldType | '' = ''): SchemaTree {
