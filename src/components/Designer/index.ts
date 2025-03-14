@@ -1,0 +1,3 @@
+export const DESIGNER_KEY = Symbol('DESIGNER_KEY') as InjectionKey<{
+  openSelectFieldDialog: () => void
+}>

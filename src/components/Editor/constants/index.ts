@@ -5,7 +5,6 @@ export interface EditorContext {
   editor: ShallowRef<Editor | undefined, Editor | undefined>
   mode: 'designer' | 'viewer'
   data: Ref<any>
-  openSelectFieldDialog: () => void
 }
 
 export const EDITOR_CONTEXT = Symbol('EDITOR_CONTEXT') as InjectionKey<EditorContext>
