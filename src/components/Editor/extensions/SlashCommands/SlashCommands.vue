@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import { Code2Icon, List, ListOrdered, Table } from 'lucide-vue-next'
 import { inject } from 'vue'
+import { DESIGNER_KEY } from '~/components/Designer'
 import { EDITOR_CONTEXT } from '../../constants'
 
 const editorContent = inject(EDITOR_CONTEXT)
+const designer = inject(DESIGNER_KEY)
 
 function deletePreviousCharacter() {
   const { state } = editorContent?.editor?.value || {}
@@ -20,7 +22,7 @@ const commandList = [
     icon: Code2Icon,
     command: () => {
       deletePreviousCharacter()?.run()
-      editorContent?.openSelectFieldDialog()
+      designer?.openSelectFieldDialog()
     },
   },
   {

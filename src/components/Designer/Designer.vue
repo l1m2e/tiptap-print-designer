@@ -3,9 +3,11 @@ import { Database, Settings } from 'lucide-vue-next'
 import { useVueToPrint } from 'vue-to-print'
 import { ResizablePanel } from '~/components/ui/resizable'
 import { generateMockData } from '~/db/services/printDesigner'
+import { DESIGNER_KEY } from '.'
 import DataSourcesDialog from './components/DataSourcesDialog/DataSourcesDialog.vue'
 import EditTopMenu from './components/EditTopMenu/EditTopMenu.vue'
 import { Paper, PaperContent, PaperTrigger } from './components/Paper'
+import SelectFieldDialog from './components/SelectFieldDialog/SelectFieldDialog.vue'
 import SettingDialog from './components/SettingDialog/SettingDialog.vue'
 
 const text = ref('')
@@ -16,9 +18,16 @@ const { state: mockData } = useAsyncState(async () => {
 
 const DataSourcesDialogRef = useTemplateRef('DataSourcesDialogEl')
 const SettingDialogRef = useTemplateRef('SettingDialogEl')
+const SelectFieldDialogRef = useTemplateRef('SelectFieldDialogEl')
 
 const print = ref<HTMLElement>()
 const { handlePrint } = useVueToPrint({ content: () => print.value! })
+
+function openSelectFieldDialog() {
+  SelectFieldDialogRef.value?.open()
+}
+
+provide(DESIGNER_KEY, { openSelectFieldDialog })
 </script>
 
 <template>
@@ -28,10 +37,10 @@ const { handlePrint } = useVueToPrint({ content: () => print.value! })
         <EditTopMenu />
         <PaperTrigger class="flex justify-center w-full" />
         <div class="flex items-center justify-end">
-          <Button variant="outline" size="icon" @click="DataSourcesDialogRef?.open">
+          <Button variant="outline" size="icon" @click="SettingDialogRef?.open">
             <Database />
           </Button>
-          <Button variant="outline" class="mx-2" size="icon" @click="SettingDialogRef?.open">
+          <Button variant="outline" class="mx-2" size="icon" @click="DataSourcesDialogRef?.open ">
             <Settings />
           </Button>
           <Button @click="handlePrint">
@@ -63,9 +72,10 @@ const { handlePrint } = useVueToPrint({ content: () => print.value! })
           </div>
         </ResizablePanel>
       </ResizablePanelGroup>
+
+      <SettingDialog ref="DataSourcesDialogEl" />
+      <DataSourcesDialog ref="SettingDialogEl" />
+      <SelectFieldDialog ref="SelectFieldDialogEl" />
     </EditorRoot>
   </Paper>
-
-  <SettingDialog ref="DataSourcesDialogEl" />
-  <DataSourcesDialog ref="SettingDialogEl" />
 </template>
