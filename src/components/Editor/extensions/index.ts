@@ -27,5 +27,6 @@ export default [
   TableCell,
   Table.configure({
     resizable: true,
+    lastColumnResizable: false,
   }),
 ]
