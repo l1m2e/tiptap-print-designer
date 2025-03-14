@@ -1,34 +1,71 @@
 <script setup lang="ts">
+import { Database, Settings } from 'lucide-vue-next'
+import { useVueToPrint } from 'vue-to-print'
 import { ResizablePanel } from '~/components/ui/resizable'
 import { generateMockData } from '~/db/services/printDesigner'
-import Container from './components/Container.vue'
+import DataSourcesDialog from './components/DataSourcesDialog/DataSourcesDialog.vue'
 import EditTopMenu from './components/EditTopMenu/EditTopMenu.vue'
+import { Paper, PaperContent, PaperTrigger } from './components/Paper'
+import SettingDialog from './components/SettingDialog/SettingDialog.vue'
 
 const text = ref('')
 const { state: mockData } = useAsyncState(async () => {
   const data = await generateMockData()
   return data
 }, null)
+
+const DataSourcesDialogRef = useTemplateRef('DataSourcesDialogEl')
+const SettingDialogRef = useTemplateRef('SettingDialogEl')
+
+const print = ref<HTMLElement>()
+const { handlePrint } = useVueToPrint({ content: () => print.value! })
 </script>
 
 <template>
-  <ResizablePanelGroup direction="horizontal" class="min-h-[100vh]">
-    <!-- 设计器 -->
-    <ResizablePanel>
-      <EditorRoot v-model="text">
+  <Paper>
+    <EditorRoot v-model="text">
+      <div class="grid grid-cols-3 gap-x-4 items-center border-b border-neutral-200 p-2 dark:border-neutral-800 h-[54px] ">
         <EditTopMenu />
-        <EditorContent />
-      </EditorRoot>
-    </ResizablePanel>
-    <ResizableHandle />
+        <PaperTrigger class="flex justify-center w-full" />
+        <div class="flex items-center justify-end">
+          <Button variant="outline" size="icon" @click="DataSourcesDialogRef?.open">
+            <Database />
+          </Button>
+          <Button variant="outline" class="mx-2" size="icon" @click="SettingDialogRef?.open">
+            <Settings />
+          </Button>
+          <Button @click="handlePrint">
+            打印
+          </Button>
+        </div>
+      </div>
 
-    <!-- 预览 -->
-    <ResizablePanel class="relative">
-      <Container>
-        <EditorRoot v-model="text" mode="viewer" :data="mockData">
-          <EditorContent />
-        </EditorRoot>
-      </Container>
-    </ResizablePanel>
-  </ResizablePanelGroup>
+      <ResizablePanelGroup direction="horizontal" class="min-h-[calc(100vh-75px)]">
+        <!-- 设计器 -->
+        <ResizablePanel>
+          <div class=" overflow-y-auto h-[calc(100vh-54px)]">
+            <PaperContent>
+              <EditorContent class="p-[6mm]" />
+            </PaperContent>
+          </div>
+        </ResizablePanel>
+
+        <ResizableHandle />
+
+        <!-- 预览 -->
+        <ResizablePanel>
+          <div class="bg-gray-100 dark:bg-neutral-800 h-[calc(100vh-54px)] overflow-hidden">
+            <PaperContent zoom class="shadow-sm">
+              <EditorRoot v-model="text" mode="viewer" :data="mockData">
+                <EditorContent ref="print" class="pointer-events-none select-none p-[6mm]" />
+              </EditorRoot>
+            </PaperContent>
+          </div>
+        </ResizablePanel>
+      </ResizablePanelGroup>
+    </EditorRoot>
+  </Paper>
+
+  <SettingDialog ref="DataSourcesDialogEl" />
+  <DataSourcesDialog ref="SettingDialogEl" />
 </template>

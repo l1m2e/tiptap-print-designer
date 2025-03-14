@@ -178,3 +178,17 @@
     font-size: 12pt;
   }
 }
+
+/* 自定义滚动条样式 */
+::-webkit-scrollbar {
+  width: 4px; /* 设置滚动条的宽度 */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d7d7d7; /* 滚动条的颜色 */
+  border-radius: 10px; /* 圆角 */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* 滚动条轨道的背景色 */
+}
