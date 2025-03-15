@@ -12,7 +12,7 @@ import Image from './Image'
 import suggestion from './SlashCommands'
 import TextAlign from './TextAlign'
 
-export default [
+export const extensions = [
   StarterKit,
   TextAlign,
   Field,
@@ -25,8 +25,11 @@ export default [
   TableRow,
   TableHeader,
   TableCell,
-  Table.configure({
-    resizable: true,
-    lastColumnResizable: false,
-  }),
+  Table.configure({ resizable: true, lastColumnResizable: false }),
 ]
+
+export function loadEditorExtensions(mode: 'designer' | 'viewer') {
+  return mode === 'designer'
+    ? extensions
+    : extensions.filter(extension => extension.name !== 'placeholder')
+}
