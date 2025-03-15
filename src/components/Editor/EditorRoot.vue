@@ -1,7 +1,7 @@
 <script lang="tsx" setup>
 import { useEditor } from '@tiptap/vue-3'
 import { EDITOR_CONTEXT } from './constants'
-import extensions from './extensions'
+import { loadEditorExtensions } from './extensions'
 
 type EditProps = {
   /** 模式 */
@@ -19,7 +19,7 @@ const content = defineModel<string>({ default: '' })
 
 const editor = useEditor({
   content: content.value,
-  extensions,
+  extensions: loadEditorExtensions(mode),
   onUpdate: () => content.value = editor.value?.getHTML() || '',
 })
 
