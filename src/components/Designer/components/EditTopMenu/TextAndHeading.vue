@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { Editor } from '@tiptap/vue-3'
 import { Heading1, Heading2, Heading3, Heading4, Heading5, Heading6, Type } from 'lucide-vue-next'
+import { EDITOR_CONTEXT } from '~/components/Editor/constants'
 
-const { editor } = defineProps<{ editor: Editor }>()
+const { editor } = inject(EDITOR_CONTEXT)!
 
 const headingLevels = [
   { label: '正文', value: 0 },
@@ -17,10 +17,10 @@ const headingLevels = [
 const currentHeadingLevel = ref(undefined)
 function toggleHeading(level: typeof headingLevels[number]['value']) {
   if (level === 0) {
-    editor.chain().focus().setParagraph().run()
+    editor.value?.chain().focus().setParagraph().run()
   }
   else {
-    editor.chain().focus().toggleHeading({ level }).run()
+    editor.value?.chain().focus().toggleHeading({ level }).run()
   }
 }
 
@@ -35,7 +35,7 @@ const IconMap = {
 } as const
 
 const Icon = computed(() => {
-  const activeHeading = headingLevels.find(item => editor.isActive('heading', { level: item.value }))
+  const activeHeading = headingLevels.find(item => editor.value?.isActive('heading', { level: item.value }))
   return activeHeading ? IconMap[activeHeading.value] : Type
 })
 </script>

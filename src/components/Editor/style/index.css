@@ -113,6 +113,9 @@
     }
 
     /* Table */
+    .tableWrapper{
+      margin: 0.5rem 0 !important;
+    }
     table {
       border-collapse: collapse;
       margin: 0;
