@@ -5,6 +5,7 @@ import { ResizablePanel } from '~/components/ui/resizable'
 import { generateMockData } from '~/db/services/printDesigner'
 import { DESIGNER_KEY } from '.'
 import DataSourcesDialog from './components/DataSourcesDialog/DataSourcesDialog.vue'
+import DesignerContextMenu from './components/DesignerContextMenu/DesignerContextMenu.vue'
 import EditTopMenu from './components/EditTopMenu/EditTopMenu.vue'
 import { Paper, PaperContent, PaperTrigger } from './components/Paper'
 import SelectFieldDialog from './components/SelectFieldDialog/SelectFieldDialog.vue'
@@ -48,14 +49,15 @@ provide(DESIGNER_KEY, { openSelectFieldDialog })
           </Button>
         </div>
       </div>
-
       <ResizablePanelGroup direction="horizontal" class="min-h-[calc(100vh-75px)]">
         <!-- 设计器 -->
         <ResizablePanel>
           <div class=" overflow-y-auto h-[calc(100vh-54px)]">
-            <PaperContent>
-              <EditorContent class="p-[6mm]" />
-            </PaperContent>
+            <DesignerContextMenu>
+              <PaperContent>
+                <EditorContent class="p-[6mm]" />
+              </PaperContent>
+            </DesignerContextMenu>
           </div>
         </ResizablePanel>
 
