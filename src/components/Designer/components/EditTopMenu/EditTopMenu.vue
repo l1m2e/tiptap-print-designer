@@ -3,7 +3,6 @@ import { AlignCenter, AlignLeft, AlignRight, Bold, Italic, Redo, Strikethrough, 
 import { EDITOR_CONTEXT } from '~/components/Editor/constants'
 
 import FontSize from './FontSize.vue'
-import Table from './Table.vue'
 import TextAndHeading from './TextAndHeading.vue'
 
 const { editor } = inject(EDITOR_CONTEXT)!
@@ -75,6 +74,5 @@ const FnButtons = [
         <TooltipContent> {{ item.label }} </TooltipContent>
       </Tooltip>
     </TooltipProvider>
-    <Table />
   </div>
 </template>
