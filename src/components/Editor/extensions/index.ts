@@ -11,6 +11,7 @@ import FontSize from './FontSize/FontSize'
 import Image from './Image'
 import suggestion from './SlashCommands'
 import TextAlign from './TextAlign'
+import TrailingNode from './TrailingNode'
 
 export const extensions = [
   StarterKit,
@@ -26,10 +27,11 @@ export const extensions = [
   TableHeader,
   TableCell,
   Table.configure({ resizable: true, lastColumnResizable: false }),
+  TrailingNode,
 ]
 
 export function loadEditorExtensions(mode: 'designer' | 'viewer') {
   return mode === 'designer'
     ? extensions
-    : extensions.filter(extension => extension.name !== 'placeholder')
+    : extensions.filter(extension => !['placeholder', 'trailingNode'].includes(extension.name))
 }
