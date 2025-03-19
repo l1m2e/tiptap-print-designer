@@ -1,32 +1,5 @@
-@import './list.css';
+@import './base.css';
 @import './head.css';
+@import './list.css';
 @import './table.css';
 
-.tiptap-editor {
-  .ProseMirror-focused {
-    @apply outline-none;
-  }
-
-  .tiptap {
-    * {
-      @apply font-normal text-base not-italic m-0 whitespace-pre-wrap;
-    }
-  }
-
-  @media print {
-    font-size: 12pt;
-  }
-}
-
-/* 自定义滚动条 */
-::-webkit-scrollbar {
-  @apply w-[4px];
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-[#d7d7d7] rounded-[10px];
-}
-
-::-webkit-scrollbar-track {
-  @apply bg-transparent;
-}

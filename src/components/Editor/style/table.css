@@ -29,23 +29,19 @@
     }
   }
 
-  /** 无边框表格 */
-  table.no-border {
-    td,th {
-      @apply border-none;
-    }
-    th {
-      @apply bg-transparent;
-    }
-  }
-  table.no-border:focus-within,
-  table.no-border:hover{
-   th,td{
-    @apply border-dashed border-[1pt] border-violet-500;
-   }
-  }
-
   &.resize-cursor {
     @apply cursor-ew-resize;
+  }
+}
+
+.designer {
+  .no-border {
+    @apply border-dashed border-[1pt] border-violet-500;
+  }
+}
+
+.viewer {
+  .no-border {
+    @apply border-none;
   }
 }

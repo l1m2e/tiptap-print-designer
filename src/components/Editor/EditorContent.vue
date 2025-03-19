@@ -2,11 +2,11 @@
 import { EditorContent } from '@tiptap/vue-3'
 import { EDITOR_CONTEXT } from './constants'
 
-const { editor } = inject(EDITOR_CONTEXT)!
+const { editor, mode } = inject(EDITOR_CONTEXT)!
 </script>
 
 <template>
-  <EditorContent :editor="editor" class="tiptap-editor" />
+  <EditorContent :editor="editor" class="tiptap-editor" :class="mode" />
 </template>
 
 <style lang="css">

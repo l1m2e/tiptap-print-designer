@@ -52,7 +52,7 @@ provide(DESIGNER_KEY, { openSelectFieldDialog })
       <ResizablePanelGroup direction="horizontal" class="min-h-[calc(100vh-75px)]">
         <!-- 设计器 -->
         <ResizablePanel>
-          <div class=" overflow-y-auto h-[calc(100vh-54px)]">
+          <div class="overflow-y-auto h-[calc(100vh-54px)]">
             <DesignerContextMenu>
               <PaperContent>
                 <EditorContent class="p-[6mm]" />

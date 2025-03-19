@@ -24,7 +24,14 @@ export const extensions = [
   Placeholder.configure({ placeholder: '输入 / 唤起更多' }),
 
   TableRow,
-  TableHeader,
+  TableHeader.extend({
+    addAttributes() {
+      return {
+        ...this.parent?.(),
+        class: null,
+      }
+    },
+  }),
   TableCell.extend({
     addAttributes() {
       return {
