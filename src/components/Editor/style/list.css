@@ -1,0 +1,48 @@
+.tiptap {
+      ul,
+    ol {
+      counter-reset: center;
+      list-style-type: none;
+      margin-bottom: 0;
+      margin-left: 24px;
+      margin-top: 0;
+      padding-bottom: 5px;
+      padding-left: 0;
+      padding-top: 5px;
+    }
+
+    li>p {
+      margin: 0;
+
+      &:first-child::before {
+        content: counter(center) '.';
+        display: inline-block;
+        line-height: 1;
+        position: relative;
+        text-align: right;
+        padding-right: 2pt;
+      }
+    }
+
+    ul li>p {
+      &:first-child::before {
+        content: '\2022';
+        text-align: center;
+      }
+    }
+
+    ol {
+      counter-reset: center;
+      li>p:first-child::before {
+        counter-increment: center;
+      }
+    }
+
+    p.is-empty::before {
+      color: #adb5bd;
+      content: attr(data-placeholder);
+      float: left;
+      height: 0;
+      pointer-events: none;
+    }
+}
