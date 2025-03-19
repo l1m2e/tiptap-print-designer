@@ -4,7 +4,7 @@ import { EDITOR_CONTEXT } from '~/components/Editor/constants'
 const { editor } = inject(EDITOR_CONTEXT)!
 
 function toggleTableBorder() {
-  editor.value?.chain().focus().setCellAttribute('class', 'bg-red-500').run()
+  editor.value?.chain().focus().setCellAttribute('class', 'no-border').run()
 }
 </script>
 

@@ -1,0 +1,22 @@
+.tiptap-editor {
+  .ProseMirror-focused {
+    @apply outline-none;
+  }
+
+  @media print {
+    font-size: 12pt;
+  }
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  @apply w-[4px];
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-[#d7d7d7] rounded-[10px];
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
