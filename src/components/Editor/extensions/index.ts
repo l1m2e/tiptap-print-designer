@@ -28,26 +28,8 @@ export const extensions = [
   TableCell.extend({
     addAttributes() {
       return {
-        class: {
-          default: null,
-        },
-        colspan: {
-          default: 1,
-        },
-        rowspan: {
-          default: 1,
-        },
-        colwidth: {
-          default: null,
-          parseHTML: (element) => {
-            const colwidth = element.getAttribute('colwidth')
-            const value = colwidth
-              ? colwidth.split(',').map(width => Number.parseInt(width, 10))
-              : null
-
-            return value
-          },
-        },
+        ...this.parent?.(),
+        class: null,
       }
     },
   }),
