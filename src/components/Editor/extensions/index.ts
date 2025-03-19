@@ -21,11 +21,36 @@ export const extensions = [
   FontSize,
   TextStyle.configure({ mergeNestedSpanStyles: true }),
   Commands.configure({ suggestion }),
-  Placeholder.configure({ placeholder: '输入 / 可打开操作面板 ...' }),
+  Placeholder.configure({ placeholder: '输入 / 唤起更多' }),
 
   TableRow,
   TableHeader,
-  TableCell,
+  TableCell.extend({
+    addAttributes() {
+      return {
+        class: {
+          default: null,
+        },
+        colspan: {
+          default: 1,
+        },
+        rowspan: {
+          default: 1,
+        },
+        colwidth: {
+          default: null,
+          parseHTML: (element) => {
+            const colwidth = element.getAttribute('colwidth')
+            const value = colwidth
+              ? colwidth.split(',').map(width => Number.parseInt(width, 10))
+              : null
+
+            return value
+          },
+        },
+      }
+    },
+  }),
   Table.configure({ resizable: true, lastColumnResizable: false }),
   TrailingNode,
 ]
