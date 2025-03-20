@@ -2,10 +2,6 @@
 import { EDITOR_CONTEXT } from '~/components/Editor/constants'
 
 const { editor } = inject(EDITOR_CONTEXT)!
-
-function toggleTableBorder() {
-  editor.value?.chain().focus().setCellAttribute('class', 'no-border').run()
-}
 </script>
 
 <template>
@@ -39,9 +35,18 @@ function toggleTableBorder() {
   <ContextMenuItem @click="editor?.chain().focus().splitCell().run()">
     拆分单元格
   </ContextMenuItem>
-  <ContextMenuItem @click="() => toggleTableBorder()">
-    隐藏表格边框
-  </ContextMenuItem>
+
+  <ContextMenuSub>
+    <ContextMenuSubTrigger>样式</ContextMenuSubTrigger>
+    <ContextMenuSubContent>
+      <ContextMenuItem @click="editor?.chain().focus().setCellAttribute('class', 'no-border').run()">
+        隐藏表格边框
+      </ContextMenuItem>
+      <ContextMenuItem @click=" editor?.chain().focus().setCellAttribute('class', '').run()">
+        显示表格边框
+      </ContextMenuItem>
+    </ContextMenuSubContent>
+  </ContextMenuSub>
 
   <ContextMenuSub>
     <ContextMenuSubTrigger>删除</ContextMenuSubTrigger>
