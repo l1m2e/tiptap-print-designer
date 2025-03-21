@@ -1,15 +1,12 @@
-import Placeholder from '@tiptap/extension-placeholder'
-import Table from '@tiptap/extension-table'
-import TableCell from '@tiptap/extension-table-cell'
-import TableHeader from '@tiptap/extension-table-header'
-import TableRow from '@tiptap/extension-table-row'
-import TextStyle from '@tiptap/extension-text-style'
+import BubbleMenu from '@tiptap/extension-bubble-menu'
 import StarterKit from '@tiptap/starter-kit'
-import Commands from './Commands'
+import Placeholder from './Placeholder'
+import TextStyle from './TextStyle'
 import Field from './Field'
-import FontSize from './FontSize/FontSize'
+import FontSize from './FontSize'
 import Image from './Image'
-import suggestion from './SlashCommands'
+import SlashCommands from './SlashCommands'
+import { Table, TableCell, TableHeader, TableRow } from './Table'
 import TextAlign from './TextAlign'
 import TrailingNode from './TrailingNode'
 
@@ -19,33 +16,19 @@ export const extensions = [
   Field,
   Image,
   FontSize,
-  TextStyle.configure({ mergeNestedSpanStyles: true }),
-  Commands.configure({ suggestion }),
-  Placeholder.configure({ placeholder: '输入 / 唤起更多' }),
-
+  TextStyle,
+  SlashCommands,
+  Placeholder,
+  Table,
+  TableCell,
+  TableHeader,
   TableRow,
-  TableHeader.extend({
-    addAttributes() {
-      return {
-        ...this.parent?.(),
-        class: null,
-      }
-    },
-  }),
-  TableCell.extend({
-    addAttributes() {
-      return {
-        ...this.parent?.(),
-        class: null,
-      }
-    },
-  }),
-  Table.configure({ resizable: true, lastColumnResizable: false }),
+  BubbleMenu,
   TrailingNode,
 ]
 
 export function loadEditorExtensions(mode: 'designer' | 'viewer') {
   return mode === 'designer'
     ? extensions
-    : extensions.filter(extension => !['placeholder', 'trailingNode'].includes(extension.name))
+    : extensions.filter(extension => !['placeholder', 'trailingNode', 'bubbleMenu'].includes(extension.name))
 }
