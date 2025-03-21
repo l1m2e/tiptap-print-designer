@@ -1,13 +1,14 @@
 import BubbleMenu from '@tiptap/extension-bubble-menu'
 import StarterKit from '@tiptap/starter-kit'
-import Placeholder from './Placeholder'
-import TextStyle from './TextStyle'
 import Field from './Field'
 import FontSize from './FontSize'
 import Image from './Image'
+import Placeholder from './Placeholder'
+import SFCLoad from './SFCLoad'
 import SlashCommands from './SlashCommands'
 import { Table, TableCell, TableHeader, TableRow } from './Table'
 import TextAlign from './TextAlign'
+import TextStyle from './TextStyle'
 import TrailingNode from './TrailingNode'
 
 export const extensions = [
@@ -25,6 +26,7 @@ export const extensions = [
   TableRow,
   BubbleMenu,
   TrailingNode,
+  SFCLoad,
 ]
 
 export function loadEditorExtensions(mode: 'designer' | 'viewer') {

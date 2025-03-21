@@ -124,6 +124,7 @@ declare module 'vue' {
     SelectValue: typeof import('./src/components/ui/select/SelectValue.vue')['default']
     Separator: typeof import('./src/components/ui/separator/Separator.vue')['default']
     SettingDialog: typeof import('./src/components/Designer/components/SettingDialog/SettingDialog.vue')['default']
+    SFCLoad: typeof import('./src/components/Editor/extensions/SFCLoad/SFCLoad.vue')['default']
     Sheet: typeof import('./src/components/ui/sheet/Sheet.vue')['default']
     SheetClose: typeof import('./src/components/ui/sheet/SheetClose.vue')['default']
     SheetContent: typeof import('./src/components/ui/sheet/SheetContent.vue')['default']
