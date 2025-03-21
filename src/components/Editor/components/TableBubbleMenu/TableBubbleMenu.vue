@@ -3,7 +3,7 @@ import type { Editor } from '@tiptap/core'
 import type { ActionButtonProps } from '~/components/common/action-button'
 import { isActive } from '@tiptap/core'
 import { BubbleMenu } from '@tiptap/vue-3'
-import { BetweenHorizonalEnd, BetweenHorizontalStart, BetweenVerticalEnd, BetweenVerticalStart, Square, SquareDashedMousePointer,  TableCellsMerge, TableCellsSplit } from 'lucide-vue-next'
+import { BetweenHorizonalEnd, BetweenHorizontalStart, BetweenVerticalEnd, BetweenVerticalStart, Square, SquareDashedMousePointer, TableCellsMerge, TableCellsSplit } from 'lucide-vue-next'
 import { sticky } from 'tippy.js'
 import DeleteColumn from '~/components/icons/DeleteColumn.vue'
 import DeleteRow from '~/components/icons/DeleteRow.vue'
@@ -31,7 +31,6 @@ const actionButtonGridList: ActionButtonProps[][] = [
     { title: '显示单元格边框', icon: Square, fn: () => editor.value?.chain().focus().setCellAttribute('class', '').run() },
   ],
 ]
-
 
 function shouldShow({ editor }: { editor: Editor }) {
   return isActive(editor.view.state, 'table')
@@ -62,21 +61,23 @@ function getReferenceClientRect() {
 </script>
 
 <template>
-<BubbleMenu v-if="editor && mode === 'designer'" :editor="editor" :should-show :update-delay="0" :tippy-options="{
-  offset: [0, 8],
-  popperOptions: {
-    modifiers: [{ name: 'flip', enabled: false }],
-  },
-  maxWidth: 'auto',
-  getReferenceClientRect,
-  plugins: [sticky],
-  sticky: 'popper',
-}">
-  <div class="bg-white dark:bg-neutral-950  rounded border shadow-lg flex  items-center p-1">
-    <template v-for="(grid, index) in actionButtonGridList">
-      <ActionButton v-for="item in grid" :key="item.title" v-bind="item" />
-      <Separator orientation="vertical" class="mx-2 h-5" v-if="index !== actionButtonGridList.length - 1" />
-    </template>
-  </div>
-</BubbleMenu>
+  <BubbleMenu
+    v-if="editor && mode === 'designer'" :editor="editor" :should-show :update-delay="0" :tippy-options="{
+      offset: [0, 8],
+      popperOptions: {
+        modifiers: [{ name: 'flip', enabled: false }],
+      },
+      maxWidth: 'auto',
+      getReferenceClientRect,
+      plugins: [sticky],
+      sticky: 'popper',
+    }"
+  >
+    <div class="bg-white dark:bg-neutral-950  rounded border shadow-lg flex  items-center p-1">
+      <template v-for="(grid, index) in actionButtonGridList" :key="index">
+        <ActionButton v-for="item in grid" :key="item.title" v-bind="item" />
+        <Separator v-if="index !== actionButtonGridList.length - 1" orientation="vertical" class="mx-2 h-5" />
+      </template>
+    </div>
+  </BubbleMenu>
 </template>

@@ -8,7 +8,7 @@
 
     td,
     th {
-      @apply border-[1pt] border-black box-border min-w-[1em] p-[2pt_4pt] relative align-top;
+      @apply border-[1pt] border-black box-border min-w-[1em] p-[2pt_4pt] relative align-top dark:border-neutral-700;
 
       >* {
         @apply mb-0;
@@ -16,7 +16,7 @@
     }
 
     th {
-      @apply bg-gray-100 font-bold text-left;
+      @apply bg-gray-100 font-bold text-left dark:bg-neutral-900;
     }
 
     .selectedCell::after {

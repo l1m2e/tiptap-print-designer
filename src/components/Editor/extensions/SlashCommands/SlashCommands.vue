@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Code2Icon, List, ListOrdered, Table } from 'lucide-vue-next'
+import { Code, Code2Icon, List, ListOrdered, Table } from 'lucide-vue-next'
 import { inject } from 'vue'
 import { DESIGNER_KEY } from '~/components/Designer'
 import { EDITOR_CONTEXT } from '../../constants'
@@ -29,6 +29,11 @@ const commandList = [
     title: '插入表格',
     icon: Table,
     command: () => deletePreviousCharacter()?.insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run(),
+  },
+  {
+    title: '插入组件',
+    icon: Code,
+    command: () => deletePreviousCharacter()?.insertContent({ type: 'sfc-node', attrs: { text: `<template>213</template>` } }).run(),
   },
   {
     title: '有序列表',
