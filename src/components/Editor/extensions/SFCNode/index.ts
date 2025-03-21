@@ -4,7 +4,7 @@ import Component from './SFCNode.vue'
 
 export default Node.create({
   name: 'sfc-node',
-  content: 'inline*',
+  content: 'block*',
   group: 'block',
   atom: true,
 

@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { Code, Code2Icon, List, ListOrdered, Table } from 'lucide-vue-next'
+import { Code2Icon, Codepen, List, ListOrdered, Table } from 'lucide-vue-next'
 import { inject } from 'vue'
 import { DESIGNER_KEY } from '~/components/Designer'
 import { EDITOR_CONTEXT } from '../../constants'
 
 const editorContent = inject(EDITOR_CONTEXT)
-const designer = inject(DESIGNER_KEY)
+const { openEditSFCDialog, openSelectFieldDialog } = inject(DESIGNER_KEY)!
 
 function deletePreviousCharacter() {
   const { state } = editorContent?.editor?.value || {}
@@ -22,7 +22,7 @@ const commandList = [
     icon: Code2Icon,
     command: () => {
       deletePreviousCharacter()?.run()
-      designer?.openSelectFieldDialog()
+      openSelectFieldDialog()
     },
   },
   {
@@ -32,8 +32,11 @@ const commandList = [
   },
   {
     title: '插入组件',
-    icon: Code,
-    command: () => deletePreviousCharacter()?.insertContent({ type: 'sfc-node', attrs: { text: `<template>213</template>` } }).run(),
+    icon: Codepen,
+    command: () => {
+      deletePreviousCharacter()?.run()
+      openEditSFCDialog()
+    },
   },
   {
     title: '有序列表',

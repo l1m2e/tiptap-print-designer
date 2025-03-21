@@ -5,6 +5,7 @@ import { ResizablePanel } from '~/components/ui/resizable'
 import { generateMockData } from '~/db/services/printDesigner'
 import { DESIGNER_KEY } from '.'
 import DataSourcesDialog from './components/DataSourcesDialog/DataSourcesDialog.vue'
+import EditSFCDialog from './components/EditSFCDialog/EditSFCDialog.vue'
 import EditTopMenu from './components/EditTopMenu/EditTopMenu.vue'
 import { Paper, PaperContent, PaperTrigger } from './components/Paper'
 import SelectFieldDialog from './components/SelectFieldDialog/SelectFieldDialog.vue'
@@ -19,6 +20,7 @@ const { state: mockData } = useAsyncState(async () => {
 const DataSourcesDialogRef = useTemplateRef('DataSourcesDialogEl')
 const SettingDialogRef = useTemplateRef('SettingDialogEl')
 const SelectFieldDialogRef = useTemplateRef('SelectFieldDialogEl')
+const EditSFCDialogRef = useTemplateRef('EditSFCDialogEl')
 
 const print = ref<HTMLElement>()
 const { handlePrint } = useVueToPrint({ content: () => print.value! })
@@ -27,7 +29,11 @@ function openSelectFieldDialog() {
   SelectFieldDialogRef.value?.open()
 }
 
-provide(DESIGNER_KEY, { openSelectFieldDialog })
+function openEditSFCDialog(text?: string) {
+  EditSFCDialogRef.value?.open(text)
+}
+
+provide(DESIGNER_KEY, { openSelectFieldDialog, openEditSFCDialog })
 </script>
 
 <template>
@@ -75,6 +81,7 @@ provide(DESIGNER_KEY, { openSelectFieldDialog })
       <SettingDialog ref="DataSourcesDialogEl" />
       <DataSourcesDialog ref="SettingDialogEl" />
       <SelectFieldDialog ref="SelectFieldDialogEl" />
+      <EditSFCDialog ref="EditSFCDialogEl" />
     </EditorRoot>
   </Paper>
 </template>
