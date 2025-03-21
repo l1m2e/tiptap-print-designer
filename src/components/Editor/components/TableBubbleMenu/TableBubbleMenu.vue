@@ -3,7 +3,7 @@ import type { Editor } from '@tiptap/core'
 import type { ActionButtonProps } from '~/components/common/action-button'
 import { isActive } from '@tiptap/core'
 import { BubbleMenu } from '@tiptap/vue-3'
-import { BetweenHorizonalEnd, BetweenHorizontalStart, BetweenVerticalEnd, BetweenVerticalStart, Square, SquareDashedMousePointer,  TableCellsMerge, TableColumnsSplit } from 'lucide-vue-next'
+import { BetweenHorizonalEnd, BetweenHorizontalStart, BetweenVerticalEnd, BetweenVerticalStart, Square, SquareDashedMousePointer,  TableCellsMerge, TableCellsSplit } from 'lucide-vue-next'
 import { sticky } from 'tippy.js'
 import DeleteColumn from '~/components/icons/DeleteColumn.vue'
 import DeleteRow from '~/components/icons/DeleteRow.vue'
@@ -24,7 +24,7 @@ const actionButtonGridList: ActionButtonProps[][] = [
   ],
   [
     { title: '合并单元格', icon: TableCellsMerge, fn: () => editor.value?.chain().focus().mergeCells().run() },
-    { title: '拆分单元格', icon: TableColumnsSplit, fn: () => editor.value?.chain().focus().splitCell().run() },
+    { title: '拆分单元格', icon: TableCellsSplit, fn: () => editor.value?.chain().focus().splitCell().run() },
   ],
   [
     { title: '隐藏单元格边框', icon: SquareDashedMousePointer, fn: () => editor.value?.chain().focus().setCellAttribute('class', 'no-border').run() },
@@ -72,7 +72,7 @@ function getReferenceClientRect() {
   plugins: [sticky],
   sticky: 'popper',
 }">
-  <div class="bg-white  rounded border shadow flex  items-center p-1">
+  <div class="bg-white dark:bg-neutral-950  rounded border shadow-lg flex  items-center p-1">
     <template v-for="(grid, index) in actionButtonGridList">
       <ActionButton v-for="item in grid" :key="item.title" v-bind="item" />
       <Separator orientation="vertical" class="mx-2 h-5" v-if="index !== actionButtonGridList.length - 1" />
