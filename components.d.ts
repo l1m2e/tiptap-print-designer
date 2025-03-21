@@ -8,7 +8,9 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    ActionButton: typeof import('./src/components/common/action-button/ActionButton.vue')['default']
     ApiSelect: typeof import('./src/components/Designer/components/ApiSelect/ApiSelect.vue')['default']
+    BubbleMenu: typeof import('./src/components/Editor/extensions/BubbleMenu/BubbleMenu.vue')['default']
     Button: typeof import('./src/components/ui/button/Button.vue')['default']
     Combobox: typeof import('./src/components/ui/combobox/Combobox.vue')['default']
     ComboboxAnchor: typeof import('./src/components/ui/combobox/ComboboxAnchor.vue')['default']
@@ -46,6 +48,10 @@ declare module 'vue' {
     DataSourcesDialog: typeof import('./src/components/Designer/components/DataSourcesDialog/DataSourcesDialog.vue')['default']
     DataSourcesSetting: typeof import('./src/components/Designer/components/SettingDialog/DataSourcesSetting.vue')['default']
     DateTable: typeof import('./src/components/ui/data-table/DateTable.vue')['default']
+    DeleteCol: typeof import('./src/components/icons/DeleteCol.vue')['default']
+    DeleteColumn: typeof import('./src/components/icons/DeleteColumn.vue')['default']
+    DeleteRow: typeof import('./src/components/icons/DeleteRow.vue')['default']
+    DeletRow: typeof import('./src/components/icons/DeletRow.vue')['default']
     Designer: typeof import('./src/components/Designer/Designer.vue')['default']
     DesignerContextMenu: typeof import('./src/components/Designer/components/DesignerContextMenu/DesignerContextMenu.vue')['default']
     Dialog: typeof import('./src/components/ui/dialog/Dialog.vue')['default']
@@ -154,6 +160,7 @@ declare module 'vue' {
     SlashCommands: typeof import('./src/components/Editor/extensions/SlashCommands/SlashCommands.vue')['default']
     Table: typeof import('./src/components/ui/table/Table.vue')['default']
     TableBody: typeof import('./src/components/ui/table/TableBody.vue')['default']
+    TableBubbleMenu: typeof import('./src/components/Editor/components/TableBubbleMenu/TableBubbleMenu.vue')['default']
     TableCaption: typeof import('./src/components/ui/table/TableCaption.vue')['default']
     TableCell: typeof import('./src/components/ui/table/TableCell.vue')['default']
     TableEmpty: typeof import('./src/components/ui/table/TableEmpty.vue')['default']

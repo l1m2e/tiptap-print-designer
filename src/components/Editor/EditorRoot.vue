@@ -1,5 +1,6 @@
 <script lang="tsx" setup>
 import { useEditor } from '@tiptap/vue-3'
+import TableBubbleMenu from './components/TableBubbleMenu/TableBubbleMenu.vue'
 import { EDITOR_CONTEXT } from './constants'
 import { loadEditorExtensions } from './extensions'
 
@@ -37,5 +38,8 @@ provide(EDITOR_CONTEXT, {
 </script>
 
 <template>
-  <slot />
+  <div>
+    <TableBubbleMenu />
+    <slot />
+  </div>
 </template>
