@@ -10,6 +10,10 @@ const { openEditSFCDialog } = inject(DESIGNER_KEY)!
 function edit() {
   openEditSFCDialog(props.node.attrs.text)
 }
+
+function ddelete() {
+  props.deleteNode()
+}
 </script>
 
 <template>
@@ -21,10 +25,12 @@ function edit() {
         </div>
       </ContextMenuTrigger>
       <ContextMenuContent>
-        <ContextMenuItem @click="edit">
+        <ContextMenuItem @select="edit">
           编辑组件
         </ContextMenuItem>
-        <ContextMenuItem>删除</ContextMenuItem>
+        <ContextMenuItem @select="ddelete">
+          删除
+        </ContextMenuItem>
       </ContextMenuContent>
     </ContextMenu>
 

@@ -6,5 +6,4 @@ const { data } = inject(EDITOR_CONTEXT)
 </script>
 
 <template>
-  <div>{{ data }}</div>
 </template>

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import MonacoEditor from '~/components/common/monaco-editor/MonacoEditor.vue'
 import SFCLoader from '~/components/common/sfc-loader/SfcLoader.vue'
+import defaultTemplate from '~/components/common/template/defaultTemplate.vue?raw'
 import { EDITOR_CONTEXT } from '~/components/Editor/constants'
 import { ResizablePanel } from '~/components/ui/resizable'
-import defaultTemplate from './template/defaultTemplate.vue?raw'
 
 const show = ref(false)
 const template = ref('')
@@ -32,7 +32,6 @@ async function open(text?: string) {
   }
   else {
     type.value = 'add'
-
     template.value = defaultTemplate
     editor.value?.setValue(defaultTemplate)
   }
