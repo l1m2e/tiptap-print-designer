@@ -7,8 +7,8 @@ import { loadModule } from 'vue3-sfc-loader'
 import { EDITOR_CONTEXT } from '~/components/Editor/constants'
 
 const { text, moduleCache = {
-  vue: Vue,
-  constants: { EDITOR_CONTEXT },
+  'vue': Vue,
+  '~/constants': { EDITOR_CONTEXT },
 } } = defineProps<{ text: string, moduleCache?: Record<string, any> }>()
 
 const sfcComponent = shallowRef()

@@ -3,6 +3,9 @@ import type { MonacoEditorProps } from './index'
 import { shikiToMonaco } from '@shikijs/monaco'
 import * as monaco from 'monaco-editor'
 import { createHighlighter } from 'shiki'
+import langJsx from 'shiki/langs/jsx.mjs'
+import langTsx from 'shiki/langs/tsx.mjs'
+import langVue from 'shiki/langs/vue.mjs'
 
 const {
   language = 'json',
@@ -41,9 +44,11 @@ async function initHighlighter() {
       'dark-plus',
     ],
     langs: [
+      langVue,
+      langTsx,
+      langJsx,
       'javascript',
       'typescript',
-      'vue',
       'json',
     ],
   })
