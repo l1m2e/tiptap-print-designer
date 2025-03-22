@@ -3,7 +3,7 @@ import MonacoEditor from '~/components/common/monaco-editor/MonacoEditor.vue'
 import SFCLoader from '~/components/common/sfc-loader/SfcLoader.vue'
 import { EDITOR_CONTEXT } from '~/components/Editor/constants'
 import { ResizablePanel } from '~/components/ui/resizable'
-import { defaultTemplate } from './index'
+import defaultTemplate from './template/defaultTemplate.vue?raw'
 
 const show = ref(false)
 const template = ref('')
@@ -45,20 +45,22 @@ defineExpose({
 
 <template>
   <Dialog v-model:open="show">
-    <DialogContent class="max-w-[1200px]">
+    <DialogContent class="max-w-[80vw]">
       <DialogHeader>
         <DialogTitle>{{ type === 'add' ? '添加组件' : '编辑组件' }}</DialogTitle>
       </DialogHeader>
 
       <ResizablePanelGroup direction="horizontal">
         <ResizablePanel>
-          <MonacoEditor ref="editorEl" v-model="template" language="vue" class="h-[700px]" />
+          <MonacoEditor ref="editorEl" v-model="template" language="vue" class="h-[60vh] rounded-sm overflow-hidden" />
         </ResizablePanel>
 
         <ResizableHandle class="mx-2" />
 
-        <ResizablePanel class="h-[700px]">
-          <SFCLoader :text="template" />
+        <ResizablePanel>
+          <div class="h-[60vh] p-4 overflow-y-auto overflow-hidden">
+            <SFCLoader :text="template" />
+          </div>
         </ResizablePanel>
       </ResizablePanelGroup>
 
