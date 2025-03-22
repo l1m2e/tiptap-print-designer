@@ -6,5 +6,6 @@ export default antfu(
     rules: {
       '@typescript-eslint/consistent-type-definitions': 'off',
     },
+    ignores: ['src/components/common/template/**/*.vue'],
   },
 )
