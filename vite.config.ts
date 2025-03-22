@@ -7,6 +7,7 @@ import VueMacros from 'unplugin-vue-macros/vite'
 import { VueRouterAutoImports } from 'unplugin-vue-router'
 import VueRouter from 'unplugin-vue-router/vite'
 import { defineConfig } from 'vite'
+import monacoEditorPlugin from 'vite-plugin-monaco-editor'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 export default defineConfig({
@@ -49,6 +50,10 @@ export default defineConfig({
     }),
     Components({
       dts: true,
+    }),
+    /** @ts-expect-error https://github.com/vdesjs/vite-plugin-monaco-editor/issues/21 */
+    monacoEditorPlugin.default({
+      languageWorkers: ['editorWorkerService', 'typescript', 'json', 'html'],
     }),
   ],
 

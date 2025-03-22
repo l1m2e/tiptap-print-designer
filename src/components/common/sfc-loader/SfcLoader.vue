@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { compileScript, compileTemplate, parse } from '@vue/compiler-sfc'
 import { defineAsyncComponent } from 'vue'
+import * as Vue from 'vue'
 // @ts-expect-error 忽略此类型问题
 import { loadModule } from 'vue3-sfc-loader'
 
-const { text, moduleCache = {} } = defineProps<{ text: string, moduleCache?: Record<string, any> }>()
+const { text, moduleCache = { vue: Vue } } = defineProps<{ text: string, moduleCache?: Record<string, any> }>()
 
 const sfcComponent = shallowRef()
 
