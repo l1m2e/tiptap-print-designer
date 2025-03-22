@@ -1,8 +1,10 @@
-export const defaultTemplate = `
-<script lang="jsx" setup>
+export const defaultTemplate = `<script lang="jsx" setup>
+import { inject } from 'vue'
+import { EDITOR_CONTEXT } from 'constants'
+const { data } = inject(EDITOR_CONTEXT)
 </script>
 
 <template>
-  <div class="bg-red-500"> 13212312313 </div>
+  <div>{{ data }}</div>
 </template>
 `

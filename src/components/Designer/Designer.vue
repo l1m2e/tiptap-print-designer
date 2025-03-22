@@ -38,7 +38,7 @@ provide(DESIGNER_KEY, { openSelectFieldDialog, openEditSFCDialog })
 
 <template>
   <Paper>
-    <EditorRoot v-model="text">
+    <EditorRoot v-model="text" :data="mockData">
       <div class="grid grid-cols-3 gap-x-4 items-center border-b border-neutral-200 p-2 dark:border-neutral-800 h-[54px] ">
         <EditTopMenu />
         <PaperTrigger class="flex justify-center w-full" />
