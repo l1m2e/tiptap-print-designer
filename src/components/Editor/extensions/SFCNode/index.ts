@@ -1,24 +1,22 @@
 import { mergeAttributes, Node } from '@tiptap/core'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
-import Component from './Field.vue'
+import Component from './SFCNode.vue'
 
 export default Node.create({
-  name: 'field',
-  group: 'inline',
-  inline: true,
-  content: 'text*',
+  name: 'sfc-node',
+  content: 'inline*',
+  group: 'block',
+  atom: true,
 
   parseHTML() {
-    return [{ tag: 'field' }]
+    return [{ tag: 'sfc-node' }]
   },
   renderHTML({ HTMLAttributes }) {
-    return ['field', mergeAttributes(HTMLAttributes), 0]
+    return ['sfc-node', mergeAttributes(HTMLAttributes), 0]
   },
   addAttributes() {
     return {
-      label: { default: '' },
-      path: { default: '' },
-      fontSize: { default: '12pt' },
+      text: { default: '' },
     }
   },
   addNodeView() {

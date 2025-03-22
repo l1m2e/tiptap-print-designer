@@ -1,11 +1,11 @@
 import type { Editor } from '@tiptap/core'
+import type { SuggestionOptions } from '@tiptap/suggestion'
 import type { Instance, Props } from 'tippy.js'
+import { Extension } from '@tiptap/core'
+import Suggestion from '@tiptap/suggestion'
 import { VueRenderer } from '@tiptap/vue-3'
 import tippy from 'tippy.js'
 import SlashCommands from './SlashCommands.vue'
-import type { SuggestionOptions } from '@tiptap/suggestion'
-import { Extension } from '@tiptap/core'
-import Suggestion from '@tiptap/suggestion'
 
 interface CommandProps {
   editor: Editor
@@ -77,5 +77,5 @@ export default slashCommands.configure({
         },
       }
     },
-  }
+  },
 })

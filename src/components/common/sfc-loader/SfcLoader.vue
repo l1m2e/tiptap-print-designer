@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { NodeViewWrapper } from '@tiptap/vue-3'
 import { compileScript, compileTemplate, parse } from '@vue/compiler-sfc'
 import { defineAsyncComponent } from 'vue'
+// @ts-expect-error 忽略此类型问题
 import { loadModule } from 'vue3-sfc-loader'
-// import { moduleCache } from './moduleCache'
 
-const props = defineProps<{ text: string }>()
+const { text, moduleCache = {} } = defineProps<{ text: string, moduleCache?: Record<string, any> }>()
 
 const sfcComponent = shallowRef()
 
@@ -16,13 +15,13 @@ function generateComponent() {
   const file = {
     files: {
       [randomFileName]: {
-        getContentData: () => props.text,
+        getContentData: () => text,
       },
     },
   }
 
   const options = {
-    // moduleCache,
+    moduleCache,
     async getFile(url: string) {
       return file.files[url]
     },
@@ -34,15 +33,15 @@ function generateComponent() {
     },
   }
 
-  const { errors: parseError, descriptor } = parse(props.text)
+  const { errors: parseError, descriptor } = parse(text)
 
   if (parseError.length > 0)
     return console.error('Vue template syntax error:', parseError)
 
   try {
     if (descriptor?.scriptSetup?.content) {
-      compileScript(descriptor, { id: 'remote-component' })
-      const { errors } = compileTemplate({ id: 'remote-component', ...descriptor })
+      compileScript(descriptor, { id: 'sfc' })
+      const { errors } = compileTemplate({ id: 'sfc', ...descriptor })
       errors.length > 0 && new Error(errors.join('\n'))
     }
 
@@ -53,7 +52,7 @@ function generateComponent() {
   }
 }
 
-watchImmediate(() => props.text, () => generateComponent())
+watchImmediate(() => text, () => generateComponent())
 
 onErrorCaptured((err, instance, info) => {
   console.error('[errorCaptured]', err, instance, info)
@@ -65,10 +64,5 @@ defineExpose({ sfcComponentRef })
 </script>
 
 <template>
-  <NodeViewWrapper
-    as="div"
-  >
-    {{ text }}
-  </NodeViewWrapper>
   <component :is="sfcComponent" ref="sfcComponentRef" />
 </template>

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { AlignCenter, AlignLeft, AlignRight, Bold, Code, Italic, Redo, Strikethrough, Undo } from 'lucide-vue-next'
+import { AlignCenter, AlignLeft, AlignRight, Bold, Italic, Redo, Strikethrough, Undo } from 'lucide-vue-next'
 import { EDITOR_CONTEXT } from '~/components/Editor/constants'
 
 import FontSize from './FontSize.vue'
@@ -55,11 +55,6 @@ const FnButtons = [
     icon: Redo,
     fn: () => editor.value?.chain().focus().redo().run(),
     isActive: () => editor.value?.can().redo(),
-  },
-  {
-    label: '插入组件',
-    icon: Code,
-    fn: () => editor?.value?.chain().focus().insertContent({ type: 'sfcLoad', attrs: { text: `<template>213</template>` } }).run(),
   },
 ]
 </script>

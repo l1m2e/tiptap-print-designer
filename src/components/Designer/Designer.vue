@@ -48,7 +48,7 @@ provide(DESIGNER_KEY, { openSelectFieldDialog })
           </Button>
         </div>
       </div>
-      <ResizablePanelGroup direction="horizontal" class="min-h-[calc(100vh-75px)]">
+      <ResizablePanelGroup direction="horizontal" class="min-h-[calc(100vh-75px)] dark:bg-black">
         <!-- 设计器 -->
         <ResizablePanel>
           <div class="overflow-y-auto h-[calc(100vh-54px)]">
@@ -62,7 +62,7 @@ provide(DESIGNER_KEY, { openSelectFieldDialog })
 
         <!-- 预览 -->
         <ResizablePanel>
-          <div class="bg-gray-100 dark:bg-neutral-800 h-[calc(100vh-54px)] overflow-hidden">
+          <div class="bg-gray-100 dark:bg-neutral-950 h-[calc(100vh-54px)] overflow-hidden">
             <PaperContent zoom>
               <EditorRoot v-model="text" mode="viewer" :data="mockData">
                 <EditorContent ref="print" class="pointer-events-none select-none p-[6mm]" />
