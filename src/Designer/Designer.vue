@@ -37,8 +37,8 @@ function openEditSFCDialog(text?: string) {
   EditSFCDialogRef.value?.open(text)
 }
 
-function openDateTableDialog() {
-  DataTableDialogRef.value?.open()
+function openDateTableDialog(data: { columns: string, path: string }) {
+  DataTableDialogRef.value?.open(data)
 }
 
 provide(DESIGNER_KEY, { openSelectFieldDialog, openEditSFCDialog, openDateTableDialog })

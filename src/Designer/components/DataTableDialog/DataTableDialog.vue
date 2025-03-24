@@ -8,9 +8,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { Database } from 'lucide-vue-next'
 import { v4 as uuidv4 } from 'uuid'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
+import { getApiTree } from '~/db/services/printDesigner'
 import { EDITOR_CONTEXT } from '~/Editor/constants'
 import SelectDataDialog from './SelectDataDialog.vue'
 
@@ -35,14 +37,10 @@ const columns = ref<ColumnDef<Columns>[]>([
     size: 250,
     cell: ({ row }) => (
       <Select v-model={row.original.accessorKey}>
-        <SelectTrigger>
-          <SelectValue placeholder="Select a fruit" />
-        </SelectTrigger>
+        <SelectTrigger><SelectValue placeholder="请选择字段" /></SelectTrigger>
         <SelectContent>
           {dataSource.value.schema.map(item => (
-            <SelectItem key={item.path} value={item.field}>
-              {item.description}
-            </SelectItem>
+            <SelectItem key={item.path} value={item.field}>{item.description}</SelectItem>
           ))}
         </SelectContent>
       </Select>
@@ -59,8 +57,11 @@ const columns = ref<ColumnDef<Columns>[]>([
   },
 ])
 
-function onSelect(data: { schema: SchemaTree, path: string, description: string }) {
-  dataSource.value = { path: data.path, schema: data.schema, description: data.description }
+function onSelect(selectData: { schema: SchemaTree, path: string, description: string }) {
+  if (dataSource.value.path) {
+    data.value = data.value.map(item => ({ ...item, accessorKey: '' }))
+  }
+  dataSource.value = { path: selectData.path, schema: selectData.schema, description: selectData.description }
 }
 
 function addRow(index: number) {
@@ -77,8 +78,28 @@ async function save() {
   show.value = false
 }
 
-async function open() {
+async function open(resetData: { columns: string, path: string }) {
+  if (resetData) {
+    const tree = await getApiTree()
+    const { schema, description } = getTreeNodeByPath(tree, resetData.path)
+    dataSource.value = { path: resetData.path, schema, description }
+    data.value = JSON.parse(resetData.columns) as Columns[]
+  }
   show.value = true
+}
+
+function getTreeNodeByPath(tree: SchemaTree, path: string): any {
+  const keys = path.split('.')
+  let resTree = tree
+  let resdescription = ''
+  for (const key of keys) {
+    const node = resTree.find(node => node.field === key)
+    if (node) {
+      resTree = node?.children || []
+      resdescription = node.description
+    }
+  }
+  return { schema: resTree, description: resdescription }
 }
 
 defineExpose({
@@ -97,12 +118,8 @@ defineExpose({
         选择数据
       </Button>
       <div v-else>
-        <div class="border rounded text-center p-2 border-dashed border-violet-500 mb-1">
-          <span class="bg-violet-500/80 text-white px-2 py-0.5 rounded">{{ dataSource.description }}</span>
-          <span class="mx-1">{{ dataSource.path }}</span>
-        </div>
         <Button class="w-full" @click="SelectDataDialogRef?.open()">
-          重新选择
+          <Database /> { {{ dataSource.description }} {{ dataSource.path }} }
         </Button>
       </div>
 
