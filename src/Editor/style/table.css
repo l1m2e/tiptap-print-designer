@@ -16,9 +16,6 @@
 
     th {
       @apply bg-gray-100 font-bold text-left dark:bg-neutral-900;
-      td{
-        @apply border-none
-      }
     }
 
     .selectedCell::after {

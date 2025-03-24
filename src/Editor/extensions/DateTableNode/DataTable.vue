@@ -28,16 +28,16 @@ const table = useVueTable({
 <template>
   <div class="border rounded-md">
     <table>
-      <th>
+      <thead>
         <tr v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
-          <td v-for="header in headerGroup.headers" :key="header.id">
+          <th v-for="header in headerGroup.headers" :key="header.id">
             <FlexRender
               v-if="!header.isPlaceholder" :render="header.column.columnDef.header"
               :props="header.getContext()"
             />
-          </td>
+          </th>
         </tr>
-      </th>
+      </thead>
       <tbody>
         <template v-if="table.getRowModel().rows?.length">
           <tr
