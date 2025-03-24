@@ -5,7 +5,7 @@ import { DESIGNER_KEY } from '~/components/Designer'
 import { EDITOR_CONTEXT } from '../../constants'
 
 const editorContent = inject(EDITOR_CONTEXT)
-const { openEditSFCDialog, openSelectFieldDialog } = inject(DESIGNER_KEY)!
+const { openEditSFCDialog, openSelectFieldDialog, openDateTableDialog } = inject(DESIGNER_KEY)!
 
 function deletePreviousCharacter() {
   const { state } = editorContent?.editor?.value || {}
@@ -18,7 +18,7 @@ function deletePreviousCharacter() {
 
 const commandList = [
   {
-    title: '插入字段',
+    title: '字段',
     icon: Code2Icon,
     command: () => {
       deletePreviousCharacter()?.run()
@@ -26,12 +26,20 @@ const commandList = [
     },
   },
   {
-    title: '插入表格',
+    title: '表格',
     icon: Table,
     command: () => deletePreviousCharacter()?.insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run(),
   },
   {
-    title: '插入组件',
+    title: '数据表格',
+    icon: Table,
+    command: () => {
+      deletePreviousCharacter()?.run()
+      openDateTableDialog()
+    },
+  },
+  {
+    title: '组件',
     icon: Codepen,
     command: () => {
       deletePreviousCharacter()?.run()

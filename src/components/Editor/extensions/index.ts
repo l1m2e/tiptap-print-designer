@@ -1,5 +1,6 @@
 import BubbleMenu from '@tiptap/extension-bubble-menu'
 import StarterKit from '@tiptap/starter-kit'
+import DateTableNode from './DateTableNode'
 import FieldNode from './FieldNode'
 import FontSize from './FontSize'
 import Placeholder from './Placeholder'
@@ -22,9 +23,10 @@ export const extensions = [
   TableCell,
   TableHeader,
   TableRow,
-  BubbleMenu,
+  DateTableNode,
   TrailingNode,
   SFCNode,
+  BubbleMenu,
 ]
 
 export function loadEditorExtensions(mode: 'designer' | 'viewer') {
