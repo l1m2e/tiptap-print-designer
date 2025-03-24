@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { SelectTrigger } from 'reka-ui'
-import { EDITOR_CONTEXT } from '~/components/Editor/constants'
+import { EDITOR_CONTEXT } from '~/Editor/constants'
 
 const { editor } = inject(EDITOR_CONTEXT)!
 

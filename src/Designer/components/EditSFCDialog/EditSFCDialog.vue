@@ -2,7 +2,7 @@
 import MonacoEditor from '~/components/common/monaco-editor/MonacoEditor.vue'
 import SFCLoader from '~/components/common/sfc-loader/SfcLoader.vue'
 import defaultTemplate from '~/components/common/template/defaultTemplate.vue?raw'
-import { EDITOR_CONTEXT } from '~/components/Editor/constants'
+import { EDITOR_CONTEXT } from '~/Editor/constants'
 import { ResizablePanel } from '~/components/ui/resizable'
 
 const show = ref(false)

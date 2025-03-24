@@ -1,19 +1,15 @@
 <script setup lang="ts">
 import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
-import { get } from 'radash'
-import { DESIGNER_KEY } from '~/components/Designer'
-import DateTable from '.'
+import { DESIGNER_KEY } from '~/Designer'
 import { EDITOR_CONTEXT } from '../../constants'
 
 const props = defineProps(nodeViewProps)
-const { mode, data } = inject(EDITOR_CONTEXT)!
+const { mode } = inject(EDITOR_CONTEXT)!
 const { openEditSFCDialog } = inject(DESIGNER_KEY)!
 
 function edit() {
   openEditSFCDialog(props.node.attrs.text)
 }
-
-const tableList = computed(() => get(data.value, props.node.attrs.path))
 
 function ddelete() {
   props.deleteNode()
@@ -25,7 +21,7 @@ function ddelete() {
     <ContextMenu v-if="mode === 'designer'" class="w-full">
       <ContextMenuTrigger>
         <div class="border border-dashed border-violet-500 rounded p-2 w-full">
-          <DateTable :columns="props.node.attrs.columns" :data="tableList" />
+          <SfcLoader :text="props.node.attrs.text" />
         </div>
       </ContextMenuTrigger>
       <ContextMenuContent>
@@ -38,6 +34,6 @@ function ddelete() {
       </ContextMenuContent>
     </ContextMenu>
 
-    <DateTable v-else :columns="props.node.attrs.columns" :data="tableList" />
+    <SfcLoader v-else :text="props.node.attrs.text" />
   </NodeViewWrapper>
 </template>
