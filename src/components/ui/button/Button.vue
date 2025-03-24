@@ -13,7 +13,6 @@ interface Props extends PrimitiveProps {
   class?: HTMLAttributes['class']
   loading?: boolean
   disabled?: boolean
-  onClick?: (e: MouseEvent) => void
 }
 
 const props = withDefaults(defineProps<Props>(), {
