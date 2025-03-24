@@ -1,24 +1,52 @@
 <script lang="tsx" setup>
 import type { ColumnDef } from '@tanstack/vue-table'
+import type { SchemaTree } from '~/db/types'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { v4 as uuidv4 } from 'uuid'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
-import ApiSelect from '../ApiSelect/ApiSelect.vue'
+import { EDITOR_CONTEXT } from '~/Editor/constants'
+import SelectDataDialog from './SelectDataDialog.vue'
+
+const { editor } = inject(EDITOR_CONTEXT)!
+
+const SelectDataDialogRef = useTemplateRef('SelectDataDialogEl')
 
 interface Columns { header: string, accessorKey: string }
-
 const show = ref(false)
 const data = ref<Columns[]>([])
+const dataSource = ref<{ path: string, schema: SchemaTree, description: string }>({ path: '', schema: [], description: '' })
 const columns = ref<ColumnDef<Columns>[]>([
   {
     accessorKey: 'header',
     header: '列名称',
+    size: 200,
     cell: ({ row }) => <Input v-model={row.original.header} />,
   },
   {
     accessorKey: 'accessorKey',
     header: '列键',
-    cell: ({ row }) => <ApiSelect v-model={row.original.accessorKey} />,
+    size: 250,
+    cell: ({ row }) => (
+      <Select v-model={row.original.accessorKey}>
+        <SelectTrigger>
+          <SelectValue placeholder="Select a fruit" />
+        </SelectTrigger>
+        <SelectContent>
+          {dataSource.value.schema.map(item => (
+            <SelectItem key={item.path} value={item.field}>
+              {item.description}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    ),
   },
   {
     header: '操作',
@@ -31,6 +59,10 @@ const columns = ref<ColumnDef<Columns>[]>([
   },
 ])
 
+function onSelect(data: { schema: SchemaTree, path: string, description: string }) {
+  dataSource.value = { path: data.path, schema: data.schema, description: data.description }
+}
+
 function addRow(index: number) {
   const newRow = { header: '', accessorKey: '', id: uuidv4() }
   data.value.splice(index + 1, 0, newRow)
@@ -41,6 +73,7 @@ function removeRow(index: number) {
 }
 
 async function save() {
+  editor?.value?.chain().focus().insertContent({ type: 'data-table-node', attrs: { path: dataSource.value.path, columns: JSON.stringify(data.value) } }).run()
   show.value = false
 }
 
@@ -60,14 +93,28 @@ defineExpose({
         <DialogTitle>数据表格配置</DialogTitle>
       </DialogHeader>
 
-      <DateTable :data="data" :columns="columns" class="mt-sm rounded-none">
+      <Button v-if="!dataSource.path" @click="SelectDataDialogRef?.open()">
+        选择数据
+      </Button>
+      <div v-else>
+        <div class="border rounded text-center p-2 border-dashed border-violet-500 mb-1">
+          <span class="bg-violet-500/80 text-white px-2 py-0.5 rounded">{{ dataSource.description }}</span>
+          <span class="mx-1">{{ dataSource.path }}</span>
+        </div>
+        <Button class="w-full" @click="SelectDataDialogRef?.open()">
+          重新选择
+        </Button>
+      </div>
+
+      <DateTable v-if="dataSource.path" :data="data" :columns="columns" class="mt-sm rounded-none">
         <template #no-data>
           <Button class="w-lg" variant="outline" @click="() => addRow(0)">
             添加一行
           </Button>
         </template>
       </DateTable>
-      <DialogFooter>
+
+      <DialogFooter v-if="dataSource.path">
         <Button variant="outline" @click="show = false">
           取消
         </Button>
@@ -76,5 +123,6 @@ defineExpose({
         </Button>
       </DialogFooter>
     </DialogContent>
+    <SelectDataDialog ref="SelectDataDialogEl" @select="onSelect" />
   </Dialog>
 </template>

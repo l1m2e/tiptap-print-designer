@@ -2,8 +2,8 @@
 import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
 import { get } from 'radash'
 import { DESIGNER_KEY } from '~/Designer'
-import DateTable from '.'
 import { EDITOR_CONTEXT } from '../../constants'
+import DateTable from './DateTable.vue'
 
 const props = defineProps(nodeViewProps)
 const { mode, data } = inject(EDITOR_CONTEXT)!
@@ -14,10 +14,13 @@ function edit() {
 }
 
 const tableList = computed(() => get(data.value, props.node.attrs.path))
+const columns = computed(() => JSON.parse(props.node.attrs.columns))
 
 function ddelete() {
   props.deleteNode()
 }
+
+console.log(columns.value, tableList.value)
 </script>
 
 <template>
@@ -25,7 +28,7 @@ function ddelete() {
     <ContextMenu v-if="mode === 'designer'" class="w-full">
       <ContextMenuTrigger>
         <div class="border border-dashed border-violet-500 rounded p-2 w-full">
-          <DateTable :columns="props.node.attrs.columns" :data="tableList" />
+          <DateTable :columns="columns" :data="tableList" />
         </div>
       </ContextMenuTrigger>
       <ContextMenuContent>
@@ -38,6 +41,6 @@ function ddelete() {
       </ContextMenuContent>
     </ContextMenu>
 
-    <DateTable v-else :columns="props.node.attrs.columns" :data="tableList" />
+    <!-- <DateTable v-else :columns="columns" :data="tableList" /> -->
   </NodeViewWrapper>
 </template>
