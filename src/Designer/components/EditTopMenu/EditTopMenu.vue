@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { AlignCenter, AlignLeft, AlignRight, Bold, Italic, Redo, Strikethrough, Undo } from 'lucide-vue-next'
-import { EDITOR_CONTEXT } from '~/components/Editor/constants'
+import { EDITOR_CONTEXT } from '~/Editor/constants'
 
 import FontSize from './FontSize.vue'
 import TextAndHeading from './TextAndHeading.vue'

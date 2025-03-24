@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { Code2Icon, Codepen, List, ListOrdered, Table } from 'lucide-vue-next'
 import { inject } from 'vue'
-import { DESIGNER_KEY } from '~/components/Designer'
+import { DESIGNER_KEY } from '~/Designer'
 import { EDITOR_CONTEXT } from '../../constants'
 
 const editorContent = inject(EDITOR_CONTEXT)

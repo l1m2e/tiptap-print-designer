@@ -47,7 +47,7 @@ declare module 'vue' {
     DataSourcesDialog: typeof import('./src/components/Designer/components/DataSourcesDialog/DataSourcesDialog.vue')['default']
     DataSourcesSetting: typeof import('./src/components/Designer/components/SettingDialog/DataSourcesSetting.vue')['default']
     DataTableDialog: typeof import('./src/components/Designer/components/DataTableDialog/DataTableDialog.vue')['default']
-    DateTable: typeof import('./src/components/Editor/extensions/DateTableNode/DateTable.vue')['default']
+    DateTable: typeof import('./src/components/ui/data-table/DateTable.vue')['default']
     DateTableNode: typeof import('./src/components/Editor/extensions/DateTableNode/DateTableNode.vue')['default']
     DefaultTemplate: typeof import('./src/components/common/template/defaultTemplate.vue')['default']
     DeleteColumn: typeof import('./src/components/icons/DeleteColumn.vue')['default']

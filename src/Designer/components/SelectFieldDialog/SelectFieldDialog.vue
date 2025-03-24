@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { Schema, SchemaTree } from '~/db/types'
-import { EDITOR_CONTEXT } from '~/components/Editor/constants'
+import { EDITOR_CONTEXT } from '~/Editor/constants'
 import { getApiTree } from '~/db/services/printDesigner'
 import Tree from '../SchemaTree/SchemaTree.vue'
 
