@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Toaster from '@/components/ui/toast/Toaster.vue'
 import { Database, Settings } from 'lucide-vue-next'
 import { useVueToPrint } from 'vue-to-print'
 import { ResizablePanel } from '~/components/ui/resizable'
@@ -91,5 +92,6 @@ provide(DESIGNER_KEY, { openSelectFieldDialog, openEditSFCDialog, openDateTableD
       <EditSFCDialog ref="EditSFCDialogEl" />
       <DataTableDialog ref="DataTableDialogEl" />
     </EditorRoot>
+    <Toaster />
   </Paper>
 </template>

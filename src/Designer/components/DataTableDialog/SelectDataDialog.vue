@@ -1,22 +1,31 @@
 <script lang="ts" setup>
 import type { Schema, SchemaTree } from '~/db/types'
+import { useToast } from '~/components/ui/toast/use-toast'
 import { getApiTree } from '~/db/services/printDesigner'
-import { EDITOR_CONTEXT } from '~/Editor/constants'
 import Tree from '../SchemaTree/SchemaTree.vue'
 
+const emits = defineEmits<{ select: [data: { schema: SchemaTree, path: string, description: string }] }>()
 const show = ref(false)
-const node = ref<Schema>()
 const tree = ref<SchemaTree>([])
-const editorContent = inject(EDITOR_CONTEXT)
-
-function insertField() {
-  editorContent?.editor?.value?.chain().focus().insertContent({ type: 'field-node', attrs: { label: node.value?.description || node.value?.field, path: node.value?.path } }).run()
-  show.value = false
-}
+const node = ref<Schema>()
 
 async function open() {
   tree.value = await getApiTree()
   show.value = true
+}
+
+const { toast } = useToast()
+function confirm() {
+  if (node.value?.type === 'array') {
+    emits('select', { schema: node.value?.children || [], path: node.value?.path || '', description: node.value?.description || '' })
+    show.value = false
+  }
+  else {
+    toast({
+      title: '提示',
+      description: '请选择一个数组',
+    })
+  }
 }
 
 function select(val: Schema) {
@@ -32,7 +41,7 @@ defineExpose({
   <Dialog v-model:open="show">
     <DialogContent class="max-w-[1200px]">
       <DialogHeader>
-        <DialogTitle>插入字段</DialogTitle>
+        <DialogTitle>选择数据</DialogTitle>
       </DialogHeader>
       <Tree :tree @select="select" />
 
@@ -40,7 +49,7 @@ defineExpose({
         <Button variant="outline" @click="show = false">
           取消
         </Button>
-        <Button @click="insertField">
+        <Button @click="confirm">
           选择
         </Button>
       </DialogFooter>
