@@ -16,7 +16,8 @@ export default Node.create({
   },
   addAttributes() {
     return {
-      columns: { default: [] },
+      columnSizingState: { default: '{}' },
+      columns: { default: '[]' },
       path: { default: '' },
     }
   },
