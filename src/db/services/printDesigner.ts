@@ -1,4 +1,4 @@
-import type { DataSchema, SchemaTree } from '../types'
+import type { ApiSchema, DataSchema, SchemaTree } from '../types'
 import { db } from '../database'
 import { apiSchemaToApiTree } from '../utils/apiSchemaToApiTree'
 import { getApiSchemaByPath } from '../utils/getApiSchemaByPath'
@@ -20,23 +20,24 @@ export async function getDataSource(): Promise<DataSchema[]> {
 /** 获取API树 */
 export async function getApiTree(): Promise<SchemaTree> {
   const data = await getDataSource()
-  return data.filter(item => item.api !== null).flatMap((item) => {
-    const { api, key, path } = item
-    let schema = getApiSchemaByPath(api!.operation, path)
-    // 在原来的schema基础上继续添加一层通过key
-    if (schema.type === 'object') {
-      schema = {
-        properties: {
-          [key]: schema,
-        },
-        type: schema.type,
-        description: schema.description,
-        required: schema.required,
-      }
-    }
-    const tree = apiSchemaToApiTree(schema)
-    return tree
-  })
+
+  const filterData = data.filter(item => item.api !== null).flatMap(item => ({
+    key: item.key,
+    path: item.path,
+    schema: getApiSchemaByPath(item.api!.operation, item.path),
+  }))
+
+  const schemaData = filterData.map(({ key, schema }) => ({
+    type: 'object',
+    description: schema.description,
+    required: schema.required,
+    properties: {
+      [key]: schema,
+    },
+  } as ApiSchema))
+
+  const tree = schemaData.flatMap(item => apiSchemaToApiTree(item))
+  return tree
 }
 
 /** 生成Mock数据 */

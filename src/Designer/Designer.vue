@@ -14,7 +14,7 @@ import { Paper, PaperContent, PaperTrigger } from './components/Paper'
 import SelectFieldDialog from './components/SelectFieldDialog/SelectFieldDialog.vue'
 import SettingDialog from './components/SettingDialog/SettingDialog.vue'
 
-const text = ref('')
+const text = useLocalStorage('text', '')
 const { state: mockData } = useAsyncState(async () => {
   const data = await generateMockData()
   return data
