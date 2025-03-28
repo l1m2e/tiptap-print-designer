@@ -3,7 +3,7 @@ import type { Editor } from '@tiptap/core'
 import type { ActionButtonProps } from '~/components/common/action-button'
 import { isActive } from '@tiptap/core'
 import { BubbleMenu } from '@tiptap/vue-3'
-import { BetweenHorizonalEnd, BetweenHorizontalStart, BetweenVerticalEnd, BetweenVerticalStart, Square, SquareDashedMousePointer, TableCellsMerge, TableCellsSplit } from 'lucide-vue-next'
+import { BetweenHorizonalEnd, BetweenHorizontalStart, BetweenVerticalEnd, BetweenVerticalStart, ListX, Square, SquareDashedMousePointer, TableCellsMerge, TableCellsSplit } from 'lucide-vue-next'
 import { sticky } from 'tippy.js'
 import DeleteColumn from '~/components/icons/DeleteColumn.vue'
 import DeleteRow from '~/components/icons/DeleteRow.vue'
@@ -29,6 +29,9 @@ const actionButtonGridList: ActionButtonProps[][] = [
   [
     { title: '隐藏单元格边框', icon: SquareDashedMousePointer, fn: () => editor.value?.chain().focus().setCellAttribute('class', 'no-border').run() },
     { title: '显示单元格边框', icon: Square, fn: () => editor.value?.chain().focus().setCellAttribute('class', '').run() },
+  ],
+  [
+    { title: '删除表格', icon: ListX, fn: () => editor.value?.chain().focus().deleteTable().run() },
   ],
 ]
 
