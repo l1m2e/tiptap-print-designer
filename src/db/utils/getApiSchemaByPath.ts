@@ -12,10 +12,9 @@ export function getApiSchemaByPath(schema: ApiSchema, path: string): ApiSchema {
     if (currentSchema.type === 'object') {
       currentSchema = currentSchema.properties?.[key]
     }
-    if (currentSchema.type === 'array') {
+    else if (currentSchema.type === 'array') {
       currentSchema = currentSchema.items
     }
   }
-
   return currentSchema
 }
