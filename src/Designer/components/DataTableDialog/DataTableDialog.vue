@@ -1,17 +1,17 @@
 <script lang="tsx" setup>
 import type { ColumnDef } from '@tanstack/vue-table'
 import type { SchemaTree } from '~/db/types'
+import { Database } from 'lucide-vue-next'
+import { v4 as uuidv4 } from 'uuid'
+import { Button } from '~/components/ui/button'
+import { Input } from '~/components/ui/input'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import { Database } from 'lucide-vue-next'
-import { v4 as uuidv4 } from 'uuid'
-import { Button } from '~/components/ui/button'
-import { Input } from '~/components/ui/input'
+} from '~/components/ui/select'
 import { getApiTree } from '~/db/services/printDesigner'
 import { EDITOR_CONTEXT } from '~/Editor/constants'
 import SelectDataDialog from './SelectDataDialog.vue'
@@ -28,19 +28,17 @@ const columns = ref<ColumnDef<Columns>[]>([
   {
     accessorKey: 'header',
     header: '列名称',
-    size: 200,
     cell: ({ row }) => <Input v-model={row.original.header} />,
   },
   {
     accessorKey: 'accessorKey',
     header: '列键',
-    size: 250,
     cell: ({ row }) => (
       <Select v-model={row.original.accessorKey}>
-        <SelectTrigger><SelectValue placeholder="请选择字段" /></SelectTrigger>
+        <SelectTrigger class="w-[400px]"><SelectValue placeholder="请选择字段" /></SelectTrigger>
         <SelectContent>
           {dataSource.value.schema.map(item => (
-            <SelectItem key={item.path} value={item.field}>{item.description}</SelectItem>
+            <SelectItem onSelect={() => row.original.header = item.description} key={item.path} value={item.field}>{item.description}</SelectItem>
           ))}
         </SelectContent>
       </Select>
