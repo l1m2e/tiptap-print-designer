@@ -61,7 +61,7 @@ const table = useVueTable({
           <TableRow>
             <TableCell :colspan="columns.length" class="h-24 text-center">
               <slot name="no-data">
-                No Data.
+                暂无数据
               </slot>
             </TableCell>
           </TableRow>

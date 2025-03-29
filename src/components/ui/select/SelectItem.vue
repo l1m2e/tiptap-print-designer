@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import type { SelectItemProps } from 'reka-ui'
+import type { AcceptableValue, SelectItemProps } from 'reka-ui'
 import type { HTMLAttributes } from 'vue'
 import { Check } from 'lucide-vue-next'
 import {
   SelectItem,
   SelectItemIndicator,
-
   SelectItemText,
   useForwardProps,
 } from 'reka-ui'
@@ -14,6 +13,7 @@ import { cn } from '~/lib/utils'
 
 const props = defineProps<SelectItemProps & { class?: HTMLAttributes['class'] }>()
 
+const emits = defineEmits<{ select: [value: AcceptableValue] }>()
 const delegatedProps = computed(() => {
   const { class: _, ...delegated } = props
 
@@ -32,6 +32,7 @@ const forwardedProps = useForwardProps(delegatedProps)
         props.class,
       )
     "
+    @select="(value) => emits('select', value)"
   >
     <span class="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
       <SelectItemIndicator>
