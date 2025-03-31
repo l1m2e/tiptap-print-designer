@@ -77,6 +77,7 @@ declare module 'vue' {
     DropdownMenuSubContent: typeof import('./src/components/ui/dropdown-menu/DropdownMenuSubContent.vue')['default']
     DropdownMenuSubTrigger: typeof import('./src/components/ui/dropdown-menu/DropdownMenuSubTrigger.vue')['default']
     DropdownMenuTrigger: typeof import('./src/components/ui/dropdown-menu/DropdownMenuTrigger.vue')['default']
+    FormatTimestamp: typeof import('./src/components/common/template/formatTimestamp.vue')['default']
     FormControl: typeof import('./src/components/ui/form/FormControl.vue')['default']
     FormDescription: typeof import('./src/components/ui/form/FormDescription.vue')['default']
     FormItem: typeof import('./src/components/ui/form/FormItem.vue')['default']

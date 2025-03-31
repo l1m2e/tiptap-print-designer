@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { compileScript, compileTemplate, parse } from '@vue/compiler-sfc'
+import { formatDate } from '@vueuse/core'
 import { defineAsyncComponent } from 'vue'
 import * as Vue from 'vue'
 // @ts-expect-error 忽略此类型问题
@@ -9,6 +10,7 @@ import { EDITOR_CONTEXT } from '~/Editor/constants'
 const { text, moduleCache = {
   'vue': Vue,
   '~/constants': { EDITOR_CONTEXT },
+  '@vueuse/core': { formatDate },
 } } = defineProps<{ text: string, moduleCache?: Record<string, any> }>()
 
 const sfcComponent = shallowRef()

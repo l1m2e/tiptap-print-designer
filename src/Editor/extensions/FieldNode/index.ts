@@ -18,6 +18,7 @@ export default Node.create({
     return {
       label: { default: '' },
       path: { default: '' },
+      format: { default: '' },
       fontSize: { default: '12pt' },
     }
   },

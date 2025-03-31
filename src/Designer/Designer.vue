@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { NodeViewProps } from '@tiptap/vue-3'
 import Toaster from '@/components/ui/toast/Toaster.vue'
 import { Database, Settings } from 'lucide-vue-next'
 import { useVueToPrint } from 'vue-to-print'
@@ -10,6 +11,7 @@ import DataSourcesDialog from './components/DataSourcesDialog/DataSourcesDialog.
 import DataTableDialog from './components/DataTableDialog/DataTableDialog.vue'
 import EditSFCDialog from './components/EditSFCDialog/EditSFCDialog.vue'
 import EditTopMenu from './components/EditTopMenu/EditTopMenu.vue'
+import FormatDialog from './components/FormatDialog/FormatDialog.vue'
 import { Paper, PaperContent, PaperTrigger } from './components/Paper'
 import SelectFieldDialog from './components/SelectFieldDialog/SelectFieldDialog.vue'
 import SettingDialog from './components/SettingDialog/SettingDialog.vue'
@@ -25,6 +27,7 @@ const SettingDialogRef = useTemplateRef('SettingDialogEl')
 const SelectFieldDialogRef = useTemplateRef('SelectFieldDialogEl')
 const EditSFCDialogRef = useTemplateRef('EditSFCDialogEl')
 const DataTableDialogRef = useTemplateRef('DataTableDialogEl')
+const FormatDialogRef = useTemplateRef('FormatDialogEl')
 
 const print = ref<HTMLElement>()
 const { handlePrint } = useVueToPrint({ content: () => print.value! })
@@ -41,7 +44,11 @@ function openDateTableDialog(data: { columns: string, path: string }) {
   DataTableDialogRef.value?.open(data)
 }
 
-provide(DESIGNER_KEY, { openSelectFieldDialog, openEditSFCDialog, openDateTableDialog })
+function openFormatDialog(props: NodeViewProps) {
+  FormatDialogRef.value?.open(props)
+}
+
+provide(DESIGNER_KEY, { openSelectFieldDialog, openEditSFCDialog, openDateTableDialog, openFormatDialog })
 </script>
 
 <template>
@@ -91,6 +98,7 @@ provide(DESIGNER_KEY, { openSelectFieldDialog, openEditSFCDialog, openDateTableD
       <SelectFieldDialog ref="SelectFieldDialogEl" />
       <EditSFCDialog ref="EditSFCDialogEl" />
       <DataTableDialog ref="DataTableDialogEl" />
+      <FormatDialog ref="FormatDialogEl" />
     </EditorRoot>
     <Toaster />
   </Paper>
