@@ -3,26 +3,33 @@ import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
 import { get } from 'radash'
 import { inject } from 'vue'
 import { DESIGNER_KEY } from '~/Designer'
+import { useFormat } from '../../composables/useFormat'
 import { EDITOR_CONTEXT } from '../../constants'
 
 const props = defineProps(nodeViewProps)
-
 const { mode, data } = inject(EDITOR_CONTEXT)!
 const { openFormatDialog } = inject(DESIGNER_KEY)!
 
 const text = computed(() => mode === 'designer' ? props.node.attrs.label : get(data.value, props.node.attrs.path))
+const { FormatNode, icon, isFormat } = useFormat(props)
 </script>
 
 <template>
   <NodeViewWrapper
-    as="span" :class="mode === 'designer' && 'rounded-[5px] bg-purple-500 px-[4px] py-[2px] text-white'"
+    as="span"
     :style="{ fontSize: props.node.attrs.fontSize }"
   >
     <ContextMenu v-if="mode === 'designer'" class="w-full">
       <ContextMenuTrigger>
-        {{ text }}
+        <div class="inline-flex items-center justify-center px-1 py-0.5 bg-purple-500 rounded-[5px] text-white">
+          <component :is="icon" v-if="isFormat" class="mr-1" :style="{ width: props.node.attrs.fontSize, height: props.node.attrs.fontSize }" />
+          <span>{{ text }}</span>
+        </div>
       </ContextMenuTrigger>
       <ContextMenuContent>
+        <ContextMenuItem v-if="props.node.attrs.format" @select="props.updateAttributes({ format: '' })">
+          清除格式化
+        </ContextMenuItem>
         <ContextMenuItem @select="openFormatDialog(props)">
           格式化
         </ContextMenuItem>
@@ -33,10 +40,10 @@ const text = computed(() => mode === 'designer' ? props.node.attrs.label : get(d
     </ContextMenu>
 
     <template v-else>
-      <template v-if="!props.node.attrs.format">
+      <template v-if="!isFormat">
         {{ text }}
       </template>
-      <SfcLoader v-else :text="props.node.attrs.format" :value="text" />
+      <FormatNode v-else :value="text" />
     </template>
   </NodeViewWrapper>
 </template>

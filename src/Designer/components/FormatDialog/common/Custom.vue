@@ -3,7 +3,12 @@ const customFormat = ref('')
 function getFormat() {
   return customFormat.value
 }
-defineExpose({ getFormat })
+
+function setFormat(value: string) {
+  customFormat.value = value
+}
+
+defineExpose({ getFormat, setFormat })
 </script>
 
 <template>

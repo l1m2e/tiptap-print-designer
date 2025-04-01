@@ -17,10 +17,16 @@ const customFormat = ref('')
 
 function getFormat() {
   const format = selectedFormat.value === 'custom' ? customFormat.value : selectedFormat.value
-  return formatTimestampTemplate.replace('$format', format)
+  const template = formatTimestampTemplate.replace('$format', format)
+  return { type: 'Timestamp', template, value: { selectedFormat: selectedFormat.value, customFormat: customFormat.value } }
 }
 
-defineExpose({ getFormat })
+function setFormat(value: { selectedFormat: string, customFormat: string }) {
+  selectedFormat.value = value.selectedFormat
+  customFormat.value = value.customFormat
+}
+
+defineExpose({ getFormat, setFormat })
 </script>
 
 <template>

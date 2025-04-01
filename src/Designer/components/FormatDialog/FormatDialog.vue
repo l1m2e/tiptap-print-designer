@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import type { NodeViewProps } from '@tiptap/vue-3'
-import { Palette, Timer } from 'lucide-vue-next'
-import CustomFormat from './CustomFormat.vue'
-import FormatTimestamp from './FormatTimestamp.vue'
+import { Box, Timer } from 'lucide-vue-next'
+import Custom from './common/Custom.vue'
+import Timestamp from './common/Timestamp.vue'
 
 const show = ref(false)
 const componentMap = {
-  FormatTimestamp,
-  CustomFormat,
+  Custom,
+  Timestamp,
 }
-const componentType = ref<keyof typeof componentMap>('FormatTimestamp')
+const componentType = ref<keyof typeof componentMap>('Timestamp')
 const componentRef = useTemplateRef('componentEl')
 const props = ref()
+
 interface Item {
   title: string
   component: keyof typeof componentMap
@@ -21,25 +22,31 @@ interface Item {
 const items: Item[] = [
   {
     title: '格式化时间戳',
-    component: 'FormatTimestamp',
+    component: 'Timestamp',
     icon: Timer,
   },
   {
     title: '自定义格式化',
-    component: 'CustomFormat',
-    icon: Palette,
+    component: 'Custom',
+    icon: Box,
   },
 ]
 
 function onConfirm() {
   const formatValue = componentRef.value?.getFormat()
-  props.value?.updateAttributes({ format: formatValue })
+  props.value?.updateAttributes({ format: JSON.stringify(formatValue) })
   show.value = false
 }
 
 function open(_props: NodeViewProps) {
   props.value = _props
   show.value = true
+
+  const format = JSON.parse(props.value.node.attrs.format || '{}')
+  componentType.value = format.type || 'Timestamp'
+  nextTick(() => {
+    componentRef.value?.setFormat(format.value)
+  })
 }
 
 defineExpose({ open })
