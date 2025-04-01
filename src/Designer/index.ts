@@ -4,5 +4,5 @@ export const DESIGNER_KEY = Symbol('DESIGNER_KEY') as InjectionKey<{
   openSelectFieldDialog: () => void
   openEditSFCDialog: (text?: string) => void
   openDateTableDialog: (data: { columns: string, path: string }) => void
-  openFormatDialog: (props: NodeViewProps) => void
+  openFormatDialog: (props: NodeViewProps, nodeMockData: any) => void
 }>

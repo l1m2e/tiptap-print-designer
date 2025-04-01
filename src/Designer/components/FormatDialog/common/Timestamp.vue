@@ -1,5 +1,10 @@
+<!-- eslint-disable unused-imports/no-unused-vars -->
 <script lang="ts" setup>
+import type { NodeViewProps } from '@tiptap/vue-3'
 import formatTimestampTemplate from '~/components/common/template/formatTimestamp.vue?raw'
+
+const { nodeProps } = defineProps<{ nodeProps: NodeViewProps, show: boolean, nodeMockData: any }>()
+const emit = defineEmits<{ 'update:show': [show: boolean] }>()
 
 const formatTimestampList = [
   { label: 'YYYY-MM-DD', value: 'YYYY-MM-DD' },
@@ -21,12 +26,17 @@ function getFormat() {
   return { type: 'Timestamp', template, value: { selectedFormat: selectedFormat.value, customFormat: customFormat.value } }
 }
 
-function setFormat(value: { selectedFormat: string, customFormat: string }) {
-  selectedFormat.value = value.selectedFormat
-  customFormat.value = value.customFormat
+function setFormat() {
+  const { value } = JSON.parse(nodeProps.node.attrs.format || '{}')
+  selectedFormat.value = value?.selectedFormat || 'YYYY-MM-DD'
+  customFormat.value = value?.customFormat || ''
 }
+nodeProps?.node?.attrs?.format && setFormat()
 
-defineExpose({ getFormat, setFormat })
+function onConfirm() {
+  nodeProps.updateAttributes({ format: JSON.stringify(getFormat()) })
+  emit('update:show', false)
+}
 </script>
 
 <template>
@@ -44,4 +54,12 @@ defineExpose({ getFormat, setFormat })
 
     <Input v-if="selectedFormat === 'custom'" v-model="customFormat" class="w-[400px] mt-4" placeholder="请输入自定义格式" />
   </div>
+  <DialogFooter>
+    <Button variant="outline" @click="emit('update:show', false)">
+      取消
+    </Button>
+    <Button @click="onConfirm">
+      确定
+    </Button>
+  </DialogFooter>
 </template>
