@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { NodeViewProps } from '@tiptap/vue-3'
-import { Box, Timer } from 'lucide-vue-next'
+import { Box, Maximize2Icon, Minimize2Icon, Timer } from 'lucide-vue-next'
 import Custom from './common/Custom.vue'
 import Timestamp from './common/Timestamp.vue'
 
@@ -10,8 +10,8 @@ const componentMap = {
   Timestamp,
 }
 const componentType = ref<keyof typeof componentMap>('Timestamp')
-const componentRef = useTemplateRef('componentEl')
-const props = ref()
+const nodeProps = ref()
+const nodeMockData = ref()
 
 interface Item {
   title: string
@@ -32,29 +32,23 @@ const items: Item[] = [
   },
 ]
 
-function onConfirm() {
-  const formatValue = componentRef.value?.getFormat()
-  props.value?.updateAttributes({ format: JSON.stringify(formatValue) })
-  show.value = false
-}
-
-function open(_props: NodeViewProps) {
-  props.value = _props
+function open(props: NodeViewProps, mockData: any) {
+  nodeProps.value = props
+  nodeMockData.value = mockData
+  const { type = 'Timestamp' } = JSON.parse(props.node.attrs.format || '{}')
+  componentType.value = type
   show.value = true
-
-  const format = JSON.parse(props.value.node.attrs.format || '{}')
-  componentType.value = format.type || 'Timestamp'
-  nextTick(() => {
-    componentRef.value?.setFormat(format.value)
-  })
 }
+
+const isFullscreen = ref(false)
+const toggle = () => (isFullscreen.value = !isFullscreen.value)
 
 defineExpose({ open })
 </script>
 
 <template>
   <Dialog v-model:open="show">
-    <DialogContent class="overflow-hidden max-h-[700px] max-w-[1200px] p-0">
+    <DialogContent class="overflow-hidden max-h-[700px] max-w-[1300px] p-0" :class="isFullscreen ? 'max-h-[100vh] max-w-[100vw]' : 'max-h-[700px] max-w-[1300px]'">
       <SidebarProvider>
         <Sidebar collapsible="none">
           <SidebarContent>
@@ -77,17 +71,14 @@ defineExpose({ open })
             </SidebarGroup>
           </SidebarContent>
         </Sidebar>
-        <main class="flex h-[680px] flex-1 flex-col overflow-hidden pt-12 px-4">
-          <component :is="componentMap[componentType]" ref="componentEl" />
-
-          <DialogFooter>
-            <Button variant="outline" @click="show = false">
-              取消
-            </Button>
-            <Button @click="onConfirm">
-              确定
-            </Button>
-          </DialogFooter>
+        <main class="flex flex-1 flex-col overflow-hidden  px-4" :class="isFullscreen ? 'h-[calc(100vh-20px)]' : 'h-[680px]'">
+          <div class="h-12">
+            <div variant="ghost" size="icon" class="absolute top-[18px] right-0 mr-12 cursor-pointer text-gray-700 hover:text-black" @click="toggle">
+              <Maximize2Icon v-if="!isFullscreen" class="size-3" />
+              <Minimize2Icon v-else class="size-3" />
+            </div>
+          </div>
+          <component :is="componentMap[componentType]" v-model:show="show" :node-props="nodeProps" :node-mock-data="nodeMockData" />
         </main>
       </SidebarProvider>
     </DialogContent>
