@@ -36,7 +36,7 @@ function Label({ method, label }: { method: OpenAPIV3.HttpMethods, label: string
 
 <template>
   <Combobox v-model="value" by="label" class="z-100">
-    <ComboboxAnchor class="w-[500px]">
+    <ComboboxAnchor class="w-full">
       <ComboboxTrigger as-child>
         <Button variant="outline" class="w-full">
           <Label :method="value?.method" :label="value?.label || ''" />
@@ -44,7 +44,7 @@ function Label({ method, label }: { method: OpenAPIV3.HttpMethods, label: string
       </ComboboxTrigger>
     </ComboboxAnchor>
 
-    <ComboboxList class="mt-2 h-[400px] w-[500px] p-1">
+    <ComboboxList class="mt-2 h-[400px] w-[400px] p-1">
       <ComboboxInput v-model="term" class="sticky top-0 w-full z-20 h-[32px] px-2 border-0 border-b rounded-none bg-popover outline-none" placeholder="查询接口" />
       <ComboboxVirtualizer v-slot="{ option }" :options="filteredPeople" :estimate-size="32" :overscan="5">
         <ComboboxItem :value="option" class="h-[32px] w-full p-1">

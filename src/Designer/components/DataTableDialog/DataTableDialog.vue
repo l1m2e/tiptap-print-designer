@@ -29,13 +29,14 @@ const columns = ref<ColumnDef<Columns>[]>([
     accessorKey: 'header',
     header: '列名称',
     cell: ({ row }) => <Input v-model={row.original.header} />,
+    size: 20,
   },
   {
     accessorKey: 'accessorKey',
     header: '列键',
     cell: ({ row }) => (
       <Select v-model={row.original.accessorKey}>
-        <SelectTrigger class="w-[400px]"><SelectValue placeholder="请选择字段" /></SelectTrigger>
+        <SelectTrigger><SelectValue placeholder="请选择字段" /></SelectTrigger>
         <SelectContent>
           {dataSource.value.schema.map(item => (
             <SelectItem onSelect={() => row.original.header = item.description} key={item.path} value={item.field}>{item.description}</SelectItem>
@@ -43,6 +44,7 @@ const columns = ref<ColumnDef<Columns>[]>([
         </SelectContent>
       </Select>
     ),
+    size: 40,
   },
   {
     header: '操作',
@@ -52,6 +54,7 @@ const columns = ref<ColumnDef<Columns>[]>([
         <Button onClick={() => removeRow(row.index)} class="ml-1" variant="outline"> 删除 </Button>
       </div>
     ),
+    size: 20,
   },
 ])
 
@@ -121,7 +124,7 @@ defineExpose({
         </Button>
       </div>
 
-      <DateTable v-if="dataSource.path" :data="data" :columns="columns" class="mt-sm rounded-none">
+      <DateTable v-if="dataSource.path" :data="data" :columns="columns" class="mt-sm rounded-none" :max-height="500">
         <template #no-data>
           <Button class="w-lg" variant="outline" @click="() => addRow(0)">
             添加一行
