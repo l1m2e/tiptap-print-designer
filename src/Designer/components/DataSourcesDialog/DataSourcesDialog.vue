@@ -88,7 +88,7 @@ defineExpose({
       <DialogHeader>
         <DialogTitle>数据源配置</DialogTitle>
       </DialogHeader>
-      <DateTable :data="data" :columns="columns" class="mt-sm rounded-none">
+      <DateTable :data="data" :columns="columns" class="mt-sm rounded-none" :max-height="500">
         <template #no-data>
           <Button class="w-lg" variant="outline" @click="() => addRow(0)">
             添加一行
