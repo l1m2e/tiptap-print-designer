@@ -73,7 +73,7 @@ defineExpose({ open })
         </Sidebar>
         <main class="flex flex-1 flex-col overflow-hidden  px-4" :class="isFullscreen ? 'h-[calc(100vh-20px)]' : 'h-[680px]'">
           <div class="h-12">
-            <div variant="ghost" size="icon" class="absolute top-[18px] right-0 mr-12 cursor-pointer text-gray-700 hover:text-black" @click="toggle">
+            <div variant="ghost" size="icon" class="absolute top-[18px] right-0 mr-12 cursor-pointer text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white" @click="toggle">
               <Maximize2Icon v-if="!isFullscreen" class="size-3" />
               <Minimize2Icon v-else class="size-3" />
             </div>

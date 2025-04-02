@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { NodeViewProps } from '@tiptap/vue-3'
 
-
 import SFCLoader from '~/components/common/sfc-loader/SfcLoader.vue'
 import DefaultTemplate from '~/components/common/template/defaultTemplate.vue?raw'
 import FiledNodeFormat from '~/components/common/template/FiledNodeFormat.vue?raw'
@@ -29,8 +28,6 @@ function getTemplate() {
   return template || defaultTemplate
 }
 
-
-
 onMounted(() => {
   template.value = getTemplate()
   editorEl.value?.setValue(template.value)
@@ -38,7 +35,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <ResizablePanelGroup ref="fullEl" direction="horizontal" class="w-full bg-white ">
+  <ResizablePanelGroup direction="horizontal" class="w-full bg-white dark:bg-neutral-950 ">
     <ResizablePanel>
       <MonacoEditor ref="editorEl" v-model="template" language="vue" class="h-full rounded-sm overflow-hidden " />
     </ResizablePanel>
@@ -46,7 +43,7 @@ onMounted(() => {
     <ResizableHandle class="mx-2" />
 
     <ResizablePanel class="relative">
-      <div class="px-8 pt-2 overflow-y-auto overflow-hidden break-all">
+      <div class="px-8 pt-2 overflow-y-auto h-full overflow-hidden break-all">
         <SFCLoader :text="template" v-bind="nodeMockData" />
       </div>
     </ResizablePanel>
