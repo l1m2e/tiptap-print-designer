@@ -31,6 +31,9 @@ const table = useVueTable({
   get columns() { return columns },
   getRowId: originalRow => originalRow[rowId],
   getCoreRowModel: getCoreRowModel(),
+  defaultColumn: {
+    size: 100 / columns.length,
+  },
 })
 </script>
 
