@@ -25,6 +25,10 @@ const table = useVueTable({
   getRowId: originalRow => originalRow[rowId],
   getCoreRowModel: getCoreRowModel(),
   columnResizeMode: 'onChange',
+  defaultColumn: {
+    size: 100 / columns.length,
+    maxSize: 100,
+  },
 })
 
 watch(() => table.getState().columnSizing, (val: ColumnSizingState) => {
@@ -41,7 +45,7 @@ defineExpose({
     <table class="w-full">
       <thead>
         <tr v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
-          <th v-for="header in headerGroup.headers" :key="header.id" class="relative group" :style="{ width: `${header.column.getSize()}pt` }">
+          <th v-for="header in headerGroup.headers" :key="header.id" class="relative group" :style="{ width: `${header.column.getSize()}%` }">
             <FlexRender
               v-if="!header.isPlaceholder" :render="header.column.columnDef.header"
               :props="header.getContext()"
@@ -63,7 +67,7 @@ defineExpose({
             v-for="row in table.getRowModel().rows" :key="row.id"
             :data-state="row.getIsSelected() ? 'selected' : undefined"
           >
-            <td v-for="cell in row.getVisibleCells()" :key="cell.id" :style="{ width: `${cell.column.getSize()}pt` }">
+            <td v-for="cell in row.getVisibleCells()" :key="cell.id" :style="{ width: `${cell.column.getSize()}%` }">
               <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
             </td>
           </tr>
