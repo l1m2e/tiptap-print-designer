@@ -1,10 +1,10 @@
 import type { NodeViewProps } from '@tiptap/vue-3'
-import { Box, Timer } from 'lucide-vue-next'
+import { Box, Clock } from 'lucide-vue-next'
 import SfcLoader from '~/components/common/sfc-loader/SfcLoader.vue'
 
 export function useFormat(props: NodeViewProps) {
   const FormatIconMap = {
-    Timestamp: Timer,
+    Timestamp: Clock,
     Custom: Box,
   }
 
