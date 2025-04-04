@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { NodeViewProps } from '@tiptap/vue-3'
-import { Box, Maximize2Icon, Minimize2Icon, Timer } from 'lucide-vue-next'
+import { Box, Clock, Maximize2Icon, Minimize2Icon } from 'lucide-vue-next'
 import Custom from './common/Custom.vue'
 import Timestamp from './common/Timestamp.vue'
 
@@ -23,7 +23,7 @@ const items: Item[] = [
   {
     title: '格式化时间戳',
     component: 'Timestamp',
-    icon: Timer,
+    icon: Clock,
   },
   {
     title: '自定义格式化',

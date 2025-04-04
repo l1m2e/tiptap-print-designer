@@ -1,7 +1,7 @@
 <script lang="tsx" setup>
-import type { ColumnDef } from '@tanstack/vue-table'
-import type { SchemaTree } from '~/db/types'
-import { Database } from 'lucide-vue-next'
+import type { ColumnDef, Row } from '@tanstack/vue-table'
+import type { Schema, SchemaTree } from '~/db/types'
+import { Database, Sparkles } from 'lucide-vue-next'
 import { v4 as uuidv4 } from 'uuid'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
@@ -20,7 +20,7 @@ const { editor } = inject(EDITOR_CONTEXT)!
 
 const SelectDataDialogRef = useTemplateRef('SelectDataDialogEl')
 
-interface Columns { header: string, accessorKey: string }
+interface Columns { header: string, accessorKey: string, id: string }
 const show = ref(false)
 const data = ref<Columns[]>([])
 const dataSource = ref<{ path: string, schema: SchemaTree, description: string }>({ path: '', schema: [], description: '' })
@@ -39,7 +39,7 @@ const columns = ref<ColumnDef<Columns>[]>([
         <SelectTrigger><SelectValue placeholder="请选择字段" /></SelectTrigger>
         <SelectContent>
           {dataSource.value.schema.map(item => (
-            <SelectItem onSelect={() => row.original.header = item.description} key={item.path} value={item.field}>{item.description}</SelectItem>
+            <SelectItem onSelect={() => onSelectAccessorKey(row, item)} value={item.field}>{item.description}</SelectItem>
           ))}
         </SelectContent>
       </Select>
@@ -57,6 +57,10 @@ const columns = ref<ColumnDef<Columns>[]>([
     size: 20,
   },
 ])
+
+function onSelectAccessorKey(row: Row<Columns>, item: Schema) {
+  !row.original.header && (row.original.header = item.description)
+}
 
 function onSelect(selectData: { schema: SchemaTree, path: string, description: string }) {
   if (dataSource.value.path) {
@@ -103,6 +107,13 @@ function getTreeNodeByPath(tree: SchemaTree, path: string): any {
   return { schema: resTree, description: resdescription }
 }
 
+function generateData() {
+  data.value = []
+  dataSource.value.schema.forEach((item) => {
+    data.value.push({ header: item.description, accessorKey: item.field, id: uuidv4() })
+  })
+}
+
 defineExpose({
   open,
 })
@@ -118,9 +129,12 @@ defineExpose({
       <Button v-if="!dataSource.path" @click="SelectDataDialogRef?.open()">
         选择数据
       </Button>
-      <div v-else>
+      <div v-else class="flex">
         <Button class="w-full" @click="SelectDataDialogRef?.open()">
           <Database /> { {{ dataSource.description }} {{ dataSource.path }} }
+        </Button>
+        <Button class="w-12 ml-1" @click="generateData">
+          <Sparkles />
         </Button>
       </div>
 
