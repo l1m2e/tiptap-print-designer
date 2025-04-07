@@ -1,7 +1,7 @@
 <script lang="tsx" setup>
 import type { ColumnDef, Row } from '@tanstack/vue-table'
 import type { Schema, SchemaTree } from '~/db/types'
-import { Database, Sparkles } from 'lucide-vue-next'
+import { Database, GripVerticalIcon, Sparkles } from 'lucide-vue-next'
 import { v4 as uuidv4 } from 'uuid'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
@@ -26,10 +26,14 @@ const data = ref<Columns[]>([])
 const dataSource = ref<{ path: string, schema: SchemaTree, description: string }>({ path: '', schema: [], description: '' })
 const columns = ref<ColumnDef<Columns>[]>([
   {
+    accessorKey: 'id',
+    cell: () => <GripVerticalIcon />,
+    size: 40,
+  },
+  {
     accessorKey: 'header',
     header: '列名称',
     cell: ({ row }) => <Input v-model={row.original.header} />,
-    size: 20,
   },
   {
     accessorKey: 'accessorKey',
@@ -44,7 +48,6 @@ const columns = ref<ColumnDef<Columns>[]>([
         </SelectContent>
       </Select>
     ),
-    size: 40,
   },
   {
     header: '操作',
@@ -54,7 +57,7 @@ const columns = ref<ColumnDef<Columns>[]>([
         <Button onClick={() => removeRow(row.index)} class="ml-1" variant="outline"> 删除 </Button>
       </div>
     ),
-    size: 20,
+    size: 150,
   },
 ])
 
@@ -84,6 +87,8 @@ async function save() {
 }
 
 async function open(resetData: { columns: string, path: string }) {
+  dataSource.value = { path: '', schema: [], description: '' }
+  data.value = []
   if (resetData) {
     const tree = await getApiTree()
     const { schema, description } = getTreeNodeByPath(tree, resetData.path)

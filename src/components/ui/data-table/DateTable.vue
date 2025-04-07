@@ -32,20 +32,26 @@ const table = useVueTable({
   getRowId: originalRow => originalRow[rowId],
   getCoreRowModel: getCoreRowModel(),
   defaultColumn: {
-    size: 100 / columns.length,
+    size: 0,
+    minSize: 0,
   },
 })
 </script>
 
 <template>
-  <div class="border rounded-md">
+  <div class="border rounded-md overflow-x-auto">
     <Table>
       <TableHeader>
-        <TableRow v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
-          <TableHead v-for="header in headerGroup.headers" :key="header.id" :style="{ width: `${header.column.getSize()}%` }">
+        <TableRow v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id" class="flex">
+          <TableHead
+            v-for="header in headerGroup.headers" :key="header.id"
+            class="flex items-center truncate"
+            :class="header.column.getSize() === 0 ? 'flex-1' : 'flex-none'"
+            :style="header.column.getSize() > 0 ? { width: `${header.column.getSize()}px` } : undefined"
+          >
             <FlexRender
               v-if="!header.isPlaceholder"
-              :style="{ width: `${header.column.getSize()}%` }" :render="header.column.columnDef.header"
+              :render="header.column.columnDef.header"
               :props="header.getContext()"
             />
           </TableHead>
@@ -60,8 +66,14 @@ const table = useVueTable({
             <TableRow
               v-for="row in table.getRowModel().rows" :key="row.id"
               :data-state="row.getIsSelected() ? 'selected' : undefined"
+              class="flex"
             >
-              <TableCell v-for="cell in row.getVisibleCells()" :key="cell.id" :style="{ width: `${cell.column.getSize()}%` }">
+              <TableCell
+                v-for="cell in row.getVisibleCells()" :key="cell.id"
+                class="flex items-center truncate"
+                :class="cell.column.getSize() === 0 ? 'flex-1' : 'flex-none'"
+                :style="cell.column.getSize() > 0 ? { width: `${cell.column.getSize()}px` } : undefined"
+              >
                 <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
               </TableCell>
             </TableRow>
