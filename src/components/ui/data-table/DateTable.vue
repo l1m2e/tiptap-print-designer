@@ -14,6 +14,7 @@ import {
   useVueTable,
 } from '@tanstack/vue-table'
 import { isNumber } from 'radash'
+import { useDraggable } from 'vue-draggable-plus'
 
 const { columns, data, rowId = 'id' } = defineProps<{
   columns: ColumnDef<TData, TValue>[]
@@ -22,13 +23,22 @@ const { columns, data, rowId = 'id' } = defineProps<{
   maxHeight?: string | number
 }>()
 
+const emits = defineEmits(['update:data'])
+
 const tableData = ref<any[]>([])
+const tableBodyEl = ref()
+
+useDraggable(tableBodyEl, tableData, { animation: 150, handle: '.handle', onUpdate: () => {
+  emits('update:data', tableData.value)
+} })
 
 watchImmediate(() => data, (val: TData[]) => tableData.value = [...val], { deep: true })
 
 const table = useVueTable({
   get data() { return tableData.value },
-  get columns() { return columns },
+  get columns() {
+    return columns
+  },
   getRowId: originalRow => originalRow[rowId],
   getCoreRowModel: getCoreRowModel(),
   defaultColumn: {
@@ -61,7 +71,7 @@ const table = useVueTable({
 
     <div :style="{ maxHeight: isNumber(maxHeight) ? `${maxHeight}px` : maxHeight }" class="overflow-y-auto">
       <Table>
-        <TableBody>
+        <TableBody ref="tableBodyEl">
           <template v-if="table.getRowModel().rows?.length">
             <TableRow
               v-for="row in table.getRowModel().rows" :key="row.id"
