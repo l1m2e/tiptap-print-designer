@@ -24,10 +24,11 @@ interface Columns { header: string, accessorKey: string, id: string }
 const show = ref(false)
 const data = ref<Columns[]>([])
 const dataSource = ref<{ path: string, schema: SchemaTree, description: string }>({ path: '', schema: [], description: '' })
+
 const columns = ref<ColumnDef<Columns>[]>([
   {
-    accessorKey: 'id',
-    cell: () => <GripVerticalIcon />,
+    accessorKey: '#',
+    cell: () => <GripVerticalIcon class="text-gray-500 cursor-move handle" />,
     size: 40,
   },
   {
@@ -143,7 +144,7 @@ defineExpose({
         </Button>
       </div>
 
-      <DateTable v-if="dataSource.path" :data="data" :columns="columns" class="mt-sm rounded-none" :max-height="500">
+      <DateTable v-if="dataSource.path" v-model:data="data" :columns="columns" class="mt-sm rounded-none" :max-height="500">
         <template #no-data>
           <Button class="w-lg" variant="outline" @click="() => addRow(0)">
             添加一行
