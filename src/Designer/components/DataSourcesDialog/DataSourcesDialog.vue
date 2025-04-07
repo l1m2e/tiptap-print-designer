@@ -19,13 +19,13 @@ const columns = ref<ColumnDef<DataSchema>[]>([
     accessorKey: 'key',
     header: '键',
     cell: ({ row }) => <Input v-model={row.original.key} />,
-    size: 20,
+    size: 200,
   },
   {
     accessorKey: 'api',
     header: 'API',
-    cell: ({ row }) => <ApiSelect v-model={row.original.api} />,
-    size: 40,
+    cell: ({ row }) => <ApiSelect v-model={row.original.api} class="w-full" />,
+    size: 400,
   },
   {
     accessorKey: 'path',
@@ -39,17 +39,16 @@ const columns = ref<ColumnDef<DataSchema>[]>([
         </Button>
       )
     },
-    size: 10,
   },
   {
     header: '操作',
     cell: ({ row }) => (
-      <div class="w-[150px]">
+      <div>
         <Button onClick={() => addRow(row.index)} variant="outline"> 添加</Button>
         <Button onClick={() => removeRow(row.index)} class="ml-1" variant="outline"> 删除 </Button>
       </div>
     ),
-    size: 20,
+    size: 150,
   },
 ])
 
