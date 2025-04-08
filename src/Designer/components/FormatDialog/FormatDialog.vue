@@ -1,25 +1,24 @@
 <script setup lang="ts">
 import type { NodeViewProps } from '@tiptap/vue-3'
+import type { Format } from './common'
 import { Box, Clock, Maximize2Icon, Minimize2Icon } from 'lucide-vue-next'
 import Custom from './common/Custom.vue'
 import Timestamp from './common/Timestamp.vue'
 
-const show = ref(false)
+const emits = defineEmits<{ onConfirm: [ val: Format ] }>()
+
 const componentMap = {
   Custom,
   Timestamp,
 }
+
+const show = ref(false)
 const componentType = ref<keyof typeof componentMap>('Timestamp')
 const nodeProps = ref()
 const nodeMockData = ref()
+const CommonRef = useTemplateRef('CommonEl')
 
-interface Item {
-  title: string
-  component: keyof typeof componentMap
-  icon: Component
-}
-
-const items: Item[] = [
+const items = [
   {
     title: '格式化时间戳',
     component: 'Timestamp',
@@ -30,14 +29,30 @@ const items: Item[] = [
     component: 'Custom',
     icon: Box,
   },
-]
+] as const
 
-function open(props: NodeViewProps, mockData: any) {
-  nodeProps.value = props
-  nodeMockData.value = mockData
-  const { type = 'Timestamp' } = JSON.parse(props.node.attrs.format || '{}')
+async function open(options: { nodeProps?: NodeViewProps, mockData: any }) {
+  nodeMockData.value = options.mockData
+  nodeProps.value = options?.nodeProps || undefined
+
+  const { type = 'Timestamp' } = JSON.parse(options.nodeProps?.node?.attrs?.format || '{}')
   componentType.value = type
   show.value = true
+  setFormat()
+}
+watch(componentType, setFormat)
+
+async function setFormat() {
+  await nextTick()
+  const { template, expands } = JSON.parse(nodeProps.value?.node?.attrs?.format || '{}')
+  CommonRef.value?.setFormat({ type: componentType.value, template, expands })
+}
+
+function confirm() {
+  const format = CommonRef.value!.getFormat()
+  emits('onConfirm', format)
+  nodeProps.value?.updateAttributes({ format: JSON.stringify(format) })
+  show.value = false
 }
 
 const isFullscreen = ref(false)
@@ -78,7 +93,21 @@ defineExpose({ open })
               <Minimize2Icon v-else class="size-3" />
             </div>
           </div>
-          <component :is="componentMap[componentType]" v-model:show="show" :node-props="nodeProps" :node-mock-data="nodeMockData" />
+          <component
+            :is="componentMap[componentType]"
+            ref="CommonEl"
+            v-model:show="show"
+            :node-props="nodeProps"
+            :node-mock-data="nodeMockData"
+          />
+          <DialogFooter class="mt-4">
+            <Button variant="outline" @click="show = false">
+              取消
+            </Button>
+            <Button @click="confirm">
+              确定
+            </Button>
+          </DialogFooter>
         </main>
       </SidebarProvider>
     </DialogContent>

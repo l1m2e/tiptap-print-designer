@@ -15,7 +15,7 @@ const text = computed(() => mode === 'designer' ? props.node.attrs.label : get(d
 const { FormatNode, icon, isFormat } = useFormat(props)
 
 function openFormat() {
-  openFormatDialog(props, { value: get(data.value, props.node.attrs.path) })
+  openFormatDialog({ nodeProps: props, mockData: { value: get(data.value, props.node.attrs.path) } })
 }
 </script>
 

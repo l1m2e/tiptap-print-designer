@@ -10,7 +10,7 @@ export function useFormat(props: NodeViewProps) {
 
   const type = ref('')
   const template = ref('')
-  const value = ref('')
+  const expands = ref('')
   const icon = computed(() => FormatIconMap?.[type.value as keyof typeof FormatIconMap])
   const isFormat = computed(() => type.value)
 
@@ -22,13 +22,13 @@ export function useFormat(props: NodeViewProps) {
     const format = JSON.parse(newFormat || '{}')
     type.value = format.type || ''
     template.value = format.template || ''
-    value.value = format.value || undefined
+    expands.value = format.expands || undefined
   })
 
   return {
     type,
     template,
-    value,
+    expands,
     icon,
     isFormat,
     FormatNode,

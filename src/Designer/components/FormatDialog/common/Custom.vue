@@ -1,36 +1,38 @@
 <script lang="ts" setup>
 import type { NodeViewProps } from '@tiptap/vue-3'
-
+import type { Format } from './index'
 import SFCLoader from '~/components/common/sfc-loader/SfcLoader.vue'
-import DefaultTemplate from '~/components/common/template/defaultTemplate.vue?raw'
-import FiledNodeFormat from '~/components/common/template/FiledNodeFormat.vue?raw'
+import { DefaultTemplate, FiledNodeTemplate } from '~/components/common/template'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '~/components/ui/resizable'
 
-const { nodeProps, nodeMockData } = defineProps<{ nodeProps: NodeViewProps, show: boolean, nodeMockData: any }>()
-const emit = defineEmits<{ 'update:show': [show: boolean] }>()
+const { nodeMockData, nodeProps } = defineProps<{ nodeMockData: any, nodeProps?: NodeViewProps }>()
 
 const editorEl = ref()
 const template = ref('')
-const nodeType = nodeProps.node.type.name
 
-function onConfirm() {
-  nodeProps.updateAttributes({ format: JSON.stringify({ type: 'Custom', template: template.value }) })
-  emit('update:show', false)
+function getFormat(): Format {
+  return { type: 'Custom', template: template.value }
 }
 
-function getTemplate() {
-  const defaultTemplateText = {
-    'field-node': FiledNodeFormat,
-  }
-  const defaultTemplate = defaultTemplateText[nodeType as keyof typeof defaultTemplateText] || DefaultTemplate
+const templateMap = new Map([
+  ['DefaultTemplate', DefaultTemplate],
+  ['field-node', FiledNodeTemplate],
+])
 
-  const { template } = JSON.parse(nodeProps.node.attrs.format || '{}')
-  return template || defaultTemplate
+function getDefaultFormatTemplate() {
+  const type  = nodeProps?.node?.type?.name || 'DefaultTemplate'
+  return templateMap.get(type) || DefaultTemplate
 }
 
-onMounted(() => {
-  template.value = getTemplate()
+function setFormat(value: Format) {
+  const { template: templateText, type } = JSON.parse(nodeProps?.node.attrs.format || '{}')
+  template.value = type === 'Custom' ? templateText : getDefaultFormatTemplate()
   editorEl.value?.setValue(template.value)
+}
+
+defineExpose({
+  getFormat,
+  setFormat,
 })
 </script>
 
@@ -48,13 +50,4 @@ onMounted(() => {
       </div>
     </ResizablePanel>
   </ResizablePanelGroup>
-
-  <DialogFooter class="mt-4">
-    <Button variant="outline" @click="emit('update:show', false)">
-      取消
-    </Button>
-    <Button @click="onConfirm">
-      确定
-    </Button>
-  </DialogFooter>
 </template>

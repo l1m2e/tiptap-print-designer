@@ -51,6 +51,12 @@ const columns = ref<ColumnDef<Columns>[]>([
     ),
   },
   {
+    accessorKey: 'format',
+    cell: ({ row }) => <Button variant="outline">无</Button>,
+    header: '格式化',
+    size: 120,
+  },
+  {
     header: '操作',
     cell: ({ row }) => (
       <div class="w-[150px]">
