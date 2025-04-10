@@ -1,5 +1,5 @@
 <script lang="jsx" setup>
-const props = defineProps(['value'])
+const { value } = defineProps(['value'])
 </script>
 
 <template>

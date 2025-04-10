@@ -17,6 +17,7 @@ const componentType = ref<keyof typeof componentMap>('Timestamp')
 const nodeProps = ref()
 const nodeMockData = ref()
 const CommonRef = useTemplateRef('CommonEl')
+const customTemplate = ref('DefaultTemplate')
 
 const items = [
   {
@@ -31,21 +32,22 @@ const items = [
   },
 ] as const
 
-async function open(options: { nodeProps?: NodeViewProps, mockData: any }) {
+async function open(options: { nodeProps?: NodeViewProps, mockData: any, customTemplate?: string }) {
   nodeMockData.value = options.mockData
   nodeProps.value = options?.nodeProps || undefined
-
+  customTemplate.value = options.customTemplate || 'DefaultTemplate'
   const { type = 'Timestamp' } = JSON.parse(options.nodeProps?.node?.attrs?.format || '{}')
   componentType.value = type
   show.value = true
   setFormat()
 }
+
 watch(componentType, setFormat)
 
 async function setFormat() {
   await nextTick()
-  const { template, expands } = JSON.parse(nodeProps.value?.node?.attrs?.format || '{}')
-  CommonRef.value?.setFormat({ type: componentType.value, template, expands })
+  const { template, expands, type } = JSON.parse(nodeProps.value?.node?.attrs?.format || '{}')
+  CommonRef.value?.setFormat({ type, template, expands })
 }
 
 function confirm() {
@@ -99,6 +101,7 @@ defineExpose({ open })
             v-model:show="show"
             :node-props="nodeProps"
             :node-mock-data="nodeMockData"
+            :custom-template="customTemplate"
           />
           <DialogFooter class="mt-4">
             <Button variant="outline" @click="show = false">

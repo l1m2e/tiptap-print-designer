@@ -44,7 +44,7 @@ function openDateTableDialog(data: { columns: string, path: string }) {
   DataTableDialogRef.value?.open(data)
 }
 
-function openFormatDialog(options: { nodeProps?: NodeViewProps, mockData: any }) {
+function openFormatDialog(options: { nodeProps?: NodeViewProps, mockData: any, customTemplate?: string }) {
   FormatDialogRef.value?.open(options)
 }
 
