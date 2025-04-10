@@ -2,10 +2,10 @@
 import type { NodeViewProps } from '@tiptap/vue-3'
 import type { Format } from './index'
 import SFCLoader from '~/components/common/sfc-loader/SfcLoader.vue'
-import { DefaultTemplate, FiledNodeTemplate } from '~/components/common/template'
+import { DefaultTemplate, FiledNodeTemplate, TableColumnTemplate } from '~/components/common/template'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '~/components/ui/resizable'
 
-const { nodeMockData, nodeProps } = defineProps<{ nodeMockData: any, nodeProps?: NodeViewProps }>()
+const { nodeMockData, customTemplate } = defineProps<{ nodeMockData: any, nodeProps?: NodeViewProps, customTemplate: string }>()
 
 const editorEl = ref()
 const template = ref('')
@@ -15,18 +15,18 @@ function getFormat(): Format {
 }
 
 const templateMap = new Map([
+  ['TableColumnTemplate', TableColumnTemplate],
   ['DefaultTemplate', DefaultTemplate],
-  ['field-node', FiledNodeTemplate],
+  ['FiledNodeTemplate', FiledNodeTemplate],
 ])
 
-function getDefaultFormatTemplate() {
-  const type  = nodeProps?.node?.type?.name || 'DefaultTemplate'
-  return templateMap.get(type) || DefaultTemplate
+function getDefaultFormatTemplate({ type, template }: Format) {
+  if (template) return type === 'Custom' ? template : templateMap.get(customTemplate)!
+  return templateMap.get(customTemplate)!
 }
 
-function setFormat(value: Format) {
-  const { template: templateText, type } = JSON.parse(nodeProps?.node.attrs.format || '{}')
-  template.value = type === 'Custom' ? templateText : getDefaultFormatTemplate()
+function setFormat(format: Format) {
+  template.value = getDefaultFormatTemplate(format)
   editorEl.value?.setValue(template.value)
 }
 

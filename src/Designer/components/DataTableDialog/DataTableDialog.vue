@@ -2,6 +2,7 @@
 import type { ColumnDef, Row } from '@tanstack/vue-table'
 import type { Schema, SchemaTree } from '~/db/types'
 import { Database, GripVerticalIcon, Sparkles } from 'lucide-vue-next'
+import { first, get } from 'radash'
 import { v4 as uuidv4 } from 'uuid'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
@@ -13,10 +14,12 @@ import {
   SelectValue,
 } from '~/components/ui/select'
 import { getApiTree } from '~/db/services/printDesigner'
+import { DESIGNER_KEY } from '~/Designer'
 import { EDITOR_CONTEXT } from '~/Editor/constants'
 import SelectDataDialog from './SelectDataDialog.vue'
 
-const { editor } = inject(EDITOR_CONTEXT)!
+const { editor, data: mockData } = inject(EDITOR_CONTEXT)!
+const { openFormatDialog } = inject(DESIGNER_KEY)!
 
 const SelectDataDialogRef = useTemplateRef('SelectDataDialogEl')
 
@@ -52,7 +55,7 @@ const columns = ref<ColumnDef<Columns>[]>([
   },
   {
     accessorKey: 'format',
-    cell: ({ row }) => <Button variant="outline">无</Button>,
+    cell: ({ row }) => <Button variant="outline" onClick={() => setFormat(row)}>设置</Button>,
     header: '格式化',
     size: 120,
   },
@@ -67,6 +70,16 @@ const columns = ref<ColumnDef<Columns>[]>([
     size: 150,
   },
 ])
+
+function setFormat(row: Row<Columns>) {
+  const tableData = get<Array<any>>(mockData.value, dataSource.value.path)
+  const rowData = first(tableData)
+  const valueData = get(rowData, row.original.accessorKey)
+  openFormatDialog({
+    mockData: { table: tableData, row: rowData, value: valueData },
+    customTemplate: 'TableColumnTemplate',
+  })
+}
 
 function onSelectAccessorKey(row: Row<Columns>, item: Schema) {
   !row.original.header && (row.original.header = item.description)

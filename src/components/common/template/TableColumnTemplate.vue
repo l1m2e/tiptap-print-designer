@@ -2,9 +2,9 @@
 import { inject } from 'vue'
 import { EDITOR_CONTEXT } from '~/constants'
 
-const { data } = inject(EDITOR_CONTEXT)
+const { value } = defineProps(['table','row','value'])
 </script>
 
 <template>
-  {{ data }}
+  {{ value }}
 </template>
