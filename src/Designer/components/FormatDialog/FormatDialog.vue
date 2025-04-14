@@ -5,8 +5,6 @@ import { Box, Clock, Maximize2Icon, Minimize2Icon } from 'lucide-vue-next'
 import Custom from './common/Custom.vue'
 import Timestamp from './common/Timestamp.vue'
 
-const emits = defineEmits<{ onConfirm: [ val: Format ] }>()
-
 const componentMap = {
   Custom,
   Timestamp,
@@ -32,6 +30,8 @@ const items = [
   },
 ] as const
 
+let resolve: (value: Format) => void | undefined
+let reject: (reason?: unknown) => void | undefined
 async function open(options: { nodeProps?: NodeViewProps, mockData: any, customTemplate?: string }) {
   nodeMockData.value = options.mockData
   nodeProps.value = options?.nodeProps || undefined
@@ -40,6 +40,10 @@ async function open(options: { nodeProps?: NodeViewProps, mockData: any, customT
   componentType.value = type
   show.value = true
   setFormat()
+  const { resolve: resolvePromise, reject: rejectPromise, promise } = Promise.withResolvers<Format>()
+  resolve = resolvePromise
+  reject = rejectPromise
+  return promise
 }
 
 watch(componentType, setFormat)
@@ -52,8 +56,13 @@ async function setFormat() {
 
 function confirm() {
   const format = CommonRef.value!.getFormat()
-  emits('onConfirm', format)
+  resolve(format)
   nodeProps.value?.updateAttributes({ format: JSON.stringify(format) })
+  show.value = false
+}
+
+function cancel() {
+  reject()
   show.value = false
 }
 
@@ -104,7 +113,7 @@ defineExpose({ open })
             :custom-template="customTemplate"
           />
           <DialogFooter class="mt-4">
-            <Button variant="outline" @click="show = false">
+            <Button variant="outline" @click="cancel">
               取消
             </Button>
             <Button @click="confirm">
