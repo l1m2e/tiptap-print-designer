@@ -1,7 +1,8 @@
 <script lang="tsx" setup>
 import type { ColumnDef, Row } from '@tanstack/vue-table'
 import type { Schema, SchemaTree } from '~/db/types'
-import { Database, GripVerticalIcon, Sparkles } from 'lucide-vue-next'
+import type { Format } from '~/Designer/components/FormatDialog/common'
+import { Database, GripVerticalIcon, Sparkles, Trash2 } from 'lucide-vue-next'
 import { first, get } from 'radash'
 import { v4 as uuidv4 } from 'uuid'
 import { Button } from '~/components/ui/button'
@@ -23,7 +24,7 @@ const { openFormatDialog } = inject(DESIGNER_KEY)!
 
 const SelectDataDialogRef = useTemplateRef('SelectDataDialogEl')
 
-interface Columns { header: string, accessorKey: string, id: string }
+interface Columns { header: string, accessorKey: string, id: string, format: Format | undefined }
 const show = ref(false)
 const data = ref<Columns[]>([])
 const dataSource = ref<{ path: string, schema: SchemaTree, description: string }>({ path: '', schema: [], description: '' })
@@ -55,7 +56,20 @@ const columns = ref<ColumnDef<Columns>[]>([
   },
   {
     accessorKey: 'format',
-    cell: ({ row }) => <Button variant="outline" onClick={() => setFormat(row)}>设置</Button>,
+    cell: ({ row }) => (
+      <div>
+        {
+          row.original.format
+            ? (
+                <div class="flex items-center">
+                  <Button onClick={() => setFormat(row)}>已设置</Button>
+                  <Button onClick={() => row.original.format = undefined} size="icon"><Trash2 /></Button>
+                </div>
+              )
+            : <Button variant="outline" onClick={() => setFormat(row)}>设置</Button>
+        }
+      </div>
+    ),
     header: '格式化',
     size: 120,
   },
@@ -71,14 +85,15 @@ const columns = ref<ColumnDef<Columns>[]>([
   },
 ])
 
-function setFormat(row: Row<Columns>) {
+async function setFormat(row: Row<Columns>) {
   const tableData = get<Array<any>>(mockData.value, dataSource.value.path)
   const rowData = first(tableData)
   const valueData = get(rowData, row.original.accessorKey)
-  openFormatDialog({
+  const format = await openFormatDialog({
     mockData: { table: tableData, row: rowData, value: valueData },
     customTemplate: 'TableColumnTemplate',
   })
+  row.original.format = format
 }
 
 function onSelectAccessorKey(row: Row<Columns>, item: Schema) {
@@ -93,7 +108,7 @@ function onSelect(selectData: { schema: SchemaTree, path: string, description: s
 }
 
 function addRow(index: number) {
-  const newRow = { header: '', accessorKey: '', id: uuidv4() }
+  const newRow = { header: '', accessorKey: '', id: uuidv4(), format: undefined }
   data.value.splice(index + 1, 0, newRow)
 }
 
@@ -135,7 +150,7 @@ function getTreeNodeByPath(tree: SchemaTree, path: string): any {
 function generateData() {
   data.value = []
   dataSource.value.schema.forEach((item) => {
-    data.value.push({ header: item.description, accessorKey: item.field, id: uuidv4() })
+    data.value.push({ header: item.description, accessorKey: item.field, id: uuidv4(), format: undefined })
   })
 }
 
