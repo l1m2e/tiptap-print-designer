@@ -1,13 +1,7 @@
 <script setup lang="ts">
-// import Designer from '~/Designer/Designer.vue'
-import { useFormatDialog } from '~/composables'
-
-const { open } = useFormatDialog()
+import Designer from '~/Designer/Designer.vue'
 </script>
 
 <template>
-  <Button @click="open({})">
-    Open Dialog
-  </Button>
-  <!-- <Designer /> -->
+  <Designer />
 </template>
