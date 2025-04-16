@@ -14,12 +14,13 @@ const { openFormatDialog } = inject(DESIGNER_KEY)!
 const text = computed(() => mode === 'designer' ? props.node.attrs.label : get(data.value, props.node.attrs.path))
 const { FormatNode, icon, isFormat } = useFormat(props)
 
-function openFormat() {
-  openFormatDialog({
-    nodeProps: props,
+async function openFormat() {
+  const format = await openFormatDialog({
+    format: props.node.attrs.format ? JSON.parse(props.node.attrs.format) : undefined,
     mockData: { value: get(data.value, props.node.attrs.path) },
     customTemplate: 'FiledNodeTemplate',
   })
+  props.updateAttributes({ format: JSON.stringify(format) })
 }
 </script>
 

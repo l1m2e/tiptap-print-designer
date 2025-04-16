@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { NodeViewProps } from '@tiptap/vue-3'
+import type { Format } from './components/FormatDialog/common'
 import Toaster from '@/components/ui/toast/Toaster.vue'
 import { Database, Settings } from 'lucide-vue-next'
 import { useVueToPrint } from 'vue-to-print'
@@ -44,7 +44,7 @@ function openDateTableDialog(data: { columns: string, path: string }) {
   DataTableDialogRef.value?.open(data)
 }
 
-async function openFormatDialog(options: { nodeProps?: NodeViewProps, mockData: any, customTemplate?: string }) {
+async function openFormatDialog(options: { format?: Format, mockData: any, customTemplate?: string }) {
   return await FormatDialogRef.value?.open(options)
 }
 

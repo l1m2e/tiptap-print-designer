@@ -1,9 +1,8 @@
-import type { NodeViewProps } from '@tiptap/vue-3'
 import type { Format } from './components/FormatDialog/common'
 
 export const DESIGNER_KEY = Symbol('DESIGNER_KEY') as InjectionKey<{
   openSelectFieldDialog: () => void
   openEditSFCDialog: (text?: string) => void
   openDateTableDialog: (data: { columns: string, path: string }) => void
-  openFormatDialog: (options: { nodeProps?: NodeViewProps, mockData: any, customTemplate?: string }) => Promise<Format | undefined>
+  openFormatDialog: (options: { format?: Format, mockData: any, customTemplate?: string }) => Promise<Format | undefined>
 }>

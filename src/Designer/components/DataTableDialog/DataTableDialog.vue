@@ -57,21 +57,15 @@ const columns = ref<ColumnDef<Columns>[]>([
   {
     accessorKey: 'format',
     cell: ({ row }) => (
-      <div>
-        {
-          row.original.format
-            ? (
-                <div class="flex items-center">
-                  <Button onClick={() => setFormat(row)}>已设置</Button>
-                  <Button onClick={() => row.original.format = undefined} size="icon"><Trash2 /></Button>
-                </div>
-              )
-            : <Button variant="outline" onClick={() => setFormat(row)}>设置</Button>
-        }
+      <div class="flex items-center w-full">
+        <Button variant={row.original.format ? 'default' : 'outline'} class="w-full" onClick={() => setFormat(row)}>
+          { row.original.format ? '编辑' : '设置' }
+        </Button>
+        { row.original.format && <Button class="ml-1" onClick={() => row.original.format = undefined}><Trash2 /></Button> }
       </div>
     ),
     header: '格式化',
-    size: 120,
+    size: 130,
   },
   {
     header: '操作',
@@ -90,6 +84,7 @@ async function setFormat(row: Row<Columns>) {
   const rowData = first(tableData)
   const valueData = get(rowData, row.original.accessorKey)
   const format = await openFormatDialog({
+    format: row.original.format,
     mockData: { table: tableData, row: rowData, value: valueData },
     customTemplate: 'TableColumnTemplate',
   })

@@ -44,7 +44,7 @@ declare module 'vue' {
     ContextMenuSubTrigger: typeof import('./src/components/ui/context-menu/ContextMenuSubTrigger.vue')['default']
     ContextMenuTrigger: typeof import('./src/components/ui/context-menu/ContextMenuTrigger.vue')['default']
     DateTable: typeof import('./src/components/ui/data-table/DateTable.vue')['default']
-    DefaultTemplate: typeof import('./src/components/common/template/DefaultTemplate.vue')['default']
+    DefaultTemplate: typeof import('./src/components/common/template/defaultTemplate.vue')['default']
     DeleteColumn: typeof import('./src/components/icons/DeleteColumn.vue')['default']
     DeleteRow: typeof import('./src/components/icons/DeleteRow.vue')['default']
     Dialog: typeof import('./src/components/ui/dialog/Dialog.vue')['default']
