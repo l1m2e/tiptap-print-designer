@@ -1,11 +1,10 @@
 <script lang="ts" setup>
-import type { NodeViewProps } from '@tiptap/vue-3'
 import type { Format } from './index'
 import SFCLoader from '~/components/common/sfc-loader/SfcLoader.vue'
 import { DefaultTemplate, FiledNodeTemplate, TableColumnTemplate } from '~/components/common/template'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '~/components/ui/resizable'
 
-const { nodeMockData, customTemplate } = defineProps<{ nodeMockData: any, nodeProps?: NodeViewProps, customTemplate: string }>()
+const { nodeMockData, customTemplate } = defineProps<{ nodeMockData: any, customTemplate: string }>()
 
 const editorEl = ref()
 const template = ref('')

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { NodeViewProps } from '@tiptap/vue-3'
 import type { Format } from './common'
 import { Box, Clock, Maximize2Icon, Minimize2Icon } from 'lucide-vue-next'
 import Custom from './common/Custom.vue'
@@ -12,7 +11,7 @@ const componentMap = {
 
 const show = ref(false)
 const componentType = ref<keyof typeof componentMap>('Timestamp')
-const nodeProps = ref()
+const format = ref<Format | undefined>()
 const nodeMockData = ref()
 const CommonRef = useTemplateRef('CommonEl')
 const customTemplate = ref('DefaultTemplate')
@@ -32,12 +31,12 @@ const items = [
 
 let resolve: (value: Format) => void | undefined
 let reject: (reason?: unknown) => void | undefined
-async function open(options: { nodeProps?: NodeViewProps, mockData: any, customTemplate?: string }) {
+
+async function open(options: { format?: Format, mockData: any, customTemplate?: string }) {
   nodeMockData.value = options.mockData
-  nodeProps.value = options?.nodeProps || undefined
   customTemplate.value = options.customTemplate || 'DefaultTemplate'
-  const { type = 'Timestamp' } = JSON.parse(options.nodeProps?.node?.attrs?.format || '{}')
-  componentType.value = type
+  format.value = options.format
+  componentType.value = options.format?.type || 'Timestamp'
   show.value = true
   setFormat()
   const { resolve: resolvePromise, reject: rejectPromise, promise } = Promise.withResolvers<Format>()
@@ -50,14 +49,13 @@ watch(componentType, setFormat)
 
 async function setFormat() {
   await nextTick()
-  const { template, expands, type } = JSON.parse(nodeProps.value?.node?.attrs?.format || '{}')
+  const { template = 'DefaultTemplate', expands, type = 'Timestamp' } = format.value || {}
   CommonRef.value?.setFormat({ type, template, expands })
 }
 
 function confirm() {
   const format = CommonRef.value!.getFormat()
   resolve(format)
-  nodeProps.value?.updateAttributes({ format: JSON.stringify(format) })
   show.value = false
 }
 
@@ -108,7 +106,6 @@ defineExpose({ open })
             :is="componentMap[componentType]"
             ref="CommonEl"
             v-model:show="show"
-            :node-props="nodeProps"
             :node-mock-data="nodeMockData"
             :custom-template="customTemplate"
           />
