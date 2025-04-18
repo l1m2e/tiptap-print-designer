@@ -3,12 +3,13 @@
   "type": "module",
   "packageManager": "pnpm@10.4.1",
   "scripts": {
-    "dev": "pnpm -C packages/core run dev",
+    "dev": "pnpm -C packages/examples run dev",
     "lint": "eslint . --fix"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.3.0",
     "@tiptap-print-designer/core": "workspace:*",
+    "@tiptap-print-designer/ui": "workspace:*",
     "eslint": "^9.20.1",
     "eslint-plugin-format": "^1.0.1"
   },
