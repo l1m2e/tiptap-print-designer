@@ -1,0 +1,46 @@
+.tiptap {
+  p {
+    @apply my-0 outline-none text-[12pt];
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply mt-[20px] mb-[20px];
+
+    &:first-child {
+      @apply mt-0;
+    }
+
+    &:last-child {
+      @apply mb-0;
+    }
+  }
+
+  h1 {
+    @apply text-[22pt];
+  }
+
+  h2 {
+    @apply text-[20pt];
+  }
+
+  h3 {
+    @apply text-[18pt];
+  }
+
+  h4 {
+    @apply text-[16pt];
+  }
+
+  h5 {
+    @apply text-[14pt];
+  }
+
+  h6 {
+    @apply text-[12pt];
+  }
+}
