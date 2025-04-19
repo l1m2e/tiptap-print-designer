@@ -116,7 +116,7 @@ async function save() {
   show.value = false
 }
 
-async function open(resetData: { columns: string, path: string }) {
+async function open(resetData?: { columns: string, path: string }) {
   dataSource.value = { path: '', schema: [], description: '' }
   data.value = []
   if (resetData) {
