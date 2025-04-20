@@ -4,9 +4,9 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import autoImport from 'unplugin-auto-import/vite'
 import components from 'unplugin-vue-components/vite'
 import { defineConfig } from 'vite'
+import dts from 'vite-plugin-dts'
 import monacoEditorPlugin from 'vite-plugin-monaco-editor'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
-import dts from 'vite-plugin-dts'
 
 export default defineConfig({
   resolve: {
@@ -45,8 +45,8 @@ export default defineConfig({
       languageWorkers: ['editorWorkerService', 'typescript', 'json', 'html'],
     }),
     dts({
-      outDir:'dist'
-    })
+      outDir: 'dist',
+    }),
   ],
 
   build: {
