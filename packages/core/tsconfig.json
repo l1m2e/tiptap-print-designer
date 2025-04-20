@@ -9,13 +9,12 @@
     "moduleResolution": "bundler",
     "paths": {
       "~/*": ["src/*"],
-      "@/*": ["./src/*"]
+      "@/*": ["src/*"]
 
     },
     "resolveJsonModule": true,
     "types": [
       "vite/client",
-      "unplugin-vue-router/client"
     ],
     "allowJs": true,
     "strict": true,
