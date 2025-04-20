@@ -6,7 +6,9 @@ export default antfu(
     rules: {
       'antfu/if-newline': 'off',
       '@typescript-eslint/consistent-type-definitions': 'off',
+      'symbol-description': 'off',
     },
-    ignores: ['src/components/common/template/**/*.vue'],
+    ignores: ['packages/core/src/components/ui/**/*'],
+    includes: ['packages/**/*'],
   },
 )
