@@ -1,13 +1,12 @@
 import path from 'node:path'
-import Vue from '@vitejs/plugin-vue'
+import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import AutoImport from 'unplugin-auto-import/vite'
-import Components from 'unplugin-vue-components/vite'
-import { VueRouterAutoImports } from 'unplugin-vue-router'
-import VueRouter from 'unplugin-vue-router/vite'
+import autoImport from 'unplugin-auto-import/vite'
+import components from 'unplugin-vue-components/vite'
 import { defineConfig } from 'vite'
 import monacoEditorPlugin from 'vite-plugin-monaco-editor'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
+import dts from 'vite-plugin-dts'
 
 export default defineConfig({
   resolve: {
@@ -18,21 +17,18 @@ export default defineConfig({
   },
 
   plugins: [
-    Vue({
+    vue({
       script: {
         propsDestructure: true,
         defineModel: true,
       },
     }),
-
-    VueRouter(),
     vueJsx(),
     nodePolyfills(),
-    AutoImport({
+    autoImport({
       imports: [
         'vue',
         '@vueuse/core',
-        VueRouterAutoImports,
         { 'vue-router/auto': ['useLink'] },
       ],
       dts: true,
@@ -41,19 +37,37 @@ export default defineConfig({
       ],
       vueTemplate: true,
     }),
-    Components({
+    components({
       dts: true,
     }),
     /** @ts-expect-error https://github.com/vdesjs/vite-plugin-monaco-editor/issues/21 */
     monacoEditorPlugin.default({
       languageWorkers: ['editorWorkerService', 'typescript', 'json', 'html'],
     }),
+    dts({
+      outDir:'dist'
+    })
   ],
 
-  server: {
-    port: 3333, // vite项目启动时自定义端口
-    open: true, // vite项目启动时自动打开浏览器
-    host: '0.0.0.0',
+  build: {
+    lib: {
+      entry: path.resolve(__dirname, './src/index.ts'),
+      name: '@tiptap-print-designer/core',
+      fileName: 'index',
+    },
+    rollupOptions: {
+      external: ['vue'],
+      output: {
+        globals: {
+          vue: 'Vue',
+        },
+      },
+    },
   },
 
+  server: {
+    port: 3333,
+    open: true,
+    host: '0.0.0.0',
+  },
 })

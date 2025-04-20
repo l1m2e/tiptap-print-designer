@@ -6,3 +6,5 @@ export const DESIGNER_KEY = Symbol('DESIGNER_KEY') as InjectionKey<{
   openDateTableDialog: (data: { columns: string, path: string }) => void
   openFormatDialog: (options: { format?: Format, mockData: any, customTemplate?: string }) => Promise<Format | undefined>
 }>
+
+export { default as Designer } from './Designer.vue'

@@ -4,6 +4,8 @@
   "packageManager": "pnpm@10.4.1",
   "scripts": {
     "dev": "pnpm -C packages/core run dev",
+    "build": "pnpm -C packages/core run build",
+    "examples": "pnpm -C packages/examples run dev",
     "lint": "eslint . --fix"
   },
   "devDependencies": {
