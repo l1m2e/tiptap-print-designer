@@ -6,7 +6,10 @@
     "dev": "pnpm -C packages/core run dev",
     "build": "pnpm -C packages/core run build",
     "examples": "pnpm -C packages/examples run dev",
-    "lint": "eslint . --fix"
+    "lint": "eslint . --fix",
+    "docs:dev": "pnpm -C docs docs:dev",
+    "docs:build": "pnpm -C docs docs:build",
+    "docs:preview": "pnpm -C docs docs:preview"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.3.0",

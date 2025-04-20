@@ -1,0 +1,26 @@
+{
+  "name": "@tiptap-print-designer/docs",
+  "type": "module",
+  "packageManager": "pnpm@10.4.1",
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
+  },
+  "dependencies": {
+    "@vueuse/core": "^12.7.0",
+    "motion-v": "1.0.0-beta.2"
+  },
+  "devDependencies": {
+    "@inspira-ui/plugins": "^0.0.1",
+    "@tailwindcss/postcss7-compat": "^2.2.17",
+    "autoprefixer": "^10.4.20",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "postcss": "^8.5.3",
+    "tailwind-merge": "^2.6.0",
+    "tailwindcss": "^3.4.17",
+    "tailwindcss-animate": "^1.0.7",
+    "vitepress": "^1.6.3"
+  }
+}
