@@ -40,7 +40,7 @@ function openEditSFCDialog(text?: string) {
   EditSFCDialogRef.value?.open(text)
 }
 
-function openDateTableDialog(data: { columns: string, path: string }) {
+function openDateTableDialog(data?: { columns: string, path: string }) {
   DataTableDialogRef.value?.open(data)
 }
 
