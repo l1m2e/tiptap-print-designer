@@ -5,7 +5,7 @@ import { defineAsyncComponent } from 'vue'
 import * as Vue from 'vue'
 // @ts-expect-error 忽略此类型问题
 import { loadModule } from 'vue3-sfc-loader'
-import { EDITOR_CONTEXT } from '~/Editor/constants'
+import { EDITOR_CONTEXT } from '~/editor/constants'
 
 const { text, moduleCache = {
   'vue': Vue,

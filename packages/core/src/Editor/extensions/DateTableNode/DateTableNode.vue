@@ -1,10 +1,10 @@
 <script setup lang="tsx">
 import type { ColumnDef, ColumnSizingState } from '@tanstack/vue-table'
-import type { Format } from '~/Designer/components/FormatDialog/common'
+import type { Format } from '~/designer/components/FormatDialog/common'
 import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
 import { get } from 'radash'
 import SfcLoader from '~/components/common/sfc-loader/SfcLoader.vue'
-import { DESIGNER_KEY } from '~/Designer'
+import { DESIGNER_KEY } from '~/designer'
 import { EDITOR_CONTEXT } from '../../constants'
 import DataTable from './DataTable.vue'
 

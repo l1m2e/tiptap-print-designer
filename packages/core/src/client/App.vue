@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Designer from '~/Designer/Designer.vue'
+import Designer from '~/designer/Designer.vue'
 </script>
 
 <template>

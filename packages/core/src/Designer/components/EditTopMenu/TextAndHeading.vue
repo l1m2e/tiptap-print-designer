@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Heading1, Heading2, Heading3, Heading4, Heading5, Heading6, Type } from 'lucide-vue-next'
-import { EDITOR_CONTEXT } from '~/Editor/constants'
+import { EDITOR_CONTEXT } from '~/editor/constants'
 
 const { editor } = inject(EDITOR_CONTEXT)!
 
