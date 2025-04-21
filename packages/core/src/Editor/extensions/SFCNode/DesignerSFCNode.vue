@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
 import { DESIGNER_KEY } from '~/designer'
-import { EDITOR_CONTEXT } from '../../constants'
 
 const props = defineProps(nodeViewProps)
-const { mode } = inject(EDITOR_CONTEXT)!
 const { openEditSFCDialog } = inject(DESIGNER_KEY)!
 
 function edit() {
@@ -18,7 +16,7 @@ function ddelete() {
 
 <template>
   <NodeViewWrapper as="div">
-    <ContextMenu v-if="mode === 'designer'" class="w-full">
+    <ContextMenu class="w-full">
       <ContextMenuTrigger>
         <div class="border border-dashed border-violet-500 rounded p-2 w-full">
           <SfcLoader :text="props.node.attrs.text" />
@@ -33,7 +31,5 @@ function ddelete() {
         </ContextMenuItem>
       </ContextMenuContent>
     </ContextMenu>
-
-    <SfcLoader v-else :text="props.node.attrs.text" />
   </NodeViewWrapper>
 </template>

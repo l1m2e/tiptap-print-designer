@@ -8,11 +8,10 @@ import { useFormat } from '../../composables/useFormat'
 import { EDITOR_CONTEXT } from '../../constants'
 
 const props = defineProps(nodeViewProps)
-const { mode, data } = inject(EDITOR_CONTEXT)!
+const { data } = inject(EDITOR_CONTEXT)!
 const { openFormatDialog } = inject(DESIGNER_KEY)!
 
-const text = computed(() => mode === 'designer' ? props.node.attrs.label : get(data.value, props.node.attrs.path))
-const { FormatNode, icon, isFormat } = useFormat(props)
+const { icon } = useFormat(props)
 
 async function openFormat() {
   const format = await openFormatDialog({
@@ -25,15 +24,15 @@ async function openFormat() {
 </script>
 
 <template>
-  <NodeViewWrapper
-    as="span"
-    :style="{ fontSize: props.node.attrs.fontSize }"
-  >
-    <ContextMenu v-if="mode === 'designer'" class="w-full">
+  <NodeViewWrapper as="span" :style="{ fontSize: props.node.attrs.fontSize }">
+    <ContextMenu class="w-full">
       <ContextMenuTrigger>
         <div class="inline-flex items-center justify-center px-2 py-0.5 bg-purple-500 rounded-[5px] text-white">
-          <component :is="icon || Link" class="mr-1" :style="{ width: props.node.attrs.fontSize, height: props.node.attrs.fontSize }" />
-          <span>{{ text }}</span>
+          <component
+            :is="icon || Link" class="mr-1"
+            :style="{ width: props.node.attrs.fontSize, height: props.node.attrs.fontSize }"
+          />
+          <span>{{ props.node.attrs.label }}</span>
         </div>
       </ContextMenuTrigger>
       <ContextMenuContent>
@@ -48,12 +47,5 @@ async function openFormat() {
         </ContextMenuItem>
       </ContextMenuContent>
     </ContextMenu>
-
-    <template v-else>
-      <template v-if="!isFormat">
-        {{ text }}
-      </template>
-      <FormatNode v-else :value="text" />
-    </template>
   </NodeViewWrapper>
 </template>
