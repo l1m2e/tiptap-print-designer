@@ -1,21 +1,39 @@
 <script setup lang="ts">
 import type { TemplateData } from '~/designer'
-import { ref } from 'vue'
+import { Designer } from '~/designer'
 import { Render } from '~/render'
 
+const DesignerRef = useTemplateRef('DesignerEl')
 const template = ref<TemplateData>({
-  content: '<p><field-node label="boos信息" path="boosInfo.name" format="" fontsize="12pt"></field-node></p>',
+  content: '',
   page: {
-    size: [
-      '210mm',
-      '297mm',
-    ],
+    size: ['210mm', '297mm'],
     paperType: 'A4',
   },
 })
-const data = ref({ boosInfo: { name: '黄金律法-拉达冈' } })
+
+const type = ref<'Designer' | 'Render'>('Designer')
+
+function save(val: TemplateData) {
+  template.value = val
+}
 </script>
 
 <template>
-  <Render :template="template" :data="data" />
+  <div>
+    <Tabs v-model="type" class="fixed bottom-4 right-4">
+      <TabsList>
+        <TabsTrigger value="Designer">
+          设计器
+        </TabsTrigger>
+        <TabsTrigger value="Render">
+          渲染器
+        </TabsTrigger>
+      </TabsList>
+    </Tabs>
+    <Designer v-show="type === 'Designer'" ref="DesignerEl" @save="save" />
+    <div v-show="type === 'Render'" class="w-[100vw] h-[100vh] flex items-center justify-center">
+      <Render :template="template" :data="DesignerRef?.mockData || {}" class="shadow-lg border" />
+    </div>
+  </div>
 </template>

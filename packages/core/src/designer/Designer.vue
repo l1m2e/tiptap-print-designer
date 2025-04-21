@@ -61,6 +61,10 @@ function save() {
 }
 
 provide(DESIGNER_KEY, { openSelectFieldDialog, openEditSFCDialog, openDateTableDialog, openFormatDialog })
+
+defineExpose({
+  mockData,
+})
 </script>
 
 <template>
