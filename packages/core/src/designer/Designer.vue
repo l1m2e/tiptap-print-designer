@@ -99,7 +99,7 @@ provide(DESIGNER_KEY, { openSelectFieldDialog, openEditSFCDialog, openDateTableD
         <!-- 预览 -->
         <ResizablePanel>
           <div class="bg-gray-100 dark:bg-neutral-950 h-[calc(100vh-54px)] overflow-hidden">
-            <PaperContent>
+            <PaperContent zoom>
               <EditorRoot v-model="text" mode="viewer" :data="mockData">
                 <EditorContent ref="print" class="pointer-events-none select-none p-[6mm]" />
               </EditorRoot>
