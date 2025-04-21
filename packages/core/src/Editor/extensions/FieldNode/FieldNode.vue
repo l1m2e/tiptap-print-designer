@@ -3,7 +3,7 @@ import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
 import { Link } from 'lucide-vue-next'
 import { get } from 'radash'
 import { inject } from 'vue'
-import { DESIGNER_KEY } from '~/Designer'
+import { DESIGNER_KEY } from '~/designer'
 import { useFormat } from '../../composables/useFormat'
 import { EDITOR_CONTEXT } from '../../constants'
 

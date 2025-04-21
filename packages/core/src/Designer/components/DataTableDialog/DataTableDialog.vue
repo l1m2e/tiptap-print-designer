@@ -1,7 +1,7 @@
 <script lang="tsx" setup>
 import type { ColumnDef, Row } from '@tanstack/vue-table'
 import type { Schema, SchemaTree } from '~/db/types'
-import type { Format } from '~/Designer/components/FormatDialog/common'
+import type { Format } from '~/designer/components/FormatDialog/common'
 import { Database, GripVerticalIcon, Sparkles, Trash2 } from 'lucide-vue-next'
 import { first, get } from 'radash'
 import { v4 as uuidv4 } from 'uuid'
@@ -15,8 +15,8 @@ import {
   SelectValue,
 } from '~/components/ui/select'
 import { getApiTree } from '~/db/services/printDesigner'
-import { DESIGNER_KEY } from '~/Designer'
-import { EDITOR_CONTEXT } from '~/Editor/constants'
+import { DESIGNER_KEY } from '~/designer'
+import { EDITOR_CONTEXT } from '~/editor/constants'
 import SelectDataDialog from './SelectDataDialog.vue'
 
 const { editor, data: mockData } = inject(EDITOR_CONTEXT)!

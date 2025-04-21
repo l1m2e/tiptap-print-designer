@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
-import { DESIGNER_KEY } from '~/Designer'
+import { DESIGNER_KEY } from '~/designer'
 import { EDITOR_CONTEXT } from '../../constants'
 
 const props = defineProps(nodeViewProps)

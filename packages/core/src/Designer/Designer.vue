@@ -2,17 +2,17 @@
 import type { Format } from './components/FormatDialog/common'
 import Toaster from '@/components/ui/toast/Toaster.vue'
 import { Database, Settings } from 'lucide-vue-next'
-import { useVueToPrint } from 'vue-to-print'
+import { Paper, PaperContent, PaperTrigger } from '~/components/common'
 import { ResizablePanel } from '~/components/ui/resizable'
 import { generateMockData } from '~/db/services/printDesigner'
-import { EditorContent, EditorRoot } from '~/Editor'
+import { EditorContent, EditorRoot } from '~/editor'
+import { Render } from '~/render'
 import { DESIGNER_KEY } from '.'
 import DataSourcesDialog from './components/DataSourcesDialog/DataSourcesDialog.vue'
 import DataTableDialog from './components/DataTableDialog/DataTableDialog.vue'
 import EditSFCDialog from './components/EditSFCDialog/EditSFCDialog.vue'
 import EditTopMenu from './components/EditTopMenu/EditTopMenu.vue'
 import FormatDialog from './components/FormatDialog/FormatDialog.vue'
-import { Paper, PaperContent, PaperTrigger } from './components/Paper'
 import SelectFieldDialog from './components/SelectFieldDialog/SelectFieldDialog.vue'
 import SettingDialog from './components/SettingDialog/SettingDialog.vue'
 
@@ -28,9 +28,7 @@ const SelectFieldDialogRef = useTemplateRef('SelectFieldDialogEl')
 const EditSFCDialogRef = useTemplateRef('EditSFCDialogEl')
 const DataTableDialogRef = useTemplateRef('DataTableDialogEl')
 const FormatDialogRef = useTemplateRef('FormatDialogEl')
-
-const print = ref<HTMLElement>()
-const { handlePrint } = useVueToPrint({ content: () => print.value! })
+const RenderRef = useTemplateRef('RenderEl')
 
 function openSelectFieldDialog() {
   SelectFieldDialogRef.value?.open()
@@ -64,7 +62,7 @@ provide(DESIGNER_KEY, { openSelectFieldDialog, openEditSFCDialog, openDateTableD
           <Button variant="outline" class="mx-2" size="icon" @click="DataSourcesDialogRef?.open ">
             <Settings />
           </Button>
-          <Button @click="handlePrint">
+          <Button @click="() => RenderRef?.handlePrint()">
             打印
           </Button>
         </div>
@@ -84,11 +82,7 @@ provide(DESIGNER_KEY, { openSelectFieldDialog, openEditSFCDialog, openDateTableD
         <!-- 预览 -->
         <ResizablePanel>
           <div class="bg-gray-100 dark:bg-neutral-950 h-[calc(100vh-54px)] overflow-hidden">
-            <PaperContent zoom>
-              <EditorRoot v-model="text" mode="viewer" :data="mockData">
-                <EditorContent ref="print" class="pointer-events-none select-none p-[6mm]" />
-              </EditorRoot>
-            </PaperContent>
+            <Render ref="RenderEl" :data="mockData" :template="text" />
           </div>
         </ResizablePanel>
       </ResizablePanelGroup>
