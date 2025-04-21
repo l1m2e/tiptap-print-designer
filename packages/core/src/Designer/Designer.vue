@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import type { DesignerEmits } from '.'
 import type { Format } from './components/FormatDialog/common'
 import Toaster from '@/components/ui/toast/Toaster.vue'
 import { Database, Settings } from 'lucide-vue-next'
-import { Paper, PaperContent, PaperTrigger } from '~/components/common'
 import { ResizablePanel } from '~/components/ui/resizable'
 import { generateMockData } from '~/db/services/printDesigner'
 import { EditorContent, EditorRoot } from '~/editor'
@@ -16,12 +16,14 @@ import FormatDialog from './components/FormatDialog/FormatDialog.vue'
 import SelectFieldDialog from './components/SelectFieldDialog/SelectFieldDialog.vue'
 import SettingDialog from './components/SettingDialog/SettingDialog.vue'
 
+const emits = defineEmits<DesignerEmits>()
 const text = useLocalStorage('text', '')
 const { state: mockData } = useAsyncState(async () => {
   const data = await generateMockData()
   return data
 }, null)
 
+const PaperRef = useTemplateRef('PaperEl')
 const DataSourcesDialogRef = useTemplateRef('DataSourcesDialogEl')
 const SettingDialogRef = useTemplateRef('SettingDialogEl')
 const SelectFieldDialogRef = useTemplateRef('SelectFieldDialogEl')
@@ -46,24 +48,37 @@ async function openFormatDialog(options: { format?: Format, mockData: any, custo
   return await FormatDialogRef.value?.open(options)
 }
 
+function save() {
+  emits('save', {
+    template: text.value,
+    page: {
+      size: toRaw(PaperRef.value!.size),
+      paperType: toRaw(PaperRef.value!.paperType),
+    },
+  })
+}
+
 provide(DESIGNER_KEY, { openSelectFieldDialog, openEditSFCDialog, openDateTableDialog, openFormatDialog })
 </script>
 
 <template>
-  <Paper>
+  <Paper ref="PaperEl">
     <EditorRoot v-model="text" :data="mockData">
       <div class="grid grid-cols-3 gap-x-4 items-center border-b border-neutral-200 p-2 dark:border-neutral-800 h-[54px] ">
         <EditTopMenu />
         <PaperTrigger class="flex justify-center w-full" />
-        <div class="flex items-center justify-end">
+        <div class="flex items-center justify-end gap-2">
           <Button variant="outline" size="icon" @click="SettingDialogRef?.open">
             <Database />
           </Button>
-          <Button variant="outline" class="mx-2" size="icon" @click="DataSourcesDialogRef?.open ">
+          <Button variant="outline" size="icon" @click="DataSourcesDialogRef?.open ">
             <Settings />
           </Button>
           <Button @click="() => RenderRef?.handlePrint()">
             打印
+          </Button>
+          <Button @click="save">
+            保存
           </Button>
         </div>
       </div>
@@ -82,7 +97,7 @@ provide(DESIGNER_KEY, { openSelectFieldDialog, openEditSFCDialog, openDateTableD
         <!-- 预览 -->
         <ResizablePanel>
           <div class="bg-gray-100 dark:bg-neutral-950 h-[calc(100vh-54px)] overflow-hidden">
-            <Render ref="RenderEl" :data="mockData" :template="text" />
+            <Render ref="RenderEl" :data="mockData" :template="text" zoom />
           </div>
         </ResizablePanel>
       </ResizablePanelGroup>

@@ -1,5 +1,10 @@
 import type { Format } from './components/FormatDialog/common'
 
+export interface TemplateData { template: string, page: { size: [string, string], paperType: string } }
+export type DesignerEmits = {
+  save: [val: TemplateData]
+}
+
 export const DESIGNER_KEY = Symbol('DESIGNER_KEY') as InjectionKey<{
   openSelectFieldDialog: () => void
   openEditSFCDialog: (text?: string) => void

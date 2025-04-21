@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useVueToPrint } from 'vue-to-print'
-import { PaperContent } from '~/components/common'
 import { EditorContent, EditorRoot } from '~/editor'
 
 const { template = '', data } = defineProps<{
@@ -20,7 +19,7 @@ defineExpose({
 </script>
 
 <template>
-  <PaperContent zoom>
+  <PaperContent>
     <EditorRoot v-model="text" mode="viewer" :data>
       <EditorContent ref="print" class="pointer-events-none select-none p-[6mm]" />
     </EditorRoot>

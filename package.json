@@ -13,9 +13,9 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.3.0",
-    "@tiptap-print-designer/core": "workspace:*",
     "eslint": "^9.20.1",
-    "eslint-plugin-format": "^1.0.1"
+    "eslint-plugin-format": "^1.0.1",
+    "tiptap-print-designer": "workspace:*"
   },
   "resolutions": {
     "unplugin": "^2.2.0",

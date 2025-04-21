@@ -52,14 +52,15 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, './src/index.ts'),
-      name: '@tiptap-print-designer/core',
+      name: 'tiptap-print-designer',
       fileName: 'index',
     },
     rollupOptions: {
-      external: ['vue'],
+      external: ['vue', 'monaco-editor'],
       output: {
         globals: {
-          vue: 'Vue',
+          'vue': 'Vue',
+          'monaco-editor': 'monaco',
         },
       },
     },
