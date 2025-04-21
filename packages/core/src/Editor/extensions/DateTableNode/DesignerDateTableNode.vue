@@ -9,7 +9,7 @@ import { EDITOR_CONTEXT } from '../../constants'
 import DataTable from './DataTable.vue'
 
 const props = defineProps(nodeViewProps)
-const { mode, data } = inject(EDITOR_CONTEXT)!
+const { data } = inject(EDITOR_CONTEXT)!
 const { openDateTableDialog } = inject(DESIGNER_KEY)!
 
 const DataTableRef = useTemplateRef('DataTableEl')
@@ -47,10 +47,13 @@ watchImmediate(() => props.node.attrs.columnSizingState, async () => {
 
 <template>
   <NodeViewWrapper as="div">
-    <ContextMenu v-if="mode === 'designer'" class="w-full">
+    <ContextMenu class="w-full">
       <ContextMenuTrigger>
         <div class="border border-dashed border-violet-500 rounded p-2 w-full">
-          <DataTable ref="DataTableEl" :columns="columns" :data="tableList" @column-sizing-change="handleColumnSizingChange" />
+          <DataTable
+            ref="DataTableEl" :columns="columns" :data="tableList"
+            @column-sizing-change="handleColumnSizingChange"
+          />
         </div>
       </ContextMenuTrigger>
       <ContextMenuContent>
@@ -62,7 +65,5 @@ watchImmediate(() => props.node.attrs.columnSizingState, async () => {
         </ContextMenuItem>
       </ContextMenuContent>
     </ContextMenu>
-
-    <DataTable v-else ref="DataTableEl" :columns="columns" :data="tableList " />
   </NodeViewWrapper>
 </template>

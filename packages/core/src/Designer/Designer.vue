@@ -3,10 +3,10 @@ import type { DesignerEmits } from '.'
 import type { Format } from './components/FormatDialog/common'
 import Toaster from '@/components/ui/toast/Toaster.vue'
 import { Database, Settings } from 'lucide-vue-next'
+import { useVueToPrint } from 'vue-to-print'
 import { ResizablePanel } from '~/components/ui/resizable'
 import { generateMockData } from '~/db/services/printDesigner'
 import { EditorContent, EditorRoot } from '~/editor'
-import { Render } from '~/render'
 import { DESIGNER_KEY } from '.'
 import DataSourcesDialog from './components/DataSourcesDialog/DataSourcesDialog.vue'
 import DataTableDialog from './components/DataTableDialog/DataTableDialog.vue'
@@ -30,7 +30,9 @@ const SelectFieldDialogRef = useTemplateRef('SelectFieldDialogEl')
 const EditSFCDialogRef = useTemplateRef('EditSFCDialogEl')
 const DataTableDialogRef = useTemplateRef('DataTableDialogEl')
 const FormatDialogRef = useTemplateRef('FormatDialogEl')
-const RenderRef = useTemplateRef('RenderEl')
+const print = ref<HTMLElement>()
+
+const { handlePrint } = useVueToPrint({ content: () => print.value! })
 
 function openSelectFieldDialog() {
   SelectFieldDialogRef.value?.open()
@@ -50,7 +52,7 @@ async function openFormatDialog(options: { format?: Format, mockData: any, custo
 
 function save() {
   emits('save', {
-    template: text.value,
+    content: text.value,
     page: {
       size: toRaw(PaperRef.value!.size),
       paperType: toRaw(PaperRef.value!.paperType),
@@ -74,7 +76,7 @@ provide(DESIGNER_KEY, { openSelectFieldDialog, openEditSFCDialog, openDateTableD
           <Button variant="outline" size="icon" @click="DataSourcesDialogRef?.open ">
             <Settings />
           </Button>
-          <Button @click="() => RenderRef?.handlePrint()">
+          <Button @click="handlePrint">
             打印
           </Button>
           <Button @click="save">
@@ -97,7 +99,11 @@ provide(DESIGNER_KEY, { openSelectFieldDialog, openEditSFCDialog, openDateTableD
         <!-- 预览 -->
         <ResizablePanel>
           <div class="bg-gray-100 dark:bg-neutral-950 h-[calc(100vh-54px)] overflow-hidden">
-            <Render ref="RenderEl" :data="mockData" :template="text" zoom />
+            <PaperContent>
+              <EditorRoot v-model="text" mode="viewer" :data="mockData">
+                <EditorContent ref="print" class="pointer-events-none select-none p-[6mm]" />
+              </EditorRoot>
+            </PaperContent>
           </div>
         </ResizablePanel>
       </ResizablePanelGroup>

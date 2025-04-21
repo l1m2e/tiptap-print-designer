@@ -1,6 +1,6 @@
 import type { Format } from './components/FormatDialog/common'
 
-export interface TemplateData { template: string, page: { size: [string, string], paperType: string } }
+export interface TemplateData { content: string, page: { size: [string, string], paperType: string } }
 export type DesignerEmits = {
   save: [val: TemplateData]
 }
