@@ -5,6 +5,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: 'tiptap-print-designer',
   description: 'tiptap-print-designer',
+  base: '/vitePress-project/',
   srcDir: './src',
   vite: {
     resolve: {
@@ -13,6 +14,5 @@ export default defineConfig({
         '@/': `${path.resolve(__dirname, '../src')}/`,
       },
     },
-    base: '/tiptap-print-designer/',
   },
 })
