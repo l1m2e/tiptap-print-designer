@@ -5,7 +5,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: 'tiptap-print-designer',
   description: 'tiptap-print-designer',
-  base: '/vitePress-project/',
+  base: '/tiptap-print-designer/',
   srcDir: './src',
   vite: {
     resolve: {
