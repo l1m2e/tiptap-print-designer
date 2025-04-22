@@ -8,8 +8,8 @@
     "docs:preview": "vitepress preview"
   },
   "dependencies": {
-    "@vueuse/core": "^12.7.0",
-    "motion-v": "1.0.0-beta.2"
+    "motion-v": "1.0.0-beta.2",
+    "reka-ui": "^2.2.0"
   },
   "devDependencies": {
     "@inspira-ui/plugins": "^0.0.1",
