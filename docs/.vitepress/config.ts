@@ -13,6 +13,6 @@ export default defineConfig({
         '@/': `${path.resolve(__dirname, '../src')}/`,
       },
     },
-    base: '/',
+    base: '/tiptap-print-designer/',
   },
 })
