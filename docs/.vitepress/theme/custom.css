@@ -11,6 +11,11 @@
 .VPHome{
   margin-bottom: 0px !important;
 }
+
+button{
+  border: inherit;
+}
+
 :root {
   --vp-c-white: #ffffff;
   --vp-c-black: #000000;

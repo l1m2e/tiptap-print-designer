@@ -3,6 +3,7 @@ import { useData, useRouter } from 'vitepress'
 import { Button } from './ui/button'
 import { FlipWords } from './ui/flip-words'
 import { ParticlesBg } from './ui/particles-bg'
+import { RainbowButton } from './ui/rainbow-button'
 import { SparklesText } from './ui/sparkles-text'
 
 const { isDark } = useData()
@@ -23,10 +24,10 @@ const router = useRouter()
         />
       </div>
       <div>
-        <Button @click="() => router.go('/tiptap-print-designer/guide/start')">
+        <RainbowButton @click="() => router.go('/tiptap-print-designer/guide/start')">
           开始使用
-        </Button>
-        <Button class="ml-4 " variant="secondary">
+        </RainbowButton>
+        <Button class="ml-4 rounded-xl h-11 py-2" variant="outline" size="lg">
           立即尝试
         </Button>
       </div>
