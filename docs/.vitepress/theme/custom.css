@@ -141,8 +141,8 @@
 }
 
 .dark {
-  --vp-c-bg: black ;
-  --vp-c-bg-alt: #161618;
+  --vp-c-bg: #121212 ;
+  --vp-c-bg-alt: black;
   --vp-c-bg-elv: #202127;
   --vp-c-bg-soft: #202127;
 }
