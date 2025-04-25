@@ -1,14 +1,15 @@
 import type { DefaultTheme } from 'vitepress'
 import path from 'node:path'
 import { defineConfig } from 'vitepress'
-
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: 'tiptap-print-designer',
   description: 'tiptap-print-designer',
   base: '/tiptap-print-designer/',
   srcDir: 'src',
+  head: [['link', { rel: 'icon', href: '/tiptap-print-designer/favicon.ico' }]],
   themeConfig: {
+    logo: { src: '/logo.svg', width: 26, height: 26 },
     sidebar: {
       '/guide/': { base: '/guide/', items: sidebarGuide() },
     },
