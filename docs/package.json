@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "motion-v": "1.0.0-beta.2",
-    "reka-ui": "^2.2.0"
+    "reka-ui": "^2.2.0",
+    "vitepress-plugin-group-icons": "^1.5.2"
   },
   "devDependencies": {
     "@inspira-ui/plugins": "^0.0.1",

@@ -28,7 +28,7 @@ const HomeRef = ref<HTMLElement | null>(null)
       <div class="md:text-2xl my-10 md:my-20">
         一个富文本打印设计器
         <FlipWords
-          :words="['设计像写Word一样简单', '可定制化', '开箱即用']"
+          :words="['所见即所得', '可定制化', '开箱即用']"
           :duration="3000"
         />
       </div>

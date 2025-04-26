@@ -1,6 +1,6 @@
 ### 渲染器
 
-```vue
+```vue [Vue]
 <script setup lang="ts">
 import type { TemplateData } from 'tiptap-print-designer'
 import { Render } from 'tiptap-print-designer'

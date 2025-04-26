@@ -1,6 +1,8 @@
 import type { DefaultTheme } from 'vitepress'
 import path from 'node:path'
 import { defineConfig } from 'vitepress'
+import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons'
+
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: 'tiptap-print-designer',
@@ -29,6 +31,16 @@ export default defineConfig({
         '@/': `${path.resolve(__dirname, '../src')}/`,
       },
     },
+    plugins: [
+      groupIconVitePlugin(),
+    ],
+  },
+  markdown: {
+    config(md) {
+      md.use(groupIconMdPlugin, {
+        titleBar: { includeSnippet: true },
+      })
+    },
   },
 })
 
@@ -39,8 +51,8 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: '简介', link: 'start' },
+        { text: '设计器使用教程', link: 'designer-tutorial' },
         { text: '安装', link: 'installation' },
-        { text: '快速上手', link: 'quick-start' },
       ],
     },
     {
