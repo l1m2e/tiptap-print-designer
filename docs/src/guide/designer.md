@@ -1,6 +1,6 @@
 ### 设计器
 
-```vue
+```vue [Vue]
 <script setup lang="ts">
 import { Designer } from 'tiptap-print-designer'
 </script>
