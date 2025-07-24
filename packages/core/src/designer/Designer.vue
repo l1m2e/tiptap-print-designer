@@ -5,7 +5,7 @@ import Toaster from '@/components/ui/toast/Toaster.vue'
 import { Database, Settings } from 'lucide-vue-next'
 import { useVueToPrint } from 'vue-to-print'
 import { ResizablePanel } from '~/components/ui/resizable'
-import { generateMockData } from '~/db/services/printDesigner'
+import { generateMockData, getDataSource } from '~/db/services/printDesigner'
 import { EditorContent, EditorRoot } from '~/editor'
 import { DESIGNER_KEY } from '.'
 import DataSourcesDialog from './components/DataSourcesDialog/DataSourcesDialog.vue'
@@ -50,13 +50,18 @@ async function openFormatDialog(options: { format?: Format, mockData: any, custo
   return await FormatDialogRef.value?.open(options)
 }
 
-function save() {
+async function save() {
+  const dataSources = await getDataSource()
+  const mockData = await generateMockData()
+
   emits('save', {
     content: text.value,
     page: {
       size: toRaw(PaperRef.value!.size),
       paperType: toRaw(PaperRef.value!.paperType),
     },
+    dataSources,
+    mockData,
   })
 }
 
