@@ -1,6 +1,13 @@
 import type { Format } from './components/FormatDialog/common'
+import type { DataSchema } from '~/db/types'
 
-export interface TemplateData { content: string, page: { size: [string, string], paperType: string } }
+export interface TemplateData {
+  content: string
+  page: { size: [string, string], paperType: string }
+  dataSources: DataSchema[]
+  mockData: any
+}
+
 export type DesignerEmits = {
   save: [val: TemplateData]
 }
