@@ -1,7 +1,7 @@
 <script lang="tsx" setup>
 import { PAPER_KEY } from '.'
 
-const { size, paperType } = inject(PAPER_KEY, { size: ref(['210mm', '297mm']), paperType: ref('A4') })
+const { size, paperType, padding } = inject(PAPER_KEY, { size: ref(['210mm', '297mm']), paperType: ref('A4'), padding: ref(6) })
 
 const paperSizeListMap = new Map<string, [number, number]>([
   ['A4', [210, 297]],
@@ -17,6 +17,7 @@ function changePaperSize(sizeKey: string) {
 
 const popoverShow = ref(false)
 const customSize = ref([210, 297])
+
 function changeCustomSize() {
   if (!customSize.value[0] || !customSize.value[1]) return
   paperType.value = 'Custom'
@@ -52,6 +53,10 @@ function changeCustomSize() {
           <div class="flex items-center">
             <Label class="flex-shrink-0">高度</Label>
             <Input v-model="customSize[1]" type="number" class="mx-2  h-8" />
+          </div>
+          <div class="flex items-center">
+            <Label class="flex-shrink-0">边距</Label>
+            <Input v-model="padding" type="number" class="mx-2  h-8" />
           </div>
           <div class="flex justify-end mt-2">
             <Button size="sm" @click="changeCustomSize">

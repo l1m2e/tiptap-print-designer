@@ -3,7 +3,7 @@ import type { DataSchema } from '~/db/types'
 
 export interface TemplateData {
   content: string
-  page: { size: [string, string], paperType: string }
+  page: { size: [string, string], paperType: string, padding: number }
   dataSources: DataSchema[]
   mockData: any
 }
