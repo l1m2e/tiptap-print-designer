@@ -1,0 +1,30 @@
+# 开发相关文件
+src/client/
+*.local
+.vite-ssg-*
+node_modules/
+.idea/
+*.log
+
+# 构建相关
+tsconfig.json
+vite.config.ts
+tailwind.config.js
+postcss.config.js
+
+# 测试和配置文件
+.eslintrc*
+.prettierrc*
+jest.config.*
+vitest.config.*
+
+# 开发工具配置
+.vscode/
+*.swp
+*.swo
+
+# 只保留构建产物和必要文件
+!dist/**
+!package.json
+!README.md
+!LICENSE
