@@ -11,6 +11,8 @@ export class PrintDesignerDB extends Dexie {
 
   printDesigner!: Table<{
     dataSource: string
+    mockData: string
+    id: number
   }>
 
   constructor() {

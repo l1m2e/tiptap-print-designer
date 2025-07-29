@@ -5,7 +5,7 @@ import Toaster from '@/components/ui/toast/Toaster.vue'
 import { Database, Settings } from 'lucide-vue-next'
 import { useVueToPrint } from 'vue-to-print'
 import { ResizablePanel } from '~/components/ui/resizable'
-import { generateMockData, getDataSource } from '~/db/services/printDesigner'
+import { getDataSource, getMockData } from '~/db/services/printDesigner'
 import { EditorContent, EditorRoot } from '~/editor'
 import { DESIGNER_KEY } from '.'
 import DataSourcesDialog from './components/DataSourcesDialog/DataSourcesDialog.vue'
@@ -18,8 +18,9 @@ import SettingDialog from './components/SettingDialog/SettingDialog.vue'
 
 const emits = defineEmits<DesignerEmits>()
 const text = useLocalStorage('text', '')
-const { state: mockData } = useAsyncState(async () => {
-  const data = await generateMockData()
+
+const { state: mockData, execute: fetchMockData } = useAsyncState(async () => {
+  const data = await getMockData()
   return data
 }, null)
 
@@ -52,7 +53,7 @@ async function openFormatDialog(options: { format?: Format, mockData: any, custo
 
 async function save() {
   const dataSources = await getDataSource()
-  const mockData = await generateMockData()
+  const mockData = await getMockData()
 
   emits('save', {
     content: text.value,
@@ -118,7 +119,7 @@ defineExpose({
       </ResizablePanelGroup>
 
       <SettingDialog ref="DataSourcesDialogEl" />
-      <DataSourcesDialog ref="SettingDialogEl" />
+      <DataSourcesDialog ref="SettingDialogEl" @on-update-data-source="fetchMockData" />
       <SelectFieldDialog ref="SelectFieldDialogEl" />
       <EditSFCDialog ref="EditSFCDialogEl" />
       <DataTableDialog ref="DataTableDialogEl" />

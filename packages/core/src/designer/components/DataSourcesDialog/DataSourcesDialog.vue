@@ -9,6 +9,8 @@ import { getDataSource, updateDataSource } from '~/db/services/printDesigner'
 import ApiSelect from '../ApiSelect/ApiSelect.vue'
 import SelectResponsesPathDialog from './SelectResponsesPathDialog.vue'
 
+const emits = defineEmits<{ onUpdateDataSource: [] }>()
+
 const show = ref(false)
 const SelectResponsesPathDialogRef = ref<InstanceType<typeof SelectResponsesPathDialog>>()
 
@@ -69,6 +71,7 @@ function resetSchemaTree(key: string, tree: Schema) {
 async function save() {
   await updateDataSource(data.value!)
   show.value = false
+  emits('onUpdateDataSource')
 }
 
 async function open() {
