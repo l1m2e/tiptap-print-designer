@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { DesignerEmits } from '.'
+import type { DesignerEmits, TemplateData } from '.'
 import type { Format } from './components/FormatDialog/common'
 import Toaster from '@/components/ui/toast/Toaster.vue'
 import { Database, Settings } from 'lucide-vue-next'
 import { useVueToPrint } from 'vue-to-print'
 import { ResizablePanel } from '~/components/ui/resizable'
-import { getDataSource, getMockData } from '~/db/services/printDesigner'
+import { getDataSource, getMockData, updateDataSource, updateMockData } from '~/db/services/printDesigner'
 import { EditorContent, EditorRoot } from '~/editor'
 import { DESIGNER_KEY } from '.'
 import DataSourcesDialog from './components/DataSourcesDialog/DataSourcesDialog.vue'
@@ -66,10 +66,24 @@ async function save() {
   })
 }
 
+/** 设置模板 */
+async function setTemplate(template: TemplateData) {
+  await updateDataSource(template.dataSources)
+  await updateMockData(template.mockData)
+
+  if (PaperRef.value) {
+    PaperRef.value.size = template.page.size
+    PaperRef.value.paperType = template.page.paperType
+  }
+  text.value = template.content
+  mockData.value = template.mockData
+}
+
 provide(DESIGNER_KEY, { openSelectFieldDialog, openEditSFCDialog, openDateTableDialog, openFormatDialog })
 
 defineExpose({
   mockData,
+  setTemplate,
 })
 </script>
 
