@@ -94,8 +94,6 @@ declare module 'vue' {
     PopoverTrigger: typeof import('./src/components/ui/popover/PopoverTrigger.vue')['default']
     ResizableHandle: typeof import('./src/components/ui/resizable/ResizableHandle.vue')['default']
     ResizablePanelGroup: typeof import('./src/components/ui/resizable/ResizablePanelGroup.vue')['default']
-    RouterLink: typeof import('vue-router')['RouterLink']
-    RouterView: typeof import('vue-router')['RouterView']
     ScrollArea: typeof import('./src/components/ui/scroll-area/ScrollArea.vue')['default']
     ScrollBar: typeof import('./src/components/ui/scroll-area/ScrollBar.vue')['default']
     Select: typeof import('./src/components/ui/select/Select.vue')['default']

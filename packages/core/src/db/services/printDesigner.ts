@@ -6,7 +6,10 @@ import { getApiSchemaByPath } from '../utils/getApiSchemaByPath'
 /** 更新数据源 */
 export async function updateDataSource(dataSource: DataSchema[]) {
   await db.printDesigner.clear()
-  return await db.printDesigner.add({ dataSource: JSON.stringify(dataSource) })
+  const source = await db.printDesigner.add({ dataSource: JSON.stringify(dataSource), mockData: '{}' })
+  const mock = await generateMockData()
+  await db.printDesigner.update(source, { mockData: JSON.stringify(mock) })
+  return source
 }
 
 /** 获取数据源 */
@@ -60,7 +63,7 @@ export async function generateMockData() {
           throw new Error(`HTTP error! status: ${response.status}`)
 
         const data = await response.json()
-        mockData[key] = data[path]
+        mockData[key] = path ? data[path] : data
       }
       catch (error) {
         console.error(`Failed to fetch mock data for ${key}:`, error)
@@ -70,4 +73,22 @@ export async function generateMockData() {
 
   await Promise.all(apiRequests)
   return mockData
+}
+
+/** 获取mock数据 */
+export async function getMockData() {
+  const res = await db.printDesigner.toCollection().first()
+  if (!res)
+    return {}
+  return JSON.parse(res.mockData)
+}
+
+/** 更新mock数据 */
+export async function updateMockData(mockData: Record<string, any>) {
+  const { id } = await db.printDesigner.toCollection().first() || {}
+  if (!id)
+    throw new Error('No data source found to update mock data')
+
+  await db.printDesigner.update(id, { mockData: JSON.stringify(mockData) })
+  return id
 }
