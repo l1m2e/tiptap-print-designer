@@ -52,18 +52,23 @@ async function openFormatDialog(options: { format?: Format, mockData: any, custo
 }
 
 async function save() {
+  const templateData = await getTemplate()
+  emits('save', templateData)
+}
+
+async function getTemplate(): Promise<TemplateData> {
   const dataSources = await getDataSource()
   const mockData = await getMockData()
-
-  emits('save', {
+  return {
     content: text.value,
     page: {
       size: toRaw(PaperRef.value!.size),
       paperType: toRaw(PaperRef.value!.paperType),
+      padding: toRaw(PaperRef.value!.padding),
     },
     dataSources,
     mockData,
-  })
+  }
 }
 
 /** 设置模板 */
@@ -74,6 +79,7 @@ async function setTemplate(template: TemplateData) {
   if (PaperRef.value) {
     PaperRef.value.size = template.page.size
     PaperRef.value.paperType = template.page.paperType
+    PaperRef.value.padding = template.page.padding
   }
   text.value = template.content
   mockData.value = template.mockData
@@ -82,8 +88,8 @@ async function setTemplate(template: TemplateData) {
 provide(DESIGNER_KEY, { openSelectFieldDialog, openEditSFCDialog, openDateTableDialog, openFormatDialog })
 
 defineExpose({
-  mockData,
   setTemplate,
+  getTemplate,
 })
 </script>
 
@@ -113,7 +119,7 @@ defineExpose({
         <ResizablePanel>
           <div class="overflow-y-auto h-[calc(100vh-54px)]">
             <PaperContent>
-              <EditorContent class="p-[6mm]" />
+              <EditorContent :style="{ padding: `${PaperRef?.padding || 0}mm` }" />
             </PaperContent>
           </div>
         </ResizablePanel>
@@ -125,7 +131,7 @@ defineExpose({
           <div class="bg-gray-100 dark:bg-neutral-950 h-[calc(100vh-54px)] overflow-hidden">
             <PaperContent zoom>
               <EditorRoot v-model="text" mode="viewer" :data="mockData">
-                <EditorContent ref="print" class="pointer-events-none select-none p-[6mm]" />
+                <EditorContent ref="print" class="pointer-events-none select-none" :style="{ padding: `${PaperRef?.padding || 0}mm` }" />
               </EditorRoot>
             </PaperContent>
           </div>
