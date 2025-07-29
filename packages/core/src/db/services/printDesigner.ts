@@ -6,7 +6,7 @@ import { getApiSchemaByPath } from '../utils/getApiSchemaByPath'
 /** 更新数据源 */
 export async function updateDataSource(dataSource: DataSchema[]) {
   await db.printDesigner.clear()
-  const source = await db.printDesigner.add({ dataSource: JSON.stringify(dataSource), mockData: '{}' })
+  const source = await db.printDesigner.add({ dataSource: JSON.stringify(dataSource), mockData: '{}', id: 1 })
   const mock = await generateMockData()
   await db.printDesigner.update(source, { mockData: JSON.stringify(mock) })
   return source
@@ -29,6 +29,7 @@ export async function getApiTree(): Promise<SchemaTree> {
     path: item.path,
     schema: getApiSchemaByPath(item.api!.operation, item.path),
   }))
+
 
   const schemaData = filterData.map(({ key, schema }) => ({
     type: 'object',
