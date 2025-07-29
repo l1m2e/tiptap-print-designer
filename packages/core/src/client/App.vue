@@ -27,7 +27,7 @@ watch(type, async (newType) => {
       </TabsList>
     </Tabs>
     <Designer v-show="type === 'Designer'" ref="DesignerEl" />
-    <div v-show="type === 'Render'">
+    <div v-show="type === 'Render'" v-if="templateData">
       <Render :template="templateData" :data="templateData?.mockData || {}" />
     </div>
   </div>
