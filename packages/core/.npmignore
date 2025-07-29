@@ -6,11 +6,12 @@ node_modules/
 .idea/
 *.log
 
-# 构建相关
+# 构建相关配置文件（保留 dist 目录）
 tsconfig.json
 vite.config.ts
 tailwind.config.js
 postcss.config.js
+index.html
 
 # 测试和配置文件
 .eslintrc*
@@ -23,8 +24,11 @@ vitest.config.*
 *.swp
 *.swo
 
-# 只保留构建产物和必要文件
-!dist/**
-!package.json
-!../../LICENSE
-!../../README.md
+# 开发依赖文件
+auto-imports.d.ts
+components.d.ts
+components.json
+shims.d.ts
+
+# 工具脚本（发布时不需要）
+scripts/
