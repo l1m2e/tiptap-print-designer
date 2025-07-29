@@ -1,6 +1,6 @@
 .tiptap {
   .tableWrapper {
-    @apply my-2 overflow-x-auto;
+    @apply my-2 first:mt-0 last:mb-0 overflow-x-auto;
   }
 
   table {
