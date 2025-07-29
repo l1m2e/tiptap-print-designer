@@ -23,8 +23,9 @@ const { handlePrint } = useVueToPrint({ content: () => print.value! })
 
 const text = shallowRef('')
 
-watchImmediate(template, (templateData) => {
+watchImmediate(template, async (templateData) => {
   text.value = templateData.content
+  await nextTick()
   if (PaperRef.value) {
     PaperRef.value.size = templateData.page.size
     PaperRef.value.paperType = templateData.page.paperType
