@@ -9,7 +9,7 @@ import SlashCommands from './SlashCommands'
 import { Table, TableCell, TableHeader, TableRow } from './Table'
 import TextAlign from './TextAlign'
 import TextStyle from './TextStyle'
-import TrailingNode from './TrailingNode'
+// import TrailingNode from './TrailingNode'
 
 const baseExtensions = [
   StarterKit,
@@ -25,7 +25,7 @@ const baseExtensions = [
 const designerExtensions = [
   ...baseExtensions,
   Placeholder,
-  TrailingNode,
+  // TrailingNode,
   SlashCommands,
   DesignerFieldNode,
   DesignerDateTableNode,
