@@ -26,5 +26,5 @@ vitest.config.*
 # 只保留构建产物和必要文件
 !dist/**
 !package.json
-!README.md
-!LICENSE
+!../../LICENSE
+!../../README.md

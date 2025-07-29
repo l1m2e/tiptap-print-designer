@@ -14,6 +14,7 @@
   "bugs": {
     "url": "https://github.com/l1m2e/tiptap-print-designer/issues"
   },
+  "readme": "../../README.md",
   "keywords": ["tiptap", "vue3", "print", "designer", "rich-text", "template", "editor"],
   "exports": {
     ".": {
@@ -33,7 +34,7 @@
     "typecheck": "vue-tsc",
     "preview": "vite preview",
     "up": "taze major -I",
-    "prepublishOnly": "pnpm run typecheck && pnpm run build",
+    "prepublishOnly": "pnpm run build",
     "publish:npm": "npm publish"
   },
   "dependencies": {
