@@ -79,45 +79,6 @@ const data = ref({
 </template>
 ```
 
-## 📚 API 文档
-
-### Designer 组件
-
-设计器组件用于创建和编辑打印模板。
-
-**Props:**
-
-- 无
-
-**Events:**
-
-- `@save(templateData: TemplateData)` - 保存模板时触发
-
-### Render 组件
-
-渲染器组件用于渲染打印模板。
-
-**Props:**
-
-- `template: TemplateData` - 模板数据
-- `data: Record<string, any>` - 渲染数据
-
-### 类型定义
-
-```typescript
-interface TemplateData {
-  content: string // 模板内容
-  page: PageConfig // 页面配置
-  dataSources: DataSource[] // 数据源配置
-  mockData: Record<string, any> // 模拟数据
-}
-
-interface PageConfig {
-  size: [string, string] // 页面尺寸
-  paperType: string // 纸张类型
-}
-```
-
 ## 🎯 功能特性
 
 已实现功能:
