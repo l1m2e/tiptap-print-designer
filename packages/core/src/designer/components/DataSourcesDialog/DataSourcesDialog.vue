@@ -5,6 +5,7 @@ import { Link } from 'lucide-vue-next'
 import { v4 as uuidv4 } from 'uuid'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip'
 import { getDataSource, updateDataSource } from '~/db/services/printDesigner'
 import ApiSelect from '../ApiSelect/ApiSelect.vue'
 import SelectResponsesPathDialog from './SelectResponsesPathDialog.vue'
@@ -35,10 +36,19 @@ const columns = ref<ColumnDef<DataSchema>[]>([
     cell: ({ row }) => {
       const path = row.original.path
       return (
-        <Button variant="outline" onClick={() => SelectResponsesPathDialogRef.value?.open(row.original)}>
-          <Link />
-          {path ? `Root.${path}` : 'Root'}
-        </Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger class="w-full">
+              <Button variant="outline" class="w-[200px] !justify-start" onClick={() => SelectResponsesPathDialogRef.value?.open(row.original)}>
+                <Link class="mr-1" />
+                <span class="truncate">{path ? `Root.${path}` : 'Root'}</span>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              {path ? `Root.${path}` : 'Root'}
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       )
     },
   },
