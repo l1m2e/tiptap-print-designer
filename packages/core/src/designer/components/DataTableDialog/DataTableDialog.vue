@@ -99,7 +99,7 @@ function onSelect(selectData: { schema: SchemaTree, path: string, description: s
   if (dataSource.value.path) {
     data.value = data.value.map(item => ({ ...item, accessorKey: '' }))
   }
-  dataSource.value = { path: selectData.path, schema: selectData.schema, description: selectData.description }
+  dataSource.value = { path: selectData.path, schema: selectData.schema[0].children!, description: selectData.description }
 }
 
 function addRow(index: number) {

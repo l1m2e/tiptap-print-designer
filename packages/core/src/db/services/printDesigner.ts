@@ -1,4 +1,5 @@
 import type { ApiSchema, DataSchema, SchemaTree } from '../types'
+import { get } from '~/utils'
 import { db } from '../database'
 import { apiSchemaToApiTree } from '../utils/apiSchemaToApiTree'
 import { getApiSchemaByPath } from '../utils/getApiSchemaByPath'
@@ -29,7 +30,6 @@ export async function getApiTree(): Promise<SchemaTree> {
     path: item.path,
     schema: getApiSchemaByPath(item.api!.operation, item.path),
   }))
-
 
   const schemaData = filterData.map(({ key, schema }) => ({
     type: 'object',
@@ -64,7 +64,7 @@ export async function generateMockData() {
           throw new Error(`HTTP error! status: ${response.status}`)
 
         const data = await response.json()
-        mockData[key] = path ? data[path] : data
+        mockData[key] = get(data, path)
       }
       catch (error) {
         console.error(`Failed to fetch mock data for ${key}:`, error)

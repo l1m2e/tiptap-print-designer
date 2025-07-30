@@ -30,7 +30,12 @@ function select(val: Schema) {
           <component :is="isExpanded ? ChevronDown : ChevronRight" v-if="item.hasChildren" class=" size-[14px]" />
 
           <div class="py-2 text-[12px]">
-            <span class="border-input rounded-sm bg-[#58a6ff1f] px-2 py-0.5 text-[#58a6ff] shadow-sm">{{ item.value.field }}</span>
+            <span
+              class="border-input rounded-sm bg-[#58a6ff1f] px-2 py-0.5 text-[#58a6ff] shadow-sm"
+              :class="item.value.field === 'ARRAY_ITEMS' && 'bg-purple-100 text-purple-500'"
+            >
+              {{ item.value.field === 'ARRAY_ITEMS' ? 'items' : item.value.field }}
+            </span>
             <span class="mx-2">{{ item.value.type === 'array' ? `${item.value.type}<${item.value.parentType}>` : item.value.type }}</span>
             <span class="text-gray-500 dark:text-gray-300">{{ item.value.description }}</span>
           </div>
