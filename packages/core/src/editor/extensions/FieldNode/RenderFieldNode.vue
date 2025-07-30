@@ -1,7 +1,7 @@
 <script lang="tsx" setup>
 import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
-import { get } from 'radash'
 import { inject } from 'vue'
+import { get } from '~/utils'
 import { useFormat } from '../../composables/useFormat'
 import { EDITOR_CONTEXT } from '../../constants'
 
