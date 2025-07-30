@@ -68,11 +68,11 @@ function resetSchemaTree(key: string, tree: Schema) {
   api && (api.path = tree.path)
 }
 
-async function save() {
+const { execute: save, isLoading: saveLoading } = useAsyncState(async () => {
   await updateDataSource(data.value!)
   show.value = false
   emits('onUpdateDataSource')
-}
+}, null, { immediate: false })
 
 async function open() {
   show.value = true
@@ -101,7 +101,7 @@ defineExpose({
         <Button variant="outline" @click="show = false">
           取消
         </Button>
-        <Button @click="save">
+        <Button :loading="saveLoading" @click="save">
           保存
         </Button>
       </DialogFooter>
