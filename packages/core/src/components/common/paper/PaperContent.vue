@@ -8,7 +8,7 @@ const { zoom } = defineProps<{
 }>()
 
 const zoomEl = ref<HTMLElement>()
-const { size } = inject(PAPER_KEY, { size: ref(['210mm', '297mm']), paperType: ref('A4') })
+const { size } = inject(PAPER_KEY, { size: ref<[string, string]>(['210mm', '297mm']), paperType: ref('A4'), padding: ref(6) })
 
 onMounted(() => {
   zoom && panzoom(zoomEl.value!, {
