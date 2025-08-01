@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Code2Icon, Codepen, List, ListOrdered, Table } from 'lucide-vue-next'
+import { Code2Icon, Codepen, Image, List, ListOrdered, Table } from 'lucide-vue-next'
 import { inject } from 'vue'
 import { DESIGNER_KEY } from '~/designer'
 import { EDITOR_CONTEXT } from '../../constants'
@@ -23,6 +23,25 @@ const commandList = [
     command: () => {
       deletePreviousCharacter()?.run()
       openSelectFieldDialog()
+    },
+  },
+  {
+    title: '图片',
+    icon: Image,
+    command: () => {
+      deletePreviousCharacter()?.run()
+      // 插入一个空的图片节点，用户可以通过UI上传或输入URL
+      editorContent?.editor.value?.chain().focus().insertContent({
+        type: 'resizable-image',
+        attrs: {
+          src: '',
+          alt: '',
+          title: '',
+          width: 'auto',
+          height: 'auto',
+          display: 'block',
+        },
+      }).run()
     },
   },
   {

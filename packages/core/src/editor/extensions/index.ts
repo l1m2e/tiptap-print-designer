@@ -4,6 +4,7 @@ import { DesignerDateTableNode, RenderDateTableNode } from './DateTableNode'
 import { DesignerFieldNode, RenderFieldNode } from './FieldNode'
 import FontSize from './FontSize'
 import Placeholder from './Placeholder'
+import { DesignerResizableImageNode, RenderResizableImageNode } from './ResizableImageNode'
 import { DesignerSFCNode, RenderSFCNode } from './SFCNode'
 import SlashCommands from './SlashCommands'
 import { Table, TableCell, TableHeader, TableRow } from './Table'
@@ -30,6 +31,7 @@ const designerExtensions = [
   DesignerFieldNode,
   DesignerDateTableNode,
   DesignerSFCNode,
+  DesignerResizableImageNode,
   BubbleMenu,
 ]
 
@@ -38,6 +40,7 @@ const renderExtensions = [
   RenderFieldNode,
   RenderDateTableNode,
   RenderSFCNode,
+  RenderResizableImageNode,
 ]
 
 export function loadEditorExtensions(mode: 'designer' | 'viewer') {
