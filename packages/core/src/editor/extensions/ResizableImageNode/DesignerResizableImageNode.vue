@@ -2,7 +2,6 @@
 import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
 import { useFileDialog } from '@vueuse/core'
 import { Image, Move, RotateCcw, Trash2 } from 'lucide-vue-next'
-import { computed, ref, watch } from 'vue'
 
 const props = defineProps(nodeViewProps)
 
@@ -14,13 +13,12 @@ const urlInputValue = ref('')
 const resizeStartData = ref<{ startX: number, startY: number, startWidth: number, startHeight: number } | null>(null)
 
 // 使用 VueUse 的文件对话框
-const { files, open: openFileDialog, reset: resetFiles } = useFileDialog({
+const { open: openFileDialog, reset: resetFiles, onChange } = useFileDialog({
   accept: 'image/*',
   multiple: false,
 })
 
-// 监听文件选择
-watch(files, (newFiles) => {
+onChange((newFiles) => {
   if (newFiles && newFiles.length > 0) {
     const file = newFiles[0]
     if (!file.type.startsWith('image/')) {
@@ -54,8 +52,6 @@ const containerStyle = computed(() => ({
   position: 'relative' as const,
   maxWidth: props.node.attrs.display === 'inline' ? 'none' : '100%',
 }))
-
-// 处理文件上传 - 现在由 useFileDialog 的 watch 处理
 
 // 触发文件选择
 function triggerFileUpload() {
@@ -171,13 +167,9 @@ function handleImageError() {
 
 <template>
   <NodeViewWrapper :style="containerStyle" class="my-1">
-    <!-- URL输入对话框 -->
-    <div v-if="showUrlInput" class="fixed inset-0 z-[1000] flex items-center justify-center">
-      <div class="absolute inset-0 bg-black/50" @click="cancelUrl" />
-      <div class="relative bg-white p-6 rounded-lg shadow-xl min-w-[400px] max-w-[90vw]">
-        <h3 class="text-lg font-semibold mb-4">
-          输入图片URL
-        </h3>
+    <Dialog v-model:open="showUrlInput" @close="cancelUrl">
+      <DialogContent>
+        <DialogTitle>输入图片URL</DialogTitle>
         <Input
           v-model="urlInputValue"
           type="url"
@@ -185,16 +177,16 @@ function handleImageError() {
           @keyup.enter="confirmUrl"
           @keyup.escape="cancelUrl"
         />
-        <div class="flex gap-2 mt-4 flex-row-reverse">
-          <Button @click="confirmUrl">
-            确认
-          </Button>
+        <DialogFooter>
           <Button variant="secondary" @click="cancelUrl">
             取消
           </Button>
-        </div>
-      </div>
-    </div>
+          <Button @click="confirmUrl">
+            确认
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
 
     <!-- 上下文菜单 -->
     <ContextMenu>
