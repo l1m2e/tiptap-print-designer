@@ -21,15 +21,11 @@ const PaperRef = useTemplateRef('PaperEl')
 const print = ref <HTMLElement>()
 const { handlePrint } = useVueToPrint({ content: () => print.value! })
 
-const text = shallowRef('')
-
-watchImmediate(template, async (templateData) => {
-  text.value = templateData.content
-  await nextTick()
+onMounted(() => {
   if (PaperRef.value) {
-    PaperRef.value.size = templateData.page.size
-    PaperRef.value.paperType = templateData.page.paperType
-    PaperRef.value.padding = templateData.page.padding || 0
+    PaperRef.value.size = template.page.size
+    PaperRef.value.paperType = template.page.paperType
+    PaperRef.value.padding = template.page.padding || 0
   }
 })
 
@@ -41,7 +37,7 @@ defineExpose({
 <template>
   <Paper v-bind="template.page" ref="PaperEl">
     <PaperContent>
-      <EditorRoot v-model="text" mode="viewer" :data>
+      <EditorRoot :model-value="template.content" mode="viewer" :data>
         <EditorContent ref="print" class="pointer-events-none select-none" :style="{ padding: `${PaperRef?.padding || 0}mm` }" />
       </EditorRoot>
     </PaperContent>
