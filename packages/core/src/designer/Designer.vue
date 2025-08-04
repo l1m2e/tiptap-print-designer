@@ -17,7 +17,7 @@ import SelectFieldDialog from './components/SelectFieldDialog/SelectFieldDialog.
 import SettingDialog from './components/SettingDialog/SettingDialog.vue'
 
 const emits = defineEmits<DesignerEmits>()
-const text = useLocalStorage('text', '')
+const text = useSessionStorage('text', '')
 
 const { state: mockData, execute: fetchMockData } = useAsyncState(async () => {
   const data = await getMockData()
