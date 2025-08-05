@@ -35,7 +35,7 @@ defineExpose({
 </script>
 
 <template>
-  <Paper v-bind="template.page" ref="PaperEl">
+  <Paper v-bind="template.page" ref="PaperEl" class="tiptap-print-designer">
     <PaperContent>
       <EditorRoot :model-value="template.content" mode="viewer" :data>
         <EditorContent ref="print" class="pointer-events-none select-none" :style="{ padding: `${PaperRef?.padding || 0}mm` }" />
