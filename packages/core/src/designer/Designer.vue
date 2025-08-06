@@ -94,7 +94,7 @@ defineExpose({
 </script>
 
 <template>
-  <Paper ref="PaperEl" class="tiptap-print-designer">
+  <Paper ref="PaperEl">
     <EditorRoot v-model="text" :data="mockData">
       <div class="grid grid-cols-3 gap-x-4 items-center border-b border-neutral-200 p-2 dark:border-neutral-800 h-[54px] ">
         <EditTopMenu />
