@@ -10,9 +10,6 @@ body,
   padding: 0;
 }
 
-html.dark {
-  background: #121212;
-}
 
 @layer base {
   :root {
