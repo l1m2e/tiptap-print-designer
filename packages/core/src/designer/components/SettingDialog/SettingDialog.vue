@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { Database, Palette } from 'lucide-vue-next'
+import { Database } from 'lucide-vue-next'
 import DataSourcesSetting from './DataSourcesSetting.vue'
-import ThemeSetting from './ThemeSetting.vue'
+// import ThemeSetting from './ThemeSetting.vue'
 
 const show = ref(false)
 const componentMap = {
   DataSourcesSetting,
-  ThemeSetting,
+  // ThemeSetting,
 }
 const componentType = ref <keyof typeof componentMap>('DataSourcesSetting')
 
@@ -22,11 +22,11 @@ const items: Item[] = [
     component: 'DataSourcesSetting',
     icon: Database,
   },
-  {
-    title: '主题',
-    component: 'ThemeSetting',
-    icon: Palette,
-  },
+  // {
+  //   title: '主题',
+  //   component: 'ThemeSetting',
+  //   icon: Palette,
+  // },
 ]
 
 function open() {
