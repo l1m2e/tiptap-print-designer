@@ -2,8 +2,6 @@
 export default {
   darkMode: ['class'],
   content: ['./index.html', './src/**/*.{ts,js,vue,tsx}'],
-  // prefix: 'tpd-', // 添加 CSS 类前缀
-  important: '.tiptap-print-designer',
   theme: {
     extend: {
       borderRadius: {
