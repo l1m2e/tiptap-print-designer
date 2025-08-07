@@ -1,46 +1,46 @@
 .tiptap {
   .tableWrapper {
-    @apply my-2 first:mt-0 last:mb-0 overflow-x-auto;
+    @apply tpd-my-2 first:tpd-mt-0 last:tpd-mb-0 tpd-overflow-x-auto;
   }
 
   table {
-    @apply border-collapse m-0 overflow-hidden table-fixed w-full;
+    @apply tpd-border-collapse tpd-m-0 tpd-overflow-hidden tpd-table-fixed tpd-w-full;
 
     td,
     th {
-      @apply border-[1pt] border-black box-border min-w-[1em] p-[2pt_4pt] relative align-top dark:border-neutral-700;
+      @apply tpd-border-[1pt] tpd-border-black tpd-box-border tpd-min-w-[1em] tpd-p-[2pt_4pt] tpd-relative tpd-align-top dark:tpd-border-neutral-700;
       > * {
-        @apply mb-0;
+        @apply tpd-mb-0;
       }
     }
 
     th {
-      @apply bg-gray-100 font-bold text-left dark:bg-neutral-900;
+      @apply tpd-bg-gray-100 tpd-font-bold tpd-text-left dark:tpd-bg-neutral-900;
     }
 
     .selectedCell::after {
       content: '';
-      @apply bg-violet-500/20 absolute inset-0 pointer-events-none z-[2];
+      @apply tpd-bg-violet-500/20 tpd-absolute tpd-inset-0 tpd-pointer-events-none tpd-z-[2];
     }
 
     .column-resize-handle {
-      @apply dark:bg-white bg-black absolute right-[-2px] top-0 bottom-[-2px] w-[4px] pointer-events-none;
+      @apply dark:tpd-bg-white tpd-bg-black tpd-absolute tpd-right-[-2px] tpd-top-0 tpd-bottom-[-2px] tpd-w-[4px] tpd-pointer-events-none;
     }
   }
 
   &.resize-cursor {
-    @apply cursor-ew-resize;
+    @apply tpd-cursor-ew-resize;
   }
 }
 
 .designer {
   .no-border {
-    @apply border-dashed border-[1pt] border-violet-500;
+    @apply tpd-border-dashed tpd-border-[1pt] tpd-border-violet-500;
   }
 }
 
 .viewer {
   .no-border {
-    @apply border-none;
+    @apply tpd-border-none;
   }
 }

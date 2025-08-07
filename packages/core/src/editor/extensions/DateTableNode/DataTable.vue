@@ -44,19 +44,19 @@ defineExpose({
 </script>
 
 <template>
-  <div class="max-w-full overflow-y-hidden">
-    <table ref="tableEl" class="w-full">
+  <div class="tpd-max-w-full tpd-overflow-y-hidden">
+    <table ref="tableEl" class="tpd-w-full">
       <thead>
         <tr v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
-          <th v-for="header in headerGroup.headers" :key="header.id" class="relative group" :style="{ width: `${header.column.getSize()}%` }">
+          <th v-for="header in headerGroup.headers" :key="header.id" class="tpd-relative group" :style="{ width: `${header.column.getSize()}%` }">
             <FlexRender
               v-if="!header.isPlaceholder" :render="header.column.columnDef.header"
               :props="header.getContext()"
             />
             <div
               v-if="getCanResize(header.column.id)"
-              class="absolute h-full right-0 w-1 top-0 opacity-0 group-hover:opacity-100 transition-opacity cursor-col-resize select-none touch-none"
-              :class="`${getIsResizing(header.column.id) ? 'bg-green-500 opacity-100' : 'bg-violet-500'}` "
+              class="tpd-absolute tpd-h-full tpd-right-0 tpd-w-1 tpd-top-0 tpd-opacity-0 group-hover:tpd-opacity-100 tpd-transition-opacity tpd-cursor-col-resize tpd-select-none touch-none"
+              :class="`${getIsResizing(header.column.id) ? 'tpd-bg-green-500 tpd-opacity-100' : 'tpd-bg-violet-500'}` "
               @mousedown="(e) => updateColumnSizes(header.column.id, e)"
             />
           </th>

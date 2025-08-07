@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import type { DialogContentEmits, DialogContentProps } from 'reka-ui'
-import type { HTMLAttributes } from 'vue'
-import { X } from 'lucide-vue-next'
+import type { DialogContentEmits, DialogContentProps } from "reka-ui"
+import type { HTMLAttributes } from "vue"
+import { reactiveOmit } from "@vueuse/core"
+import { X } from "lucide-vue-next"
 import {
   DialogClose,
   DialogContent,
@@ -9,18 +10,13 @@ import {
   DialogOverlay,
   DialogPortal,
   useForwardPropsEmits,
-} from 'reka-ui'
-import { computed } from 'vue'
+} from "reka-ui"
 import { cn } from '~/lib/utils'
 
-const props = defineProps<DialogContentProps & { class?: HTMLAttributes['class'] }>()
+const props = defineProps<DialogContentProps & { class?: HTMLAttributes["class"] }>()
 const emits = defineEmits<DialogContentEmits>()
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
-
-  return delegated
-})
+const delegatedProps = reactiveOmit(props, "class")
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
 </script>
@@ -28,23 +24,23 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 <template>
   <DialogPortal>
     <DialogOverlay
-      class="fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+      class="tpd-fixed tpd-inset-0 tpd-z-50 tpd-bg-black/80 data-[state=open]:tpd-animate-in data-[state=closed]:tpd-animate-out data-[state=closed]:tpd-fade-out-0 data-[state=open]:tpd-fade-in-0"
     />
     <DialogContent
       v-bind="forwarded"
       :class="
         cn(
-          'fixed left-1/2 top-1/2 z-50 grid w-full max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg',
+          'tpd-fixed tpd-left-1/2 tpd-top-1/2 tpd-z-50 tpd-grid tpd-w-full tpd-max-w-lg tpd--translate-x-1/2 tpd--translate-y-1/2 tpd-gap-4 tpd-border tpd-bg-background tpd-p-6 tpd-shadow-lg tpd-duration-200 data-[state=open]:tpd-animate-in data-[state=closed]:tpd-animate-out data-[state=closed]:tpd-fade-out-0 data-[state=open]:tpd-fade-in-0 data-[state=closed]:tpd-zoom-out-95 data-[state=open]:tpd-zoom-in-95 data-[state=closed]:tpd-slide-out-to-left-1/2 data-[state=closed]:tpd-slide-out-to-top-[48%] data-[state=open]:tpd-slide-in-from-left-1/2 data-[state=open]:tpd-slide-in-from-top-[48%] sm:tpd-rounded-lg',
           props.class,
         )"
     >
       <slot />
 
       <DialogClose
-        class="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
+        class="tpd-absolute tpd-right-4 tpd-top-4 tpd-rounded-sm tpd-opacity-70 tpd-ring-offset-background tpd-transition-opacity hover:tpd-opacity-100 focus:tpd-outline-none focus:tpd-ring-2 focus:tpd-ring-ring focus:tpd-ring-offset-2 disabled:tpd-pointer-events-none data-[state=open]:tpd-bg-accent data-[state=open]:tpd-text-muted-foreground"
       >
-        <X class="w-4 h-4" />
-        <span class="sr-only">Close</span>
+        <X class="tpd-w-4 tpd-h-4" />
+        <span class="tpd-sr-only">Close</span>
       </DialogClose>
     </DialogContent>
   </DialogPortal>

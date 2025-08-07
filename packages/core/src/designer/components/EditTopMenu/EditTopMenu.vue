@@ -60,7 +60,7 @@ const FnButtons = [
 </script>
 
 <template>
-  <div v-if="editor" class="flex items-center">
+  <div v-if="editor" class="tpd-flex tpd-items-center">
     <TextAndHeading class="mr-sm" />
     <FontSize />
 

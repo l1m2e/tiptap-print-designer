@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from 'vue'
+import type { HTMLAttributes } from "vue"
 import { cn } from '~/lib/utils'
 
 const props = defineProps<{
-  class?: HTMLAttributes['class']
+  class?: HTMLAttributes["class"]
 }>()
 </script>
 
@@ -11,8 +11,8 @@ const props = defineProps<{
   <ul
     data-sidebar="menu-badge"
     :class="cn(
-      'mx-3.5 flex min-w-0 translate-x-px flex-col gap-1 border-l border-sidebar-border px-2.5 py-0.5',
-      'group-data-[collapsible=icon]:hidden',
+      'tpd-mx-3.5 tpd-flex tpd-min-w-0 tpd-translate-x-px tpd-flex-col tpd-gap-1 tpd-border-l tpd-border-sidebar-border tpd-px-2.5 tpd-py-0.5',
+      'group-data-[collapsible=icon]:tpd-hidden',
       props.class,
     )"
   >

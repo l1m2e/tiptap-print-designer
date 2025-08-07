@@ -76,10 +76,10 @@ function getReferenceClientRect() {
       sticky: 'popper',
     }"
   >
-    <div class="bg-white dark:bg-neutral-950  rounded border shadow-lg flex  items-center p-1">
+    <div class="tpd-bg-white dark:tpd-bg-neutral-950 tpd-rounded tpd-border tpd-shadow-lg tpd-flex tpd-items-center tpd-p-1">
       <template v-for="(grid, index) in actionButtonGridList" :key="index">
         <ActionButton v-for="item in grid" :key="item.title" v-bind="item" />
-        <Separator v-if="index !== actionButtonGridList.length - 1" orientation="vertical" class="mx-2 h-5" />
+        <Separator v-if="index !== actionButtonGridList.length - 1" orientation="vertical" class="tpd-mx-2 tpd-h-5" />
       </template>
     </div>
   </BubbleMenu>

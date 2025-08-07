@@ -1,6 +1,6 @@
 .tiptap-editor {
   .ProseMirror-focused {
-    @apply outline-none;
+    @apply tpd-outline-none;
   }
 
   @media print {
@@ -10,13 +10,13 @@
 
 /* 自定义滚动条 */
 ::-webkit-scrollbar {
-  @apply w-[4px];
+  @apply tpd-w-[4px];
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-[#d7d7d7] rounded-[10px];
+  @apply tpd-bg-[#d7d7d7] tpd-rounded-[10px];
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-transparent;
+  @apply tpd-bg-transparent;
 }

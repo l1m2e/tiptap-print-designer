@@ -39,7 +39,7 @@ defineExpose({
 
 <template>
   <Dialog v-model:open="show">
-    <DialogContent class="max-w-[1200px]">
+    <DialogContent class="!tpd-max-w-[1200px]">
       <DialogHeader>
         <DialogTitle>选择数据</DialogTitle>
       </DialogHeader>

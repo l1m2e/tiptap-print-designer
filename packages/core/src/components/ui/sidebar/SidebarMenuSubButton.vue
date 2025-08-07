@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import type { PrimitiveProps } from 'reka-ui'
-import type { HTMLAttributes } from 'vue'
-import { Primitive } from 'reka-ui'
+import type { PrimitiveProps } from "reka-ui"
+import type { HTMLAttributes } from "vue"
+import { Primitive } from "reka-ui"
 import { cn } from '~/lib/utils'
 
 const props = withDefaults(defineProps<PrimitiveProps & {
-  size?: 'sm' | 'md'
+  size?: "sm" | "md"
   isActive?: boolean
-  class?: HTMLAttributes['class']
+  class?: HTMLAttributes["class"]
 }>(), {
-  as: 'a',
-  size: 'md',
+  as: "a",
+  size: "md",
 })
 </script>
 
@@ -22,11 +22,11 @@ const props = withDefaults(defineProps<PrimitiveProps & {
     :data-size="size"
     :data-active="isActive"
     :class="cn(
-      'flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-sidebar-foreground outline-none ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-sidebar-accent-foreground',
-      'data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground',
-      size === 'sm' && 'text-xs',
-      size === 'md' && 'text-sm',
-      'group-data-[collapsible=icon]:hidden',
+      'tpd-flex tpd-h-7 tpd-min-w-0 tpd--translate-x-px tpd-items-center tpd-gap-2 tpd-overflow-hidden tpd-rounded-md tpd-px-2 tpd-text-sidebar-foreground tpd-outline-none tpd-ring-sidebar-ring hover:tpd-bg-sidebar-accent hover:tpd-text-sidebar-accent-foreground focus-visible:tpd-ring-2 active:tpd-bg-sidebar-accent active:tpd-text-sidebar-accent-foreground disabled:tpd-pointer-events-none disabled:tpd-opacity-50 aria-disabled:tpd-pointer-events-none aria-disabled:tpd-opacity-50 [&>span:last-child]:tpd-truncate [&>svg]:tpd-size-4 [&>svg]:tpd-shrink-0 [&>svg]:tpd-text-sidebar-accent-foreground',
+      'data-[active=true]:tpd-bg-sidebar-accent data-[active=true]:tpd-text-sidebar-accent-foreground',
+      size === 'tpd-sm' && 'tpd-text-xs',
+      size === 'tpd-md' && 'tpd-text-sm',
+      'group-data-[collapsible=icon]:tpd-hidden',
       props.class,
     )"
   >

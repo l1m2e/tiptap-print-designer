@@ -69,7 +69,7 @@ const table = useVueTable({
       </TableHeader>
     </Table>
 
-    <div :style="{ maxHeight: isNumber(maxHeight) ? `${maxHeight}px` : maxHeight }" class="overflow-y-auto">
+    <div :style="{ maxHeight: isNumber(maxHeight) ? `${maxHeight}px` : maxHeight }" class="tpd-overflow-y-auto">
       <Table>
         <TableBody ref="tableBodyEl">
           <template v-if="table.getRowModel().rows?.length">
@@ -90,7 +90,7 @@ const table = useVueTable({
           </template>
           <template v-else>
             <TableRow>
-              <TableCell :colspan="columns.length" class="h-24 text-center">
+              <TableCell :colspan="columns.length" class="tpd-h-24 tpd-text-center">
                 <slot name="no-data">
                   暂无数据
                 </slot>

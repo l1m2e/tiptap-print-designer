@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { PrimitiveProps } from 'reka-ui'
-import type { HTMLAttributes } from 'vue'
-import { Primitive } from 'reka-ui'
+import type { PrimitiveProps } from "reka-ui"
+import type { HTMLAttributes } from "vue"
+import { Primitive } from "reka-ui"
 import { cn } from '~/lib/utils'
 
 const props = defineProps<PrimitiveProps & {
-  class?: HTMLAttributes['class']
+  class?: HTMLAttributes["class"]
 }>()
 </script>
 
@@ -15,8 +15,8 @@ const props = defineProps<PrimitiveProps & {
     :as="as"
     :as-child="asChild"
     :class="cn(
-      'duration-200 flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-sidebar-foreground/70 outline-none ring-sidebar-ring transition-[margin,opa] ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0',
-      'group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0',
+      'tpd-duration-200 tpd-flex tpd-h-8 tpd-shrink-0 tpd-items-center tpd-rounded-md tpd-px-2 tpd-text-xs tpd-font-medium tpd-text-sidebar-foreground/70 tpd-outline-none tpd-ring-sidebar-ring tpd-transition-[margin,opa] tpd-ease-linear focus-visible:tpd-ring-2 [&>svg]:tpd-size-4 [&>svg]:tpd-shrink-0',
+      'group-data-[collapsible=icon]:tpd--mt-8 group-data-[collapsible=icon]:tpd-opacity-0',
       props.class)"
   >
     <slot />

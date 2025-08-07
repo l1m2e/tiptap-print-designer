@@ -81,7 +81,7 @@ onKeyStroke('Escape', () => deletePreviousCharacter()?.run())
 </script>
 
 <template>
-  <Command class="shadow-sm border">
+  <Command class="tpd-shadow-sm tpd-border">
     <CommandList>
       <CommandGroup>
         <CommandItem
@@ -89,8 +89,8 @@ onKeyStroke('Escape', () => deletePreviousCharacter()?.run())
           :value="item"
           @select="() => item.command()"
         >
-          <div class="flex items-center">
-            <component :is="item.icon" class="mr-2" />
+          <div class="tpd-flex tpd-items-center">
+            <component :is="item.icon" class="tpd-mr-2" />
             <span>{{ item.title }}</span>
           </div>
         </CommandItem>

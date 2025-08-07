@@ -44,20 +44,20 @@ defineExpose({
 
 <template>
   <Dialog v-model:open="show">
-    <DialogContent class="max-w-[80vw]">
+    <DialogContent class="tpd-max-w-screen-xl">
       <DialogHeader>
         <DialogTitle>{{ type === 'add' ? '添加组件' : '编辑组件' }}</DialogTitle>
       </DialogHeader>
 
       <ResizablePanelGroup direction="horizontal">
         <ResizablePanel>
-          <MonacoEditor ref="editorEl" v-model="template" language="vue" class="h-[60vh] rounded-sm overflow-hidden" />
+          <MonacoEditor ref="editorEl" v-model="template" language="vue" class="tpd-h-[60vh] tpd-rounded-sm tpd-overflow-hidden" />
         </ResizablePanel>
 
-        <ResizableHandle class="mx-2" />
+        <ResizableHandle class="tpd-mx-2" />
 
         <ResizablePanel>
-          <div class="h-[60vh] p-4 overflow-y-auto overflow-hidden">
+          <div class="tpd-h-[60vh] tpd-p-4 tpd-overflow-y-auto tpd-overflow-hidden">
             <SFCLoader :text="template" />
           </div>
         </ResizablePanel>

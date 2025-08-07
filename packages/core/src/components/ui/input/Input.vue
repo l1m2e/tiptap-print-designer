@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from 'vue'
-import { useVModel } from '@vueuse/core'
+import type { HTMLAttributes } from "vue"
+import { useVModel } from "@vueuse/core"
 import { cn } from '~/lib/utils'
 
 const props = defineProps<{
   defaultValue?: string | number
   modelValue?: string | number
-  class?: HTMLAttributes['class']
+  class?: HTMLAttributes["class"]
 }>()
 
 const emits = defineEmits<{
-  (e: 'update:modelValue', payload: string | number): void
+  (e: "update:modelValue", payload: string | number): void
 }>()
 
-const modelValue = useVModel(props, 'modelValue', emits, {
+const modelValue = useVModel(props, "modelValue", emits, {
   passive: true,
   defaultValue: props.defaultValue,
 })
 </script>
 
 <template>
-  <input v-model="modelValue" :class="cn('flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50', props.class)">
+  <input v-model="modelValue" :class="cn('tpd-flex tpd-h-9 tpd-w-full tpd-rounded-md tpd-border tpd-border-input tpd-bg-transparent tpd-px-3 tpd-py-1 tpd-text-sm tpd-shadow-sm tpd-transition-colors file:tpd-border-0 file:tpd-bg-transparent file:tpd-text-sm file:tpd-font-medium placeholder:tpd-text-muted-foreground focus-visible:tpd-outline-none focus-visible:tpd-ring-1 focus-visible:tpd-ring-ring disabled:tpd-cursor-not-allowed disabled:tpd-opacity-50', props.class)">
 </template>

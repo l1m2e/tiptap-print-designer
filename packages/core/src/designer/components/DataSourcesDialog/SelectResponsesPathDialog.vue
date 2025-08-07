@@ -53,11 +53,11 @@ defineExpose({
 
 <template>
   <Dialog v-model:open="show" @update:open="beforeClose">
-    <DialogContent class="max-w-[1200px]">
+    <DialogContent class="tpd-max-w-screen-2xl">
       <DialogHeader>
         <DialogTitle>选择数据</DialogTitle>
       </DialogHeader>
-      <SchemaTreeView h-600px :tree @select="schemaTreeSelect" />
+      <SchemaTreeView class="tpd-h-600px" :tree @select="schemaTreeSelect" />
 
       <DialogFooter>
         <Button variant="outline" @click="show = false">

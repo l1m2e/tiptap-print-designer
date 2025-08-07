@@ -27,7 +27,7 @@ function changeCustomSize() {
 </script>
 
 <template>
-  <div class="flex items-center">
+  <div class="tpd-flex tpd-items-center">
     <Tabs v-model="paperType" default-value="A4">
       <TabsList>
         <TabsTrigger v-for="item in paperSizeListMap.keys()" :key="item" :value="item" @click="changePaperSize(item)">
@@ -37,28 +37,28 @@ function changeCustomSize() {
     </Tabs>
     <Popover v-model:open="popoverShow">
       <PopoverTrigger as-child>
-        <Button class="ml-2" size="sm" :variant="paperType === 'Custom' ? 'default' : 'outline'">
+        <Button class="tpd-ml-2" size="sm" :variant="paperType === 'Custom' ? 'default' : 'outline'">
           自定义
         </Button>
       </PopoverTrigger>
-      <PopoverContent class="w-80">
-        <div class="grid gap-2">
-          <h4 class="mb-4">
+      <PopoverContent class="tpd-w-80">
+        <div class="tpd-grid tpd-gap-2">
+          <h4 class="tpd-mb-4">
             自定义纸张尺寸 单位 mm
           </h4>
-          <div class="flex items-center">
-            <Label class="flex-shrink-0">宽度</Label>
-            <Input v-model="customSize[0]" type="number" class="mx-2 h-8" />
+          <div class="tpd-flex tpd-items-center">
+            <Label class="tpd-flex-shrink-0">宽度</Label>
+            <Input v-model="customSize[0]" type="number" class="tpd-mx-2 tpd-h-8" />
           </div>
-          <div class="flex items-center">
-            <Label class="flex-shrink-0">高度</Label>
-            <Input v-model="customSize[1]" type="number" class="mx-2  h-8" />
+          <div class="tpd-flex tpd-items-center">
+            <Label class="tpd-flex-shrink-0">高度</Label>
+            <Input v-model="customSize[1]" type="number" class="tpd-mx-2 tpd-h-8" />
           </div>
-          <div class="flex items-center">
-            <Label class="flex-shrink-0">边距</Label>
-            <Input v-model="padding" type="number" class="mx-2  h-8" />
+          <div class="tpd-flex tpd-items-center">
+            <Label class="tpd-flex-shrink-0">边距</Label>
+            <Input v-model="padding" type="number" class="tpd-mx-2 tpd-h-8" />
           </div>
-          <div class="flex justify-end mt-2">
+          <div class="tpd-flex tpd-justify-end tpd-mt-2">
             <Button size="sm" @click="changeCustomSize">
               确定
             </Button>

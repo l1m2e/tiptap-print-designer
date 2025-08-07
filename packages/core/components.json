@@ -7,7 +7,7 @@
     "css": "src/styles/main.css",
     "baseColor": "zinc",
     "cssVariables": true,
-    "prefix": ""
+    "prefix": "tpd-"
   },
   "aliases": {
     "components": "~/components",

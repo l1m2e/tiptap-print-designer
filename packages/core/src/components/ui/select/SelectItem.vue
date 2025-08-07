@@ -1,24 +1,20 @@
 <script setup lang="ts">
-import type { AcceptableValue, SelectItemProps } from 'reka-ui'
-import type { HTMLAttributes } from 'vue'
-import { Check } from 'lucide-vue-next'
+import type { SelectItemProps } from "reka-ui"
+import type { HTMLAttributes } from "vue"
+import { reactiveOmit } from "@vueuse/core"
+import { Check } from "lucide-vue-next"
 import {
   SelectItem,
   SelectItemIndicator,
+
   SelectItemText,
   useForwardProps,
-} from 'reka-ui'
-import { computed } from 'vue'
+} from "reka-ui"
 import { cn } from '~/lib/utils'
 
-const props = defineProps<SelectItemProps & { class?: HTMLAttributes['class'] }>()
+const props = defineProps<SelectItemProps & { class?: HTMLAttributes["class"] }>()
 
-const emits = defineEmits<{ select: [value: AcceptableValue] }>()
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
-
-  return delegated
-})
+const delegatedProps = reactiveOmit(props, "class")
 
 const forwardedProps = useForwardProps(delegatedProps)
 </script>
@@ -28,15 +24,14 @@ const forwardedProps = useForwardProps(delegatedProps)
     v-bind="forwardedProps"
     :class="
       cn(
-        'relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+        'tpd-relative tpd-flex tpd-w-full tpd-cursor-default tpd-select-none tpd-items-center tpd-rounded-sm tpd-py-1.5 tpd-pl-2 tpd-pr-8 tpd-text-sm tpd-outline-none focus:tpd-bg-accent focus:tpd-text-accent-foreground data-[disabled]:tpd-pointer-events-none data-[disabled]:tpd-opacity-50',
         props.class,
       )
     "
-    @select="(value) => emits('select', value)"
   >
-    <span class="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span class="tpd-absolute tpd-right-2 tpd-flex tpd-h-3.5 tpd-w-3.5 tpd-items-center tpd-justify-center">
       <SelectItemIndicator>
-        <Check class="h-4 w-4" />
+        <Check class="tpd-h-4 tpd-w-4" />
       </SelectItemIndicator>
     </span>
 

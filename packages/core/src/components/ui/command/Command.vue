@@ -1,31 +1,28 @@
 <script setup lang="ts">
-import type { ListboxRootEmits, ListboxRootProps } from 'reka-ui'
-import type { HTMLAttributes } from 'vue'
-import { ListboxRoot, useFilter, useForwardPropsEmits } from 'reka-ui'
-import { computed, reactive, ref, watch } from 'vue'
+import type { ListboxRootEmits, ListboxRootProps } from "reka-ui"
+import type { HTMLAttributes } from "vue"
+import { reactiveOmit } from "@vueuse/core"
+import { ListboxRoot, useFilter, useForwardPropsEmits } from "reka-ui"
+import { reactive, ref, watch } from "vue"
 import { cn } from '~/lib/utils'
-import { provideCommandContext } from '.'
+import { provideCommandContext } from "."
 
-const props = withDefaults(defineProps<ListboxRootProps & { class?: HTMLAttributes['class'] }>(), {
-  modelValue: '',
+const props = withDefaults(defineProps<ListboxRootProps & { class?: HTMLAttributes["class"] }>(), {
+  modelValue: "",
 })
 
 const emits = defineEmits<ListboxRootEmits>()
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
-
-  return delegated
-})
+const delegatedProps = reactiveOmit(props, "class")
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
 
 const allItems = ref<Map<string, string>>(new Map())
 const allGroups = ref<Map<string, Set<string>>>(new Map())
 
-const { contains } = useFilter({ sensitivity: 'base' })
+const { contains } = useFilter({ sensitivity: "base" })
 const filterState = reactive({
-  search: '',
+  search: "",
   filtered: {
     /** The count of all visible items. */
     count: 0,
@@ -69,7 +66,7 @@ function filterItems() {
 }
 
 function handleSelect() {
-  filterState.search = ''
+  filterState.search = ""
 }
 
 watch(() => filterState.search, () => {
@@ -86,7 +83,7 @@ provideCommandContext({
 <template>
   <ListboxRoot
     v-bind="forwarded"
-    :class="cn('flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground', props.class)"
+    :class="cn('tpd-flex tpd-h-full tpd-w-full tpd-flex-col tpd-overflow-hidden tpd-rounded-md tpd-bg-popover tpd-text-popover-foreground', props.class)"
   >
     <slot />
   </ListboxRoot>

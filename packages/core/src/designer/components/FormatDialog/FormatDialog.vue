@@ -72,12 +72,12 @@ defineExpose({ open })
 
 <template>
   <Dialog v-model:open="show">
-    <DialogContent class="overflow-hidden max-h-[700px] max-w-[1300px] p-0" :class="isFullscreen ? 'max-h-[100vh] max-w-[100vw]' : 'max-h-[700px] max-w-[1300px]'">
+    <DialogContent class="tpd-overflow-hidden !tpd-max-h-[700px] !tpd-max-w-[1300px] !tpd-p-0" :class="isFullscreen ? '!tpd-max-h-[100vh] !tpd-max-w-[100vw]' : '!tpd-max-h-[700px] !tpd-max-w-[1300px]'">
       <SidebarProvider>
         <Sidebar collapsible="none">
           <SidebarContent>
             <SidebarGroup>
-              <SidebarGroupLabel class="font-bold dark:text-white text-black mb-2 text-xl">
+              <SidebarGroupLabel class="!tpd-font-bold dark:tpd-text-white !tpd-text-black tpd-mb-2 !tpd-text-xl">
                 格式化设置
               </SidebarGroupLabel>
               <SidebarGroupContent>
@@ -95,11 +95,11 @@ defineExpose({ open })
             </SidebarGroup>
           </SidebarContent>
         </Sidebar>
-        <main class="flex flex-1 flex-col overflow-hidden  px-4" :class="isFullscreen ? 'h-[calc(100vh-20px)]' : 'h-[680px]'">
-          <div class="h-12">
-            <div variant="ghost" size="icon" class="absolute top-[18px] right-0 mr-12 cursor-pointer text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white" @click="toggle">
-              <Maximize2Icon v-if="!isFullscreen" class="size-3" />
-              <Minimize2Icon v-else class="size-3" />
+        <main class="tpd-flex tpd-flex-1 tpd-flex-col tpd-overflow-hidden tpd-px-4" :class="isFullscreen ? 'tpd-h-[calc(100vh-20px)]' : 'tpd-h-[680px]'">
+          <div class="tpd-h-12">
+            <div variant="ghost" size="icon" class="tpd-absolute tpd-top-[18px] tpd-right-0 tpd-mr-12 tpd-cursor-pointer tpd-text-gray-700 hover:tpd-text-black dark:tpd-text-gray-300 tpd-dark:hover:text-white" @click="toggle">
+              <Maximize2Icon v-if="!isFullscreen" class="tpd-size-3" />
+              <Minimize2Icon v-else class="tpd-size-3" />
             </div>
           </div>
           <component
@@ -109,7 +109,7 @@ defineExpose({ open })
             :node-mock-data="nodeMockData"
             :custom-template="customTemplate"
           />
-          <DialogFooter class="mt-4">
+          <DialogFooter class="tpd-mt-4">
             <Button variant="outline" @click="cancel">
               取消
             </Button>

@@ -1,1 +1,1 @@
-export { default as RainbowButton } from './RainbowButton.vue';
+export { default as RainbowButton } from './RainbowButton.vue'

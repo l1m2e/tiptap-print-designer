@@ -27,7 +27,7 @@ const containerStyle = computed(() => ({
       :alt="props.node.attrs.alt || ''"
       :title="props.node.attrs.title || ''"
       :style="imageStyle"
-      class="max-w-full h-auto"
+      class="max-w-full tpd-h-auto"
     >
   </NodeViewWrapper>
 </template>

@@ -47,9 +47,9 @@ watchImmediate(() => props.node.attrs.columnSizingState, async () => {
 
 <template>
   <NodeViewWrapper as="div">
-    <ContextMenu class="w-full">
+    <ContextMenu class="tpd-w-full">
       <ContextMenuTrigger>
-        <div class="border border-dashed border-violet-500 rounded p-2 w-full">
+        <div class="tpd-border tpd-border-dashed tpd-border-violet-500 tpd-rounded tpd-p-2 tpd-w-full">
           <DataTable
             ref="DataTableEl" :columns="columns" :data="tableList"
             @column-sizing-change="handleColumnSizingChange"
