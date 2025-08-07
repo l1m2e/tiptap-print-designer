@@ -8,8 +8,7 @@ import { getApiSchemaByPath } from '../utils/getApiSchemaByPath'
 export async function updateDataSource(dataSource: DataSchema[]) {
   await db.printDesigner.clear()
   const source = await db.printDesigner.add({ dataSource: JSON.stringify(dataSource), mockData: '{}', id: 1 })
-  const mock = await generateMockData()
-  await db.printDesigner.update(source, { mockData: JSON.stringify(mock) })
+  await db.printDesigner.update(source, { mockData: JSON.stringify({}) })
   return source
 }
 
@@ -47,9 +46,7 @@ export async function getApiTree(): Promise<SchemaTree> {
 /** 生成Mock数据 */
 export async function generateMockData() {
   const mockData: Record<string, any> = {}
-  const baseMockUrl = localStorage.getItem('mockUrl')
-  if (!baseMockUrl)
-    throw new Error('Mock URL not found in localStorage')
+  const baseMockUrl = localStorage.getItem('TIPTAP_PRINT_DESIGNER_MOCKURL')
 
   const apis = await getDataSource()
   const apiRequests = apis
@@ -57,7 +54,7 @@ export async function generateMockData() {
     .map(async ({ key, api, path }) => {
       try {
         const { path: url, method } = api!
-        const mockUrl = baseMockUrl + url
+        const mockUrl = baseMockUrl! + url
         const response = await fetch(mockUrl, { method })
 
         if (!response.ok)

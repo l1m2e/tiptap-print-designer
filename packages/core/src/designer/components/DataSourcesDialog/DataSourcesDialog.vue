@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip'
-import { getDataSource, updateDataSource } from '~/db/services/printDesigner'
+import { generateMockData, getDataSource, updateDataSource } from '~/db/services/printDesigner'
 import ApiSelect from '../ApiSelect/ApiSelect.vue'
 import SelectResponsesPathDialog from './SelectResponsesPathDialog.vue'
 
@@ -80,6 +80,7 @@ function resetSchemaTree(key: string, tree: Schema) {
 
 const { execute: save, isLoading: saveLoading } = useAsyncState(async () => {
   await updateDataSource(data.value!)
+  await generateMockData()
   show.value = false
   emits('onUpdateDataSource')
 }, null, { immediate: false })
