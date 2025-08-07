@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import type { PopoverContentEmits, PopoverContentProps } from 'reka-ui'
-import type { HTMLAttributes } from 'vue'
+import type { PopoverContentEmits, PopoverContentProps } from "reka-ui"
+import type { HTMLAttributes } from "vue"
+import { reactiveOmit } from "@vueuse/core"
 import {
   PopoverContent,
 
   PopoverPortal,
   useForwardPropsEmits,
-} from 'reka-ui'
-import { computed } from 'vue'
+} from "reka-ui"
 import { cn } from '~/lib/utils'
 
 defineOptions({
@@ -15,19 +15,15 @@ defineOptions({
 })
 
 const props = withDefaults(
-  defineProps<PopoverContentProps & { class?: HTMLAttributes['class'] }>(),
+  defineProps<PopoverContentProps & { class?: HTMLAttributes["class"] }>(),
   {
-    align: 'center',
+    align: "center",
     sideOffset: 4,
   },
 )
 const emits = defineEmits<PopoverContentEmits>()
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
-
-  return delegated
-})
+const delegatedProps = reactiveOmit(props, "class")
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
 </script>
@@ -38,7 +34,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
       v-bind="{ ...forwarded, ...$attrs }"
       :class="
         cn(
-          'z-50 w-72 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
+          'tpd-z-50 tpd-w-72 tpd-rounded-md tpd-border tpd-bg-popover tpd-p-4 tpd-text-popover-foreground tpd-shadow-md tpd-outline-none data-[state=open]:tpd-animate-in data-[state=closed]:tpd-animate-out data-[state=closed]:tpd-fade-out-0 data-[state=open]:tpd-fade-in-0 data-[state=closed]:tpd-zoom-out-95 data-[state=open]:tpd-zoom-in-95 data-[side=bottom]:tpd-slide-in-from-top-2 data-[side=left]:tpd-slide-in-from-right-2 data-[side=right]:tpd-slide-in-from-left-2 data-[side=top]:tpd-slide-in-from-bottom-2',
           props.class,
         )
       "

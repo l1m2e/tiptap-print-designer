@@ -1,22 +1,18 @@
 <script setup lang="ts">
-import type { DropdownMenuSubTriggerProps } from 'reka-ui'
-import type { HTMLAttributes } from 'vue'
-import { ChevronRight } from 'lucide-vue-next'
+import type { DropdownMenuSubTriggerProps } from "reka-ui"
+import type { HTMLAttributes } from "vue"
+import { reactiveOmit } from "@vueuse/core"
+import { ChevronRight } from "lucide-vue-next"
 import {
   DropdownMenuSubTrigger,
 
   useForwardProps,
-} from 'reka-ui'
-import { computed } from 'vue'
+} from "reka-ui"
 import { cn } from '~/lib/utils'
 
-const props = defineProps<DropdownMenuSubTriggerProps & { class?: HTMLAttributes['class'] }>()
+const props = defineProps<DropdownMenuSubTriggerProps & { class?: HTMLAttributes["class"] }>()
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
-
-  return delegated
-})
+const delegatedProps = reactiveOmit(props, "class")
 
 const forwardedProps = useForwardProps(delegatedProps)
 </script>
@@ -25,11 +21,11 @@ const forwardedProps = useForwardProps(delegatedProps)
   <DropdownMenuSubTrigger
     v-bind="forwardedProps"
     :class="cn(
-      'flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent data-[state=open]:bg-accent',
+      'tpd-flex tpd-cursor-default tpd-select-none tpd-items-center tpd-rounded-sm tpd-px-2 tpd-py-1.5 tpd-text-sm tpd-outline-none focus:tpd-bg-accent data-[state=open]:tpd-bg-accent',
       props.class,
     )"
   >
     <slot />
-    <ChevronRight class="ml-auto h-4 w-4" />
+    <ChevronRight class="tpd-ml-auto tpd-h-4 tpd-w-4" />
   </DropdownMenuSubTrigger>
 </template>

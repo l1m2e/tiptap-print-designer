@@ -37,12 +37,12 @@ defineExpose({ open })
 
 <template>
   <Dialog v-model:open="show">
-    <DialogContent class="overflow-hidden max-h-[700px] max-w-[1200px] p-0">
+    <DialogContent class="tpd-overflow-hidden !tpd-max-h-[700px] !tpd-max-w-[1200px] !tpd-p-0">
       <SidebarProvider>
         <Sidebar collapsible="none">
           <SidebarContent>
             <SidebarGroup>
-              <SidebarGroupLabel class="font-bold dark:text-white text-black mb-2 text-xl">
+              <SidebarGroupLabel class="!tpd-font-bold dark:tpd-text-white !tpd-text-black tpd-mb-2 !tpd-text-xl">
                 设置
               </SidebarGroupLabel>
               <SidebarGroupContent>
@@ -60,7 +60,7 @@ defineExpose({ open })
             </SidebarGroup>
           </SidebarContent>
         </Sidebar>
-        <main class="flex h-[680px] flex-1 flex-col overflow-hidden pt-12 px-4">
+        <main class="tpd-flex tpd-h-[680px] tpd-flex-1 tpd-flex-col tpd-overflow-hidden tpd-pt-12 tpd-px-4">
           <component :is="componentMap[componentType]" />
         </main>
       </SidebarProvider>

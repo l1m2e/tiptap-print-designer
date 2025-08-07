@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { isVNode } from 'vue'
-import { Toast, ToastClose, ToastDescription, ToastProvider, ToastTitle, ToastViewport } from '.'
-import { useToast } from './use-toast'
+import { isVNode } from "vue"
+import { Toast, ToastClose, ToastDescription, ToastProvider, ToastTitle, ToastViewport } from "."
+import { useToast } from "./use-toast"
 
 const { toasts } = useToast()
 </script>
@@ -9,7 +9,7 @@ const { toasts } = useToast()
 <template>
   <ToastProvider>
     <Toast v-for="toast in toasts" :key="toast.id" v-bind="toast">
-      <div class="grid gap-1">
+      <div class="tpd-grid tpd-gap-1">
         <ToastTitle v-if="toast.title">
           {{ toast.title }}
         </ToastTitle>

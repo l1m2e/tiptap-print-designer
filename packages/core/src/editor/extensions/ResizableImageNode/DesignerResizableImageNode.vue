@@ -166,7 +166,7 @@ function handleImageError() {
 </script>
 
 <template>
-  <NodeViewWrapper :style="containerStyle" class="my-1">
+  <NodeViewWrapper :style="containerStyle" class="tpd-my-1">
     <Dialog v-model:open="showUrlInput" @close="cancelUrl">
       <DialogContent>
         <DialogTitle>输入图片URL</DialogTitle>
@@ -191,15 +191,15 @@ function handleImageError() {
     <!-- 上下文菜单 -->
     <ContextMenu>
       <ContextMenuTrigger>
-        <div class="relative group">
+        <div class="tpd-relative group">
           <!-- 如果没有图片，显示上传区域 -->
-          <div v-if="!props.node.attrs.src" class="select-none">
-            <div class="flex flex-col items-center justify-center p-8 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50">
-              <Image class="w-12 h-12 text-gray-400 mb-4" />
-              <p class="text-gray-500 mb-4">
+          <div v-if="!props.node.attrs.src" class="tpd-select-none">
+            <div class="tpd-flex tpd-flex-col tpd-items-center tpd-justify-center tpd-p-8 tpd-border-2 tpd-border-dashed tpd-border-gray-300 tpd-rounded-lg tpd-bg-gray-50">
+              <Image class="tpd-w-12 tpd-h-12 tpd-text-gray-400 tpd-mb-4" />
+              <p class="tpd-text-gray-500 tpd-mb-4">
                 点击上传图片或输入图片URL
               </p>
-              <div class="flex gap-2 mt-2">
+              <div class="tpd-flex tpd-gap-2 tpd-mt-2">
                 <Button @click="triggerFileUpload">
                   上传文件
                 </Button>
@@ -211,19 +211,19 @@ function handleImageError() {
           </div>
 
           <!-- 图片显示区域 -->
-          <div v-else class="relative inline-block">
+          <div v-else class="tpd-relative tpd-inline-block">
             <img
               ref="imageRef"
               :src="props.node.attrs.src"
               :alt="props.node.attrs.alt || ''"
               :title="props.node.attrs.title || ''"
               :style="imageStyle"
-              class="max-w-full h-auto"
+              class="max-w-full tpd-h-auto"
               @error="handleImageError"
             >
 
             <!-- 拖拽手柄 - 只在选中时显示 -->
-            <div v-if="props.selected" class="absolute inset-0 pointer-events-none">
+            <div v-if="props.selected" class="tpd-absolute tpd-inset-0 tpd-pointer-events-none">
               <!-- 右下角 - 等比例缩放 -->
               <div
                 class="resize-handle resize-handle-se"
@@ -242,27 +242,27 @@ function handleImageError() {
             </div>
 
             <!-- 工具栏 - 悬停时显示 -->
-            <div class="absolute top-2 right-2 flex gap-1 bg-black/80 p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+            <div class="tpd-absolute tpd-top-2 tpd-right-2 tpd-flex tpd-gap-1 tpd-bg-black/80 tpd-p-1 tpd-rounded tpd-opacity-0 group-hover:tpd-opacity-100 tpd-transition-opacity">
               <button
                 class="toolbar-btn"
                 :title="props.node.attrs.display === 'inline' ? '切换到块级' : '切换到内嵌'"
                 @click="toggleDisplay"
               >
-                <Move class="w-4 h-4" />
+                <Move class="tpd-w-4 tpd-h-4" />
               </button>
               <button
                 class="toolbar-btn"
                 title="重置尺寸"
                 @click="resetSize"
               >
-                <RotateCcw class="w-4 h-4" />
+                <RotateCcw class="tpd-w-4 tpd-h-4" />
               </button>
               <button
-                class="toolbar-btn text-red-400"
+                class="toolbar-btn tpd-text-red-400"
                 title="删除图片"
                 @click="deleteImage"
               >
-                <Trash2 class="w-4 h-4" />
+                <Trash2 class="tpd-w-4 tpd-h-4" />
               </button>
             </div>
           </div>
@@ -280,7 +280,7 @@ function handleImageError() {
           重置尺寸
         </ContextMenuItem>
         <ContextMenuSeparator />
-        <ContextMenuItem class="text-red-500" @select="deleteImage">
+        <ContextMenuItem class="tpd-text-red-500" @select="deleteImage">
           删除图片
         </ContextMenuItem>
       </ContextMenuContent>
@@ -290,22 +290,22 @@ function handleImageError() {
 
 <style scoped>
 .resize-handle {
-  @apply absolute bg-black border-2 border-white rounded-sm pointer-events-auto shadow-md;
+  @apply tpd-absolute tpd-bg-black tpd-border-2 tpd-border-white tpd-rounded-sm tpd-pointer-events-auto tpd-shadow-md;
 }
 
 .resize-handle-se {
-  @apply bottom-[-4px] right-[-4px] w-2 h-2 cursor-nw-resize;
+  @apply tpd-bottom-[-4px] tpd-right-[-4px] tpd-w-2 tpd-h-2 tpd-cursor-nw-resize;
 }
 
 .resize-handle-e {
-  @apply top-1/2 right-[-4px] w-2 h-4 cursor-ew-resize -translate-y-1/2;
+  @apply tpd-top-1/2 tpd-right-[-4px] tpd-w-2 tpd-h-4 tpd-cursor-ew-resize tpd--translate-y-1/2;
 }
 
 .resize-handle-s {
-  @apply bottom-[-4px] left-1/2 w-4 h-2 cursor-ns-resize -translate-x-1/2;
+  @apply tpd-bottom-[-4px] tpd-left-1/2 tpd-w-4 tpd-h-2 tpd-cursor-ns-resize tpd--translate-x-1/2;
 }
 
 .toolbar-btn {
-  @apply flex items-center justify-center w-7 h-7 bg-transparent border-none text-white rounded-sm cursor-pointer transition-colors hover:bg-white/20;
+  @apply tpd-flex tpd-items-center tpd-justify-center tpd-w-7 tpd-h-7 tpd-bg-transparent tpd-border-none tpd-text-white tpd-rounded-sm tpd-cursor-pointer tpd-transition-colors hover:tpd-bg-white/20;
 }
 </style>

@@ -10,7 +10,6 @@ body,
   padding: 0;
 }
 
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -85,9 +84,9 @@ body,
 
 @layer base {
   * {
-    @apply border-border;
+    @apply tpd-border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply tpd-bg-background tpd-text-foreground;
   }
 }

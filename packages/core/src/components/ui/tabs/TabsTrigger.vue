@@ -1,17 +1,13 @@
 <script setup lang="ts">
-import type { TabsTriggerProps } from 'reka-ui'
-import type { HTMLAttributes } from 'vue'
-import { TabsTrigger, useForwardProps } from 'reka-ui'
-import { computed } from 'vue'
+import type { TabsTriggerProps } from "reka-ui"
+import type { HTMLAttributes } from "vue"
+import { reactiveOmit } from "@vueuse/core"
+import { TabsTrigger, useForwardProps } from "reka-ui"
 import { cn } from '~/lib/utils'
 
-const props = defineProps<TabsTriggerProps & { class?: HTMLAttributes['class'] }>()
+const props = defineProps<TabsTriggerProps & { class?: HTMLAttributes["class"] }>()
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
-
-  return delegated
-})
+const delegatedProps = reactiveOmit(props, "class")
 
 const forwardedProps = useForwardProps(delegatedProps)
 </script>
@@ -20,11 +16,11 @@ const forwardedProps = useForwardProps(delegatedProps)
   <TabsTrigger
     v-bind="forwardedProps"
     :class="cn(
-      'inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow',
+      'tpd-inline-flex tpd-items-center tpd-justify-center tpd-whitespace-nowrap tpd-rounded-md tpd-px-3 tpd-py-1 tpd-text-sm tpd-font-medium tpd-ring-offset-background tpd-transition-all focus-visible:tpd-outline-none focus-visible:tpd-ring-2 focus-visible:tpd-ring-ring focus-visible:tpd-ring-offset-2 disabled:tpd-pointer-events-none disabled:tpd-opacity-50 data-[state=active]:tpd-bg-background data-[state=active]:tpd-text-foreground data-[state=active]:tpd-shadow',
       props.class,
     )"
   >
-    <span class="truncate">
+    <span class="tpd-truncate">
       <slot />
     </span>
   </TabsTrigger>

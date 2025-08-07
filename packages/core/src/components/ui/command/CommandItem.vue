@@ -1,20 +1,16 @@
 <script setup lang="ts">
-import type { ListboxItemEmits, ListboxItemProps } from 'reka-ui'
-import type { HTMLAttributes } from 'vue'
-import { useCurrentElement } from '@vueuse/core'
-import { ListboxItem, useForwardPropsEmits, useId } from 'reka-ui'
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import type { ListboxItemEmits, ListboxItemProps } from "reka-ui"
+import type { HTMLAttributes } from "vue"
+import { reactiveOmit, useCurrentElement } from "@vueuse/core"
+import { ListboxItem, useForwardPropsEmits, useId } from "reka-ui"
+import { computed, onMounted, onUnmounted, ref } from "vue"
 import { cn } from '~/lib/utils'
-import { useCommand, useCommandGroup } from '.'
+import { useCommand, useCommandGroup } from "."
 
-const props = defineProps<ListboxItemProps & { class?: HTMLAttributes['class'] }>()
+const props = defineProps<ListboxItemProps & { class?: HTMLAttributes["class"] }>()
 const emits = defineEmits<ListboxItemEmits>()
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
-
-  return delegated
-})
+const delegatedProps = reactiveOmit(props, "class")
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
 
@@ -46,7 +42,7 @@ onMounted(() => {
     return
 
   // textValue to perform filter
-  allItems.value.set(id, currentElement.value.textContent ?? props.value.toString())
+  allItems.value.set(id, currentElement.value.textContent ?? props?.value!.toString())
 
   const groupId = groupContext?.id
   if (groupId) {
@@ -69,7 +65,7 @@ onUnmounted(() => {
     v-bind="forwarded"
     :id="id"
     ref="itemRef"
-    :class="cn('relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0', props.class)"
+    :class="cn('tpd-relative tpd-flex tpd-cursor-default tpd-gap-2 tpd-select-none tpd-items-center tpd-rounded-sm tpd-px-2 tpd-py-1.5 tpd-text-sm tpd-outline-none data-[highlighted]:tpd-bg-accent data-[highlighted]:tpd-text-accent-foreground data-[disabled]:tpd-pointer-events-none data-[disabled]:tpd-opacity-50 [&_svg]:tpd-size-4 [&_svg]:tpd-shrink-0', props.class)"
     @select="() => {
       filterState.search = ''
     }"

@@ -85,8 +85,6 @@
    import 'tiptap-print-designer/index.css'
    ```
 
-
-
 ### 使用设计器组件
 
 ```vue [Vue]
@@ -98,8 +96,6 @@ import { Designer } from 'tiptap-print-designer'
   <Designer />
 </template>
 ```
-
-
 
 ### 使用渲染器组件
 
@@ -126,4 +122,3 @@ const data = ref({ boosInfo: { name: '黄金律法-拉达冈' } })
   <Render :template="template" :data="data" />
 </template>
 ```
-

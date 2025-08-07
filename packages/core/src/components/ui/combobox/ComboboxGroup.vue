@@ -1,28 +1,24 @@
 <script setup lang="ts">
-import type { ComboboxGroupProps } from 'reka-ui'
-import type { HTMLAttributes } from 'vue'
-import { ComboboxGroup, ComboboxLabel } from 'reka-ui'
-import { computed } from 'vue'
+import type { ComboboxGroupProps } from "reka-ui"
+import type { HTMLAttributes } from "vue"
+import { reactiveOmit } from "@vueuse/core"
+import { ComboboxGroup, ComboboxLabel } from "reka-ui"
 import { cn } from '~/lib/utils'
 
 const props = defineProps<ComboboxGroupProps & {
-  class?: HTMLAttributes['class']
+  class?: HTMLAttributes["class"]
   heading?: string
 }>()
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
-
-  return delegated
-})
+const delegatedProps = reactiveOmit(props, "class")
 </script>
 
 <template>
   <ComboboxGroup
     v-bind="delegatedProps"
-    :class="cn('overflow-hidden p-1 text-foreground [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground', props.class)"
+    :class="cn('tpd-overflow-hidden tpd-p-1 tpd-text-foreground [&_[cmdk-group-heading]]:tpd-px-2 [&_[cmdk-group-heading]]:tpd-py-1.5 [&_[cmdk-group-heading]]:tpd-text-xs [&_[cmdk-group-heading]]:tpd-font-medium [&_[cmdk-group-heading]]:tpd-text-muted-foreground', props.class)"
   >
-    <ComboboxLabel v-if="heading" class="px-2 py-1.5 text-xs font-medium text-muted-foreground">
+    <ComboboxLabel v-if="heading" class="tpd-px-2 tpd-py-1.5 tpd-text-xs tpd-font-medium tpd-text-muted-foreground">
       {{ heading }}
     </ComboboxLabel>
     <slot />

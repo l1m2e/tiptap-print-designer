@@ -18,18 +18,18 @@ const { isLoading, execute: updateOpenapiDoc } = useAsyncState(
 </script>
 
 <template>
-  <div class="flex flex-col justify-between h-full">
-    <div class="flex flex-col gap-2 p-1">
+  <div class="tpd-flex tpd-flex-col tpd-justify-between tpd-h-full">
+    <div class="tpd-flex tpd-flex-col tpd-gap-2 tpd-p-1">
       <label>接口文档地址</label>
-      <div class="flex items-center">
+      <div class="tpd-flex tpd-items-center">
         <Input v-model="openapiDocUrl" type="text" placeholder="文档地址" />
       </div>
       <label>Mock地址</label>
       <Input v-model="mockUrl" type="text" placeholder="Mock地址" />
     </div>
 
-    <div class="flex flex-row-reverse">
-      <Button :loading="isLoading" class="mt-4" @click="() => updateOpenapiDoc()">
+    <div class="tpd-flex tpd-flex-row-reverse">
+      <Button :loading="isLoading" class="tpd-mt-4" @click="() => updateOpenapiDoc()">
         应用
       </Button>
     </div>

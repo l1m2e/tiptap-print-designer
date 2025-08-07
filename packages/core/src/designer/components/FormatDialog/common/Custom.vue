@@ -36,15 +36,15 @@ defineExpose({
 </script>
 
 <template>
-  <ResizablePanelGroup direction="horizontal" class="w-full bg-white dark:bg-neutral-950 ">
+  <ResizablePanelGroup direction="horizontal" class="tpd-w-full tpd-bg-white dark:tpd-bg-neutral-950">
     <ResizablePanel>
-      <MonacoEditor ref="editorEl" v-model="template" language="vue" class="h-full rounded-sm overflow-hidden " />
+      <MonacoEditor ref="editorEl" v-model="template" language="vue" class="tpd-h-full tpd-rounded-sm tpd-overflow-hidden" />
     </ResizablePanel>
 
-    <ResizableHandle class="mx-2" />
+    <ResizableHandle class="tpd-mx-2" />
 
-    <ResizablePanel class="relative">
-      <div class="px-8 pt-2 overflow-y-auto h-full overflow-hidden break-all">
+    <ResizablePanel class="tpd-relative">
+      <div class="tpd-px-8 tpd-pt-2 tpd-overflow-y-auto tpd-h-full tpd-overflow-hidden tpd-break-all">
         <SFCLoader :text="template" v-bind="nodeMockData" />
       </div>
     </ResizablePanel>

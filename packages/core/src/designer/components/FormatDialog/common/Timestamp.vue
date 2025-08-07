@@ -34,9 +34,9 @@ defineExpose({
 </script>
 
 <template>
-  <div class="flex items-center justify-center size-full flex-col">
+  <div class="tpd-flex tpd-items-center tpd-justify-center tpd-size-full tpd-flex-col">
     <Select v-model="selectedFormat">
-      <SelectTrigger class="w-[400px]">
+      <SelectTrigger class="tpd-max-w-sm">
         <SelectValue placeholder="请选择字段" />
       </SelectTrigger>
       <SelectContent>
@@ -46,6 +46,6 @@ defineExpose({
       </SelectContent>
     </Select>
 
-    <Input v-if="selectedFormat === 'custom'" v-model="customFormat" class="w-[400px] mt-4" placeholder="请输入自定义格式" />
+    <Input v-if="selectedFormat === 'custom'" v-model="customFormat" class="!tpd-w-[400px] tpd-mt-4" placeholder="请输入自定义格式" />
   </div>
 </template>

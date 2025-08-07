@@ -38,7 +38,7 @@ defineExpose({
   <Paper v-bind="template.page" ref="PaperEl">
     <PaperContent>
       <EditorRoot :model-value="template.content" mode="viewer" :data>
-        <EditorContent ref="print" class="pointer-events-none select-none" :style="{ padding: `${PaperRef?.padding || 0}mm` }" />
+        <EditorContent ref="print" class="tpd-pointer-events-none tpd-select-none" :style="{ padding: `${PaperRef?.padding || 0}mm` }" />
       </EditorRoot>
     </PaperContent>
   </Paper>

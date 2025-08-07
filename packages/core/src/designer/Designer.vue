@@ -96,10 +96,10 @@ defineExpose({
 <template>
   <Paper ref="PaperEl">
     <EditorRoot v-model="text" :data="mockData">
-      <div class="grid grid-cols-3 gap-x-4 items-center border-b border-neutral-200 p-2 dark:border-neutral-800 h-[54px] ">
+      <div class="tpd-grid tpd-grid-cols-3 gap-x-4 tpd-items-center tpd-border-b tpd-border-neutral-200 tpd-p-2 dark:tpd-border-neutral-800 tpd-h-[54px]">
         <EditTopMenu />
-        <PaperTrigger class="flex justify-center w-full" />
-        <div class="flex items-center justify-end gap-2">
+        <PaperTrigger class="tpd-flex tpd-justify-center tpd-w-full" />
+        <div class="tpd-flex tpd-items-center tpd-justify-end tpd-gap-2">
           <Button variant="outline" size="icon" @click="SettingDialogRef?.open">
             <Database />
           </Button>
@@ -114,10 +114,10 @@ defineExpose({
           </Button>
         </div>
       </div>
-      <ResizablePanelGroup direction="horizontal" class="min-h-[calc(100vh-75px)] dark:bg-black">
+      <ResizablePanelGroup direction="horizontal" class="tpd-min-h-[calc(100vh-75px)] dark:tpd-bg-black">
         <!-- 设计器 -->
         <ResizablePanel>
-          <div class="overflow-y-auto h-[calc(100vh-54px)]">
+          <div class="tpd-overflow-y-auto tpd-h-[calc(100vh-54px)]">
             <PaperContent>
               <EditorContent :style="{ padding: `${PaperRef?.padding || 0}mm` }" />
             </PaperContent>
@@ -128,10 +128,10 @@ defineExpose({
 
         <!-- 预览 -->
         <ResizablePanel>
-          <div class="bg-gray-100 dark:bg-neutral-950 h-[calc(100vh-54px)] overflow-hidden">
+          <div class="tpd-bg-gray-100 dark:tpd-bg-neutral-950 tpd-h-[calc(100vh-54px)] tpd-overflow-hidden">
             <PaperContent zoom>
               <EditorRoot v-model="text" mode="viewer" :data="mockData">
-                <EditorContent ref="print" class="pointer-events-none select-none" :style="{ padding: `${PaperRef?.padding || 0}mm` }" />
+                <EditorContent ref="print" class="tpd-pointer-events-none tpd-select-none" :style="{ padding: `${PaperRef?.padding || 0}mm` }" />
               </EditorRoot>
             </PaperContent>
           </div>

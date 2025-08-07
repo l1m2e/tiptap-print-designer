@@ -13,31 +13,31 @@ function select(val: Schema) {
 </script>
 
 <template>
-  <ScrollArea class="h-[500px] w-full">
+  <ScrollArea class="tpd-h-[500px] tpd-w-full">
     <TreeRoot :items="tree" :get-key="(item) => item.id">
       <TreeVirtualizer v-slot="{ item }" :text-content="(opt) => opt.field">
         <TreeItem
           v-slot="{ isExpanded }" v-bind="item.bind"
-          class="h-[32px] w-full flex items-center rounded text-sm focus:bg-accent hover:bg-accent/30"
+          class="tpd-h-[32px] tpd-w-full tpd-flex tpd-items-center tpd-rounded tpd-text-sm focus:tpd-bg-accent hover:tpd-bg-accent/30"
           @select="(val) => select(val.detail.value as Schema)"
         >
-          <div v-if="item.level !== 1" class="h-full flex items-center">
-            <div v-for="l in item.level" :key="l" class="h-full w-3 flex items-center border-l">
-              <div v-if="l === item.level" class="w-full border-t" />
+          <div v-if="item.level !== 1" class="tpd-h-full tpd-flex tpd-items-center">
+            <div v-for="l in item.level" :key="l" class="tpd-h-full tpd-w-3 tpd-flex tpd-items-center tpd-border-l">
+              <div v-if="l === item.level" class="tpd-w-full tpd-border-t" />
             </div>
           </div>
 
-          <component :is="isExpanded ? ChevronDown : ChevronRight" v-if="item.hasChildren" class=" size-[14px]" />
+          <component :is="isExpanded ? ChevronDown : ChevronRight" v-if="item.hasChildren" class="tpd-size-[14px]" />
 
-          <div class="py-2 text-[12px]">
+          <div class="tpd-py-2 tpd-text-[12px]">
             <span
-              class="border-input rounded-sm bg-[#58a6ff1f] px-2 py-0.5 text-[#58a6ff] shadow-sm"
-              :class="item.value.field === 'ARRAY_ITEMS' && 'bg-purple-100 text-purple-500'"
+              class="tpd-border-input tpd-rounded-sm tpd-bg-[#58a6ff1f] tpd-px-2 tpd-py-0.5 tpd-text-[#58a6ff] tpd-shadow-sm"
+              :class="item.value.field === 'ARRAY_ITEMS' && 'tpd-bg-purple-100 tpd-text-purple-500'"
             >
               {{ item.value.field === 'ARRAY_ITEMS' ? 'items' : item.value.field }}
             </span>
-            <span class="mx-2">{{ item.value.type === 'array' ? `${item.value.type}<${item.value.parentType}>` : item.value.type }}</span>
-            <span class="text-gray-500 dark:text-gray-300">{{ item.value.description }}</span>
+            <span class="tpd-mx-2">{{ item.value.type === 'array' ? `${item.value.type}<${item.value.parentType}>` : item.value.type }}</span>
+            <span class="tpd-text-gray-500 dark:tpd-text-gray-300">{{ item.value.description }}</span>
           </div>
         </TreeItem>
       </TreeVirtualizer>

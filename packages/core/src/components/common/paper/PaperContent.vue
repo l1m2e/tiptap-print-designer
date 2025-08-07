@@ -21,8 +21,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex items-center justify-center">
-    <div ref="zoomEl" :style="{ width: size[0], minHeight: size[1] }" class="bg-white dark:bg-black">
+  <div class="tpd-flex tpd-items-center tpd-justify-center">
+    <div ref="zoomEl" :style="{ width: size[0], minHeight: size[1] }" class="tpd-bg-white dark:tpd-bg-black">
       <slot />
     </div>
   </div>

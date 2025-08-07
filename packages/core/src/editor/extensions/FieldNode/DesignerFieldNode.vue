@@ -25,11 +25,11 @@ async function openFormat() {
 
 <template>
   <NodeViewWrapper as="span" :style="{ fontSize: props.node.attrs.fontSize }">
-    <ContextMenu class="w-full">
+    <ContextMenu class="tpd-w-full">
       <ContextMenuTrigger>
-        <div class="inline-flex items-center justify-center px-2 py-0.5 bg-purple-500 rounded-[5px] text-white">
+        <div class="tpd-inline-flex tpd-items-center tpd-justify-center tpd-px-2 tpd-py-0.5 tpd-bg-purple-500 tpd-rounded-[5px] tpd-text-white">
           <component
-            :is="icon || Link" class="mr-1"
+            :is="icon || Link" class="tpd-mr-1"
             :style="{ width: props.node.attrs.fontSize, height: props.node.attrs.fontSize }"
           />
           <span>{{ props.node.attrs.label }}</span>

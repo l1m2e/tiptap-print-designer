@@ -1,6 +1,6 @@
 .tiptap {
   p {
-    @apply my-0 outline-none text-[12pt];
+    @apply tpd-my-0 tpd-outline-none tpd-text-[12pt];
   }
 
   h1,
@@ -9,38 +9,38 @@
   h4,
   h5,
   h6 {
-    @apply mt-[20px] mb-[20px];
+    @apply tpd-mt-[20px] tpd-mb-[20px];
 
     &:first-child {
-      @apply mt-0;
+      @apply tpd-mt-0;
     }
 
     &:last-child {
-      @apply mb-0;
+      @apply tpd-mb-0;
     }
   }
 
   h1 {
-    @apply text-[22pt];
+    @apply tpd-text-[22pt];
   }
 
   h2 {
-    @apply text-[20pt];
+    @apply tpd-text-[20pt];
   }
 
   h3 {
-    @apply text-[18pt];
+    @apply tpd-text-[18pt];
   }
 
   h4 {
-    @apply text-[16pt];
+    @apply tpd-text-[16pt];
   }
 
   h5 {
-    @apply text-[14pt];
+    @apply tpd-text-[14pt];
   }
 
   h6 {
-    @apply text-[12pt];
+    @apply tpd-text-[12pt];
   }
 }

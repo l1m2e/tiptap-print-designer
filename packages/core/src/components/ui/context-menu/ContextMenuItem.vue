@@ -1,22 +1,18 @@
 <script setup lang="ts">
-import type { ContextMenuItemEmits, ContextMenuItemProps } from 'reka-ui'
-import type { HTMLAttributes } from 'vue'
+import type { ContextMenuItemEmits, ContextMenuItemProps } from "reka-ui"
+import type { HTMLAttributes } from "vue"
+import { reactiveOmit } from "@vueuse/core"
 import {
   ContextMenuItem,
 
   useForwardPropsEmits,
-} from 'reka-ui'
-import { computed } from 'vue'
+} from "reka-ui"
 import { cn } from '~/lib/utils'
 
-const props = defineProps<ContextMenuItemProps & { class?: HTMLAttributes['class'], inset?: boolean }>()
+const props = defineProps<ContextMenuItemProps & { class?: HTMLAttributes["class"], inset?: boolean }>()
 const emits = defineEmits<ContextMenuItemEmits>()
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
-
-  return delegated
-})
+const delegatedProps = reactiveOmit(props, "class")
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
 </script>
@@ -25,8 +21,8 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
   <ContextMenuItem
     v-bind="forwarded"
     :class="cn(
-      'relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-      inset && 'pl-8',
+      'tpd-relative tpd-flex tpd-cursor-default tpd-select-none tpd-items-center tpd-rounded-sm tpd-px-2 tpd-py-1.5 tpd-text-sm tpd-outline-none focus:tpd-bg-accent focus:tpd-text-accent-foreground data-[disabled]:tpd-pointer-events-none data-[disabled]:tpd-opacity-50',
+      inset && 'tpd-pl-8',
       props.class,
     )"
   >

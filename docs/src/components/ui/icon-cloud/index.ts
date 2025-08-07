@@ -1,17 +1,17 @@
-import type { HTMLAttributes } from 'vue';
+import type { HTMLAttributes } from 'vue'
 
 export interface SphereIcon {
-  x: number;
-  y: number;
-  z: number;
-  scale: number;
-  opacity: number;
-  id: number;
+  x: number
+  y: number
+  z: number
+  scale: number
+  opacity: number
+  id: number
 }
 
 export interface IconCloudProps {
-  class?: HTMLAttributes['class'];
-  images?: string[];
+  class?: HTMLAttributes['class']
+  images?: string[]
 }
 
-export { default as IconCloud } from './IconCloud.vue';
+export { default as IconCloud } from './IconCloud.vue'

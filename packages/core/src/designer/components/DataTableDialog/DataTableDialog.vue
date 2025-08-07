@@ -32,7 +32,7 @@ const dataSource = ref<{ path: string, schema: SchemaTree, description: string }
 const columns = ref<ColumnDef<Columns>[]>([
   {
     accessorKey: '#',
-    cell: () => <GripVerticalIcon class="text-gray-500 cursor-move handle" />,
+    cell: () => <GripVerticalIcon class="tpd-text-gray-500 tpd-cursor-move handle" />,
     size: 40,
   },
   {
@@ -57,11 +57,11 @@ const columns = ref<ColumnDef<Columns>[]>([
   {
     accessorKey: 'format',
     cell: ({ row }) => (
-      <div class="flex items-center w-full">
-        <Button variant={row.original.format ? 'default' : 'outline'} class="w-full" onClick={() => setFormat(row)}>
+      <div class="tpd-flex tpd-items-center tpd-w-full">
+        <Button variant={row.original.format ? 'default' : 'outline'} class="tpd-w-full" onClick={() => setFormat(row)}>
           { row.original.format ? '编辑' : '设置' }
         </Button>
-        { row.original.format && <Button class="ml-1" onClick={() => row.original.format = undefined}><Trash2 /></Button> }
+        { row.original.format && <Button class="tpd-ml-1" onClick={() => row.original.format = undefined}><Trash2 /></Button> }
       </div>
     ),
     header: '格式化',
@@ -70,9 +70,9 @@ const columns = ref<ColumnDef<Columns>[]>([
   {
     header: '操作',
     cell: ({ row }) => (
-      <div class="w-[150px]">
+      <div class="tpd-w-[150px]">
         <Button onClick={() => addRow(row.index)} variant="outline"> 添加</Button>
-        <Button onClick={() => removeRow(row.index)} class="ml-1" variant="outline"> 删除 </Button>
+        <Button onClick={() => removeRow(row.index)} class="tpd-ml-1" variant="outline"> 删除 </Button>
       </div>
     ),
     size: 150,
@@ -156,7 +156,7 @@ defineExpose({
 
 <template>
   <Dialog v-model:open="show">
-    <DialogContent class="max-w-5xl">
+    <DialogContent class="tpd-max-w-5xl">
       <DialogHeader>
         <DialogTitle>数据表格配置</DialogTitle>
       </DialogHeader>
@@ -164,18 +164,18 @@ defineExpose({
       <Button v-if="!dataSource.path" @click="SelectDataDialogRef?.open()">
         选择数据
       </Button>
-      <div v-else class="flex">
-        <Button class="w-full" @click="SelectDataDialogRef?.open()">
+      <div v-else class="tpd-flex">
+        <Button class="tpd-w-full" @click="SelectDataDialogRef?.open()">
           <Database /> { {{ dataSource.description }} {{ dataSource.path }} }
         </Button>
-        <Button class="w-12 ml-1" @click="generateData">
+        <Button class="tpd-w-12 tpd-ml-1" @click="generateData">
           <Sparkles />
         </Button>
       </div>
 
-      <DateTable v-if="dataSource.path" v-model:data="data" :columns="columns" class="mt-sm rounded-none" :max-height="500">
+      <DateTable v-if="dataSource.path" v-model:data="data" :columns="columns" class="tpd-mt-sm tpd-rounded-none" :max-height="500">
         <template #no-data>
-          <Button class="w-lg" variant="outline" @click="() => addRow(0)">
+          <Button class="tpd-w-lg" variant="outline" @click="() => addRow(0)">
             添加一行
           </Button>
         </template>

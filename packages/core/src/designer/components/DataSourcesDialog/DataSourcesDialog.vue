@@ -27,7 +27,7 @@ const columns = ref<ColumnDef<DataSchema>[]>([
   {
     accessorKey: 'api',
     header: 'API',
-    cell: ({ row }) => <ApiSelect v-model={row.original.api} class="w-full" />,
+    cell: ({ row }) => <ApiSelect v-model={row.original.api} class="tpd-w-full" />,
     size: 400,
   },
   {
@@ -38,9 +38,9 @@ const columns = ref<ColumnDef<DataSchema>[]>([
       return (
         <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger class="w-full">
-              <Button variant="outline" class="w-[200px] !justify-start" onClick={() => SelectResponsesPathDialogRef.value?.open(row.original)}>
-                <Link class="mr-1" />
+            <TooltipTrigger class="tpd-w-full">
+              <Button variant="outline" class="tpd-w-[200px] !justify-start" onClick={() => SelectResponsesPathDialogRef.value?.open(row.original)}>
+                <Link class="tpd-mr-1" />
                 <span class="truncate">{path ? `Root.${path}` : 'Root'}</span>
               </Button>
             </TooltipTrigger>
@@ -57,7 +57,7 @@ const columns = ref<ColumnDef<DataSchema>[]>([
     cell: ({ row }) => (
       <div>
         <Button onClick={() => addRow(row.index)} variant="outline"> 添加</Button>
-        <Button onClick={() => removeRow(row.index)} class="ml-1" variant="outline"> 删除 </Button>
+        <Button onClick={() => removeRow(row.index)} class="tpd-ml-1" variant="outline"> 删除 </Button>
       </div>
     ),
     size: 150,
@@ -96,11 +96,11 @@ defineExpose({
 
 <template>
   <Dialog v-model:open="show" :modal="false">
-    <DialogContent class="max-w-5xl">
+    <DialogContent class="tpd-max-w-5xl">
       <DialogHeader>
         <DialogTitle>数据源配置</DialogTitle>
       </DialogHeader>
-      <DateTable :data="data" :columns="columns" class="mt-sm rounded-none" :max-height="500">
+      <DateTable :data="data" :columns="columns" class="mt-sm tpd-rounded-none" :max-height="500">
         <template #no-data>
           <Button class="w-lg" variant="outline" @click="() => addRow(0)">
             添加一行

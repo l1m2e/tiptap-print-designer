@@ -18,8 +18,8 @@ const computedFontSize = computed(() => {
 
 <template>
   <Select>
-    <SelectTrigger as-child class="w-12">
-      <Button variant="ghost" class="outline-none">
+    <SelectTrigger as-child class="tpd-w-12">
+      <Button variant="ghost" class="tpd-outline-none">
         {{ computedFontSize }}
       </Button>
     </SelectTrigger>

@@ -1,19 +1,15 @@
 <script setup lang="ts">
-import type { ToastViewportProps } from 'reka-ui'
-import type { HTMLAttributes } from 'vue'
-import { ToastViewport } from 'reka-ui'
-import { computed } from 'vue'
+import type { ToastViewportProps } from "reka-ui"
+import type { HTMLAttributes } from "vue"
+import { reactiveOmit } from "@vueuse/core"
+import { ToastViewport } from "reka-ui"
 import { cn } from '~/lib/utils'
 
-const props = defineProps<ToastViewportProps & { class?: HTMLAttributes['class'] }>()
+const props = defineProps<ToastViewportProps & { class?: HTMLAttributes["class"] }>()
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
-
-  return delegated
-})
+const delegatedProps = reactiveOmit(props, "class")
 </script>
 
 <template>
-  <ToastViewport v-bind="delegatedProps" :class="cn('fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]', props.class)" />
+  <ToastViewport v-bind="delegatedProps" :class="cn('tpd-fixed tpd-top-0 tpd-z-[100] tpd-flex tpd-max-h-screen tpd-w-full tpd-flex-col-reverse tpd-p-4 sm:tpd-bottom-0 sm:tpd-right-0 sm:tpd-top-auto sm:tpd-flex-col md:tpd-max-w-[420px]', props.class)" />
 </template>

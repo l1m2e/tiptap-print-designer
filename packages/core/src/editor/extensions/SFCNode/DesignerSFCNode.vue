@@ -16,9 +16,9 @@ function ddelete() {
 
 <template>
   <NodeViewWrapper as="div">
-    <ContextMenu class="w-full">
+    <ContextMenu class="tpd-w-full">
       <ContextMenuTrigger>
-        <div class="border border-dashed border-violet-500 rounded p-2 w-full">
+        <div class="tpd-border tpd-border-dashed tpd-border-violet-500 tpd-rounded tpd-p-2 tpd-w-full">
           <SfcLoader :text="props.node.attrs.text" />
         </div>
       </ContextMenuTrigger>

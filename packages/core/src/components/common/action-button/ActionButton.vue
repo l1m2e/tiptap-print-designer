@@ -8,7 +8,7 @@ const { title, icon, fn } = defineProps<ActionButtonProps>()
   <TooltipProvider>
     <Tooltip>
       <TooltipTrigger as-child>
-        <Button size="icon" class="font-black" variant="ghost" @click="fn">
+        <Button size="icon" class="tpd-font-black" variant="ghost" @click="fn">
           <component :is="icon" />
         </Button>
       </TooltipTrigger>
