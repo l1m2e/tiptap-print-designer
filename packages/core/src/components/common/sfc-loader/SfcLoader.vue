@@ -5,13 +5,18 @@ import { defineAsyncComponent } from 'vue'
 import * as Vue from 'vue'
 // @ts-expect-error 忽略此类型问题
 import { loadModule } from 'vue3-sfc-loader'
+import { TIPTAP_PRINT_DESIGNER_SFCLOADER_MODULE_CACHE } from '~/constants'
 import { EDITOR_CONTEXT } from '~/editor/constants'
 
-const { text, moduleCache = {
+const { text } = defineProps<{ text: string }>()
+
+const interiorModuleCache = {
   'vue': Vue,
   '~/constants': { EDITOR_CONTEXT },
   '@vueuse/core': { formatDate },
-} } = defineProps<{ text: string, moduleCache?: Record<string, any> }>()
+}
+const externalModuleCache = inject(TIPTAP_PRINT_DESIGNER_SFCLOADER_MODULE_CACHE, {})
+const moduleCache = Object.assign({}, interiorModuleCache, externalModuleCache)
 
 const sfcComponent = shallowRef()
 
