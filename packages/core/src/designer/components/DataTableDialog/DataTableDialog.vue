@@ -122,7 +122,7 @@ async function open(resetData?: { columns: string, path: string }) {
   if (resetData) {
     const tree = await getApiTree()
     const { schema, description } = getTreeNodeByPath(tree, resetData.path)
-    dataSource.value = { path: resetData.path, schema, description }
+    dataSource.value = { path: resetData.path, schema: schema[0].children!, description }
     data.value = JSON.parse(resetData.columns) as Columns[]
   }
   show.value = true
