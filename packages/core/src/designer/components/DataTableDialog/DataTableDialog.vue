@@ -156,7 +156,7 @@ defineExpose({
 
 <template>
   <Dialog v-model:open="show">
-    <DialogContent class="tpd-max-w-5xl">
+    <DialogContent class="tpd-max-w-screen-lg">
       <DialogHeader>
         <DialogTitle>数据表格配置</DialogTitle>
       </DialogHeader>

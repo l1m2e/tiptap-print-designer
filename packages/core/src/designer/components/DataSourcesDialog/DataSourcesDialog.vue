@@ -96,7 +96,7 @@ defineExpose({
 
 <template>
   <Dialog v-model:open="show" :modal="false">
-    <DialogContent class="tpd-max-w-5xl">
+    <DialogContent class="tpd-max-w-screen-lg">
       <DialogHeader>
         <DialogTitle>数据源配置</DialogTitle>
       </DialogHeader>
