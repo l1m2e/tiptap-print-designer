@@ -12,6 +12,10 @@ watch(type, async (newType) => {
     templateData.value = await DesignerRef.value?.getTemplate()
   }
 })
+
+function save(data: TemplateData) {
+  console.log('save', data)
+}
 </script>
 
 <template>
@@ -26,7 +30,7 @@ watch(type, async (newType) => {
         </TabsTrigger>
       </TabsList>
     </Tabs>
-    <Designer v-show="type === 'Designer'" ref="DesignerEl" />
+    <Designer v-show="type === 'Designer'" ref="DesignerEl" @save="save" />
     <div v-show="type === 'Render'" v-if="templateData">
       <Render :template="templateData" :data="templateData?.mockData || {}" />
     </div>
