@@ -3,8 +3,8 @@ import { useToast } from '~/components/ui/toast/use-toast'
 import { updateDoc } from '~/db/services/openapiDoc'
 
 // 接口文档URL
-const openapiDocUrl = useStorage('openapiDocUrl', '')
-const mockUrl = useStorage('mockUrl', '')
+const openapiDocUrl = useStorage('TIPTAP_PRINT_DESIGNER_OPENAPIDOCURL', '')
+const mockUrl = useStorage('TIPTAP_PRINT_DESIGNER_MOCKURL', '')
 const { toast } = useToast()
 
 const { isLoading, execute: updateOpenapiDoc } = useAsyncState(
