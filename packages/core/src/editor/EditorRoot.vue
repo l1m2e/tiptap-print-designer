@@ -20,6 +20,7 @@ const content = defineModel<string>({ default: '' })
 
 const editor = useEditor({
   content: content.value,
+  parseOptions: { preserveWhitespace: true },
   extensions: loadEditorExtensions(mode),
   onUpdate: () => content.value = editor.value?.getHTML() || '',
 })
