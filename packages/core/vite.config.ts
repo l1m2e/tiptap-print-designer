@@ -5,7 +5,6 @@ import autoImport from 'unplugin-auto-import/vite'
 import components from 'unplugin-vue-components/vite'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
-import monacoEditorPlugin from 'vite-plugin-monaco-editor'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 export default defineConfig({
@@ -39,10 +38,6 @@ export default defineConfig({
     }),
     components({
       dts: true,
-    }),
-    /** @ts-expect-error https://github.com/vdesjs/vite-plugin-monaco-editor/issues/21 */
-    monacoEditorPlugin.default({
-      languageWorkers: ['editorWorkerService', 'typescript', 'json', 'html'],
     }),
     dts({
       outDir: 'dist',
