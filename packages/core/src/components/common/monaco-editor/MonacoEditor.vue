@@ -1,11 +1,5 @@
 <script setup lang="ts">
 import type { MonacoEditorProps } from './index'
-import { shikiToMonaco } from '@shikijs/monaco'
-import * as monaco from 'monaco-editor'
-import { createHighlighter } from 'shiki'
-import langJsx from 'shiki/langs/jsx.mjs'
-import langTsx from 'shiki/langs/tsx.mjs'
-import langVue from 'shiki/langs/vue.mjs'
 
 const {
   language = 'json',
@@ -17,12 +11,33 @@ const {
 } = defineProps<MonacoEditorProps>()
 
 const editContainer = ref<HTMLElement | null>(null)
-
 const modelValue = defineModel<string>()
 
-let monacoEditor: monaco.editor.IStandaloneCodeEditor | null = null
+let monaco: typeof import('monaco-editor') | null = null
+let monacoEditor: import('monaco-editor').editor.IStandaloneCodeEditor | null = null
+let pendingValue: string | null = null
 
-onMounted(() => {
+onMounted(async () => {
+  if (typeof window === 'undefined') return
+  await initEditor()
+})
+
+async function initEditor() {
+  const [monacoMod, shikiMod, shikiMonacoMod, langVueMod, langTsxMod, langJsxMod] = await Promise.all([
+    import('monaco-editor'),
+    import('shiki'),
+    import('@shikijs/monaco'),
+    import('shiki/langs/vue.mjs'),
+    import('shiki/langs/tsx.mjs'),
+    import('shiki/langs/jsx.mjs'),
+  ])
+  monaco = monacoMod
+  const { createHighlighter } = shikiMod
+  const { shikiToMonaco } = shikiMonacoMod
+  const langVue = langVueMod.default
+  const langTsx = langTsxMod.default
+  const langJsx = langJsxMod.default
+
   monacoEditor = monaco.editor.create(editContainer.value as HTMLElement, {
     language,
     readOnly,
@@ -31,26 +46,18 @@ onMounted(() => {
     automaticLayout: true,
   })
 
+  if (pendingValue != null) {
+    monacoEditor.setValue(pendingValue)
+    pendingValue = null
+  }
+
   monacoEditor.onDidChangeModelContent(() => {
     modelValue.value = monacoEditor?.getValue() ?? ''
   })
 
-  initHighlighter()
-})
-
-async function initHighlighter() {
   const highlighter = await createHighlighter({
-    themes: [
-      'dark-plus',
-    ],
-    langs: [
-      langVue,
-      langTsx,
-      langJsx,
-      'javascript',
-      'typescript',
-      'json',
-    ],
+    themes: ['dark-plus'],
+    langs: [langVue, langTsx, langJsx, 'javascript', 'typescript', 'json'],
   })
   monaco.languages.register({ id: 'vue' })
   monaco.languages.register({ id: 'typescript' })
@@ -60,7 +67,8 @@ async function initHighlighter() {
 
 defineExpose({
   setValue(text: string) {
-    monacoEditor?.setValue(text)
+    if (monacoEditor) monacoEditor.setValue(text)
+    else pendingValue = text
   },
 })
 </script>
