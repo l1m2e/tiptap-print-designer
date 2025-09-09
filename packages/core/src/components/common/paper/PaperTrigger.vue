@@ -24,10 +24,15 @@ function changeCustomSize() {
   size.value = [`${customSize.value[0]}mm`, `${customSize.value[1]}mm`]
   popoverShow.value = false
 }
+
+watchImmediate(size, () => {
+  customSize.value = [Number(size.value[0].replace('mm', '')) || 210, Number(size.value[1].replace('mm', '')) || 297]
+})
 </script>
 
 <template>
   <div class="tpd-flex tpd-items-center">
+    {{ size }}
     <Tabs v-model="paperType" default-value="A4">
       <TabsList>
         <TabsTrigger v-for="item in paperSizeListMap.keys()" :key="item" :value="item" @click="changePaperSize(item)">
