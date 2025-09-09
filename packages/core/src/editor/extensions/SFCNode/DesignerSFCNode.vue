@@ -102,7 +102,7 @@ function toggleInlineBlock() {
     <ContextMenu>
       <ContextMenuTrigger>
         <div
-          class="tpd-border tpd-border-dashed tpd-border-violet-500 tpd-rounded tpd-p-2"
+          class="tpd-border tpd-border-dashed tpd-border-violet-500 tpd-rounded"
           :class="[isInline ? 'tpd-inline-block' : 'tpd-w-full']"
         >
           <SfcLoader :text="props.node.attrs.text" />
