@@ -32,7 +32,6 @@ watchImmediate(size, () => {
 
 <template>
   <div class="tpd-flex tpd-items-center">
-    {{ size }}
     <Tabs v-model="paperType" default-value="A4">
       <TabsList>
         <TabsTrigger v-for="item in paperSizeListMap.keys()" :key="item" :value="item" @click="changePaperSize(item)">
