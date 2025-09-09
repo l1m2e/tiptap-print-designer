@@ -9,8 +9,8 @@ const wrapperStyle = computed(() => {
   if (props.node.attrs.isFloating) {
     return {
       position: 'absolute',
-      left: `${props.node.attrs.x || 0}px`,
-      top: `${props.node.attrs.y || 0}px`,
+      left: `${props.node.attrs.x || 0}pt`,
+      top: `${props.node.attrs.y || 0}pt`,
       zIndex: props.node.attrs.zIndex || 1,
     } as Record<string, string | number>
   }
