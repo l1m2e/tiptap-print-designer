@@ -61,7 +61,7 @@ async function getTemplate(): Promise<TemplateData> {
   const mockData = await getMockData()
   return {
     content: text.value,
-    paperSetting: PaperRef.value!.paperSetting,
+    paperSetting: toRaw(PaperRef.value!.paperSetting),
     dataSources,
     mockData,
   }
@@ -93,7 +93,7 @@ defineExpose({
       <div class="tpd-grid tpd-grid-cols-2 gap-x-4 tpd-items-center tpd-border-b tpd-border-neutral-200 tpd-p-2 dark:tpd-border-neutral-800 tpd-h-[54px]">
         <EditTopMenu />
         <div class="tpd-flex tpd-items-center tpd-justify-end tpd-gap-2">
-          <PaperTrigger/>
+          <PaperTrigger />
           <Button variant="outline" size="icon" @click="SettingDialogRef?.open">
             <Database />
           </Button>
@@ -113,7 +113,7 @@ defineExpose({
         <ResizablePanel>
           <div class="tpd-overflow-y-auto tpd-h-[calc(100vh-54px)]">
             <PaperContent>
-              <EditorContent  />
+              <EditorContent />
             </PaperContent>
           </div>
         </ResizablePanel>
@@ -125,7 +125,7 @@ defineExpose({
           <div class="tpd-bg-gray-100 dark:tpd-bg-neutral-950 tpd-h-[calc(100vh-54px)] tpd-overflow-hidden">
             <PaperContent zoom>
               <EditorRoot v-model="text" mode="viewer" :data="mockData">
-                <EditorContent ref="print" class="tpd-pointer-events-none tpd-select-none"  />
+                <EditorContent ref="print" class="tpd-pointer-events-none tpd-select-none" />
               </EditorRoot>
             </PaperContent>
           </div>

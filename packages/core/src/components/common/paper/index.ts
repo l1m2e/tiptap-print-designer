@@ -1,12 +1,12 @@
 export interface PagerSetting {
-  paperType: string,
+  paperType: string
   style: {
-    width: string,
-    height: string,
-    padding: string,
-    lineHeight: string,
-    letterSpacing: string,
-  },
+    width: string
+    height: string
+    padding: string
+    lineHeight: string
+    letterSpacing: string
+  }
 }
 export const PAPER_KEY = Symbol('PAPER_KEY') as InjectionKey<PagerSetting>
 

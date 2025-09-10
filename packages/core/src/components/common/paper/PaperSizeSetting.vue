@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { XIcon } from 'lucide-vue-next'
 import { useToast } from '~/components/ui/toast'
-import { PAPER_KEY } from '.'
 import { TIPTAP_PRINT_DESIGNER_CONST } from '~/constants'
+import { PAPER_KEY } from '.'
 
 const paperSetting = inject(PAPER_KEY)!
 
 const { PAPER_SIZE_MAP } = inject(TIPTAP_PRINT_DESIGNER_CONST, {
-  PAPER_SIZE_MAP: new Map<string, [string,string]>([
+  PAPER_SIZE_MAP: new Map<string, [string, string]>([
     ['A4', ['210mm', '297mm']],
     ['A5', ['148mm', '210mm']],
     ['B4', ['250mm', '353mm']],
     ['B5', ['176mm', '250mm']],
-  ])
+  ]),
 })
 
 const sizeSetting = reactive({

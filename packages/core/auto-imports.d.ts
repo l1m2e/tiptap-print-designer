@@ -486,7 +486,6 @@ declare module 'vue' {
     readonly useIdle: UnwrapRef<typeof import('@vueuse/core')['useIdle']>
     readonly useImage: UnwrapRef<typeof import('@vueuse/core')['useImage']>
     readonly useInfiniteScroll: UnwrapRef<typeof import('@vueuse/core')['useInfiniteScroll']>
-    readonly useInjectModuleCache: UnwrapRef<typeof import('./src/composables/useInjectModuleCache')['useInjectModuleCache']>
     readonly useIntersectionObserver: UnwrapRef<typeof import('@vueuse/core')['useIntersectionObserver']>
     readonly useInterval: UnwrapRef<typeof import('@vueuse/core')['useInterval']>
     readonly useIntervalFn: UnwrapRef<typeof import('@vueuse/core')['useIntervalFn']>
