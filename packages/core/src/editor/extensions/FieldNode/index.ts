@@ -22,7 +22,7 @@ function CreateNode(Component: Component) {
         label: { default: '' },
         path: { default: '' },
         format: { default: '' },
-        fontSize: { default: '12pt' },
+        fontSize: { default: 'inherit' },
       }
     },
     addNodeView() {
