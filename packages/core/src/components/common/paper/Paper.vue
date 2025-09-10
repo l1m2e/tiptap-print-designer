@@ -1,7 +1,7 @@
 <script lang="tsx" setup>
 import { PAPER_KEY } from './index'
 
-const paperSetting = reactive({
+const paperSetting = ref({
   paperType: 'A4',
   style: {
     width: '210mm',

@@ -5,15 +5,15 @@ import { PAPER_KEY } from '.'
 const paperSetting = inject(PAPER_KEY)!
 
 const layoutSetting = reactive({
-  lineHeight: paperSetting.style.lineHeight,
-  letterSpacing: paperSetting.style.letterSpacing,
+  lineHeight: paperSetting.value.style.lineHeight,
+  letterSpacing: paperSetting.value.style.letterSpacing,
 })
 
 const { toast } = useToast()
 
 function save() {
-  paperSetting.style.letterSpacing = layoutSetting.letterSpacing
-  paperSetting.style.lineHeight = layoutSetting.lineHeight
+  paperSetting.value.style.letterSpacing = layoutSetting.letterSpacing
+  paperSetting.value.style.lineHeight = layoutSetting.lineHeight
   toast({ title: '纸张排版已更新' })
 }
 </script>

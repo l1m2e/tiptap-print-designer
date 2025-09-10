@@ -8,7 +8,7 @@ export interface PagerSetting {
     letterSpacing: string
   }
 }
-export const PAPER_KEY = Symbol('PAPER_KEY') as InjectionKey<PagerSetting>
+export const PAPER_KEY = Symbol('PAPER_KEY') as InjectionKey<Ref<PagerSetting>>
 
 export { default as Paper } from './Paper.vue'
 export { default as PaperContent } from './PaperContent.vue'
