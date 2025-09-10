@@ -1,3 +1,3 @@
 export { default as EditorContent } from './EditorContent.vue'
 export { default as EditorRoot } from './EditorRoot.vue'
-export { useInjectModuleCache } from '~/composables/useInjectModuleCache'
+export * from '~/constants'
