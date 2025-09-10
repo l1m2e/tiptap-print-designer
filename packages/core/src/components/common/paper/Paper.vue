@@ -1,18 +1,20 @@
 <script lang="tsx" setup>
 import { PAPER_KEY } from './index'
 
-const props = defineProps<{
-  size?: [string, string]
-  paperType?: string
-}>()
+const paperSetting = reactive({
+  paperType: 'A4',
+  style: {
+    width: '210mm',
+    height: '297mm',
+    padding: '6mm',
+    lineHeight: '1.5',
+    letterSpacing: '0pt',
+  },
+})
 
-const paperType = ref<string>(props.paperType ?? 'A4')
-const size = ref<[string, string]>(props.size ?? ['210mm', '297mm'])
-const padding = ref(6)
+provide(PAPER_KEY, paperSetting)
 
-provide(PAPER_KEY, { size, paperType, padding })
-
-defineExpose({ size, paperType, padding })
+defineExpose({ paperSetting })
 </script>
 
 <template>

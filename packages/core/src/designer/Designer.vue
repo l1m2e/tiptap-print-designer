@@ -61,11 +61,7 @@ async function getTemplate(): Promise<TemplateData> {
   const mockData = await getMockData()
   return {
     content: text.value,
-    page: {
-      size: toRaw(PaperRef.value!.size),
-      paperType: toRaw(PaperRef.value!.paperType),
-      padding: toRaw(PaperRef.value!.padding),
-    },
+    paperSetting: PaperRef.value!.paperSetting,
     dataSources,
     mockData,
   }
@@ -77,9 +73,7 @@ async function setTemplate(template: TemplateData) {
   await updateMockData(template.mockData)
 
   if (PaperRef.value) {
-    PaperRef.value.size = template.page.size
-    PaperRef.value.paperType = template.page.paperType
-    PaperRef.value.padding = template.page.padding
+    PaperRef.value.paperSetting = template.paperSetting
   }
   text.value = template.content
   mockData.value = template.mockData
@@ -98,7 +92,6 @@ defineExpose({
     <EditorRoot v-model="text" :data="mockData">
       <div class="tpd-grid tpd-grid-cols-2 gap-x-4 tpd-items-center tpd-border-b tpd-border-neutral-200 tpd-p-2 dark:tpd-border-neutral-800 tpd-h-[54px]">
         <EditTopMenu />
-        
         <div class="tpd-flex tpd-items-center tpd-justify-end tpd-gap-2">
           <PaperTrigger/>
           <Button variant="outline" size="icon" @click="SettingDialogRef?.open">
@@ -120,7 +113,7 @@ defineExpose({
         <ResizablePanel>
           <div class="tpd-overflow-y-auto tpd-h-[calc(100vh-54px)]">
             <PaperContent>
-              <EditorContent :style="{ padding: `${PaperRef?.padding || 0}mm` }" />
+              <EditorContent  />
             </PaperContent>
           </div>
         </ResizablePanel>
@@ -132,7 +125,7 @@ defineExpose({
           <div class="tpd-bg-gray-100 dark:tpd-bg-neutral-950 tpd-h-[calc(100vh-54px)] tpd-overflow-hidden">
             <PaperContent zoom>
               <EditorRoot v-model="text" mode="viewer" :data="mockData">
-                <EditorContent ref="print" class="tpd-pointer-events-none tpd-select-none" :style="{ padding: `${PaperRef?.padding || 0}mm` }" />
+                <EditorContent ref="print" class="tpd-pointer-events-none tpd-select-none"  />
               </EditorRoot>
             </PaperContent>
           </div>

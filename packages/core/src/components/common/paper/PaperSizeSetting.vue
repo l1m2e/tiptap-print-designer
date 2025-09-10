@@ -4,35 +4,38 @@ import { useToast } from '~/components/ui/toast'
 import { PAPER_KEY } from '.'
 import { TIPTAP_PRINT_DESIGNER_CONST } from '~/constants'
 
-const { size, paperType, padding } = inject(PAPER_KEY, { size: ref(['210mm', '297mm']), paperType: ref('A4'), padding: ref(6) })
+const paperSetting = inject(PAPER_KEY)!
+
 const { PAPER_SIZE_MAP } = inject(TIPTAP_PRINT_DESIGNER_CONST, {
-  PAPER_SIZE_MAP: new Map<string, [number, number]>([
-    ['A4', [210, 297]],
-    ['A5', [148, 210]],
-    ['B4', [250, 353]],
-    ['B5', [176, 250]],
+  PAPER_SIZE_MAP: new Map<string, [string,string]>([
+    ['A4', ['210mm', '297mm']],
+    ['A5', ['148mm', '210mm']],
+    ['B4', ['250mm', '353mm']],
+    ['B5', ['176mm', '250mm']],
   ])
 })
 
 const sizeSetting = reactive({
-  type: paperType.value || PAPER_SIZE_MAP!.keys().next().value!,
-  customSize: [Number(size.value[0].replace('mm', '')) || 210, Number(size.value[1].replace('mm', '')) || 297],
-  padding: padding.value,
+  type: paperSetting.paperType || PAPER_SIZE_MAP!.keys().next().value!,
+  customSize: [paperSetting.style.width, paperSetting.style.height],
+  padding: paperSetting.style.padding,
 })
 
 const { toast } = useToast()
 
 function save() {
   if (sizeSetting.type === 'custom') {
-    size.value = [`${sizeSetting.customSize[0]}mm`, `${sizeSetting.customSize[1]}mm`]
+    paperSetting.style.width = sizeSetting.customSize[0]
+    paperSetting.style.height = sizeSetting.customSize[1]
   }
   else {
-    const [w, h] = PAPER_SIZE_MAP?.get(sizeSetting.type) || [210, 297]
-    size.value = [`${w}mm`, `${h}mm`]
+    const [w, h] = PAPER_SIZE_MAP?.get(sizeSetting.type) || ['210mm', '297mm']
+    paperSetting.style.width = w
+    paperSetting.style.height = h
   }
-  paperType.value = sizeSetting.type
-  padding.value = sizeSetting.padding
-  toast({ title: '纸张尺寸已更新', description: `宽度${size.value[0]}，高度${size.value[1]} 边距${sizeSetting.padding}mm` })
+  paperSetting.paperType = sizeSetting.type
+  paperSetting.style.padding = sizeSetting.padding
+  toast({ title: '纸张尺寸已更新', description: `宽度${paperSetting.style.width}，高度${paperSetting.style.height} 边距${sizeSetting.padding}` })
 }
 </script>
 
@@ -57,14 +60,14 @@ function save() {
 
         <div v-if="sizeSetting.type === 'custom'" class="tpd-flex tpd-gap-2 tpd-items-center">
           <div class="tpd-relative tpd-flex-1">
-            <Input v-model="sizeSetting.customSize[0]" type="number" class="tpd-pl-10" />
+            <Input v-model="sizeSetting.customSize[0]" class="tpd-pl-10" />
             <span class="tpd-absolute tpd-start-0 tpd-inset-y-0 tpd-text-sm tpd-flex tpd-items-center tpd-justify-center tpd-text-gray-500 tpd-px-2">
               宽度
             </span>
           </div>
           <XIcon class="tpd-w-4 tpd-h-4" />
           <div class="tpd-relative tpd-flex-1">
-            <Input v-model="sizeSetting.customSize[1]" type="number" class="tpd-pl-10" />
+            <Input v-model="sizeSetting.customSize[1]" class="tpd-pl-10" />
             <span class="tpd-absolute tpd-start-0 tpd-inset-y-0 tpd-text-sm  tpd-flex tpd-items-center tpd-justify-center tpd-text-gray-500 tpd-px-2">
               高度
             </span>
@@ -72,7 +75,7 @@ function save() {
         </div>
 
         <Label class="tpd-my-2">纸张边距</Label>
-        <Input v-model="sizeSetting.padding" type="number" />
+        <Input v-model="sizeSetting.padding" />
       </div>
     </div>
 
