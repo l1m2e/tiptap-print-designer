@@ -2,18 +2,20 @@
 import { XIcon } from 'lucide-vue-next'
 import { useToast } from '~/components/ui/toast'
 import { PAPER_KEY } from '.'
+import { TIPTAP_PRINT_DESIGNER_CONST } from '~/constants'
 
 const { size, paperType, padding } = inject(PAPER_KEY, { size: ref(['210mm', '297mm']), paperType: ref('A4'), padding: ref(6) })
-
-const paperSizeListMap = new Map<string, [number, number]>([
-  ['A4', [210, 297]],
-  ['A5', [148, 210]],
-  ['B4', [250, 353]],
-  ['B5', [176, 250]],
-])
+const { PAPER_SIZE_MAP } = inject(TIPTAP_PRINT_DESIGNER_CONST, {
+  PAPER_SIZE_MAP: new Map<string, [number, number]>([
+    ['A4', [210, 297]],
+    ['A5', [148, 210]],
+    ['B4', [250, 353]],
+    ['B5', [176, 250]],
+  ])
+})
 
 const sizeSetting = reactive({
-  type: paperType.value,
+  type: paperType.value || PAPER_SIZE_MAP!.keys().next().value!,
   customSize: [Number(size.value[0].replace('mm', '')) || 210, Number(size.value[1].replace('mm', '')) || 297],
   padding: padding.value,
 })
@@ -25,7 +27,7 @@ function save() {
     size.value = [`${sizeSetting.customSize[0]}mm`, `${sizeSetting.customSize[1]}mm`]
   }
   else {
-    const [w, h] = paperSizeListMap.get(sizeSetting.type) || [210, 297]
+    const [w, h] = PAPER_SIZE_MAP?.get(sizeSetting.type) || [210, 297]
     size.value = [`${w}mm`, `${h}mm`]
   }
   paperType.value = sizeSetting.type
@@ -39,12 +41,12 @@ function save() {
     <div class="tpd-w-full tpd-h-full tpd-flex tpd-justify-center tpd-items-center">
       <div class="tpd-flex tpd-flex-col tpd-gap-2 tpd-p-1  tpd-w-[600px]">
         <Label class="tpd-mb-2">纸张尺寸</Label>
-        <Select v-model="sizeSetting.type" default-value="A4">
+        <Select v-model="sizeSetting.type">
           <SelectTrigger>
             <SelectValue placeholder="选择纸张尺寸" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem v-for="item in paperSizeListMap.keys()" :key="item" :value="item">
+            <SelectItem v-for="item in PAPER_SIZE_MAP?.keys()" :key="item" :value="item">
               {{ item }}
             </SelectItem>
             <SelectItem value="custom">
