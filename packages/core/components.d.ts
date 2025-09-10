@@ -85,6 +85,7 @@ declare module 'vue' {
     FormMessage: typeof import('./src/components/ui/form/FormMessage.vue')['default']
     Input: typeof import('./src/components/ui/input/Input.vue')['default']
     Label: typeof import('./src/components/ui/label/Label.vue')['default']
+    MenuDialog: typeof import('./src/components/common/menu-dialog/MenuDialog.vue')['default']
     MonacoEditor: typeof import('./src/components/common/monaco-editor/MonacoEditor.vue')['default']
     Paper: typeof import('./src/components/common/paper/Paper.vue')['default']
     PaperContent: typeof import('./src/components/common/paper/PaperContent.vue')['default']
