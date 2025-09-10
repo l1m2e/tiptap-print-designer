@@ -1,9 +1,10 @@
 import type { Format } from './components/FormatDialog/common'
 import type { DataSchema } from '~/db/types'
+import type { PagerSetting } from '~/components/common'
 
 export interface TemplateData {
   content: string
-  page: { size: [string, string], paperType: string, padding: number }
+  paperSetting: PagerSetting
   dataSources: DataSchema[]
   mockData: any
 }

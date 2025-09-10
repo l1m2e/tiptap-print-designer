@@ -8,7 +8,7 @@ const { zoom } = defineProps<{
 }>()
 
 const zoomEl = ref<HTMLElement>()
-const { size } = inject(PAPER_KEY, { size: ref<[string, string]>(['210mm', '297mm']), paperType: ref('A4'), padding: ref(6) })
+const paperSetting = inject(PAPER_KEY)!
 
 onMounted(() => {
   zoom && panzoom(zoomEl.value!, {
@@ -22,7 +22,7 @@ onMounted(() => {
 
 <template>
   <div class="tpd-flex tpd-items-center tpd-justify-center">
-    <div ref="zoomEl" :style="{ width: size[0], minHeight: size[1] }" class="tpd-bg-white dark:tpd-bg-black">
+    <div ref="zoomEl" :style="paperSetting.style" class="tpd-bg-white dark:tpd-bg-black">
       <slot />
     </div>
   </div>
