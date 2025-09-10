@@ -3,10 +3,10 @@ import type { MenuDialogProps } from '.'
 
 const { menuItems, title } = defineProps<MenuDialogProps>()
 
-const componentType = ref<string | undefined>(menuItems?.[0]?.component.name)
+const componentIndex = ref<number>(0)
 
 const RenderComponent = computed(() => {
-  const component = menuItems.find(item => item.component.name === componentType.value)
+  const component = menuItems[componentIndex.value]
   return component?.component
 })
 </script>
@@ -23,9 +23,9 @@ const RenderComponent = computed(() => {
               </SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  <SidebarMenuItem v-for="item in menuItems" :key="item.title">
-                    <SidebarMenuButton as-child :is-active="componentType === item.component.name">
-                      <div @click="componentType = item.component.name">
+                  <SidebarMenuItem v-for="(item, index) in menuItems" :key="item.title">
+                    <SidebarMenuButton as-child :is-active="componentIndex === index">
+                      <div @click="componentIndex = index">
                         <component :is="item.icon" />
                         <span>{{ item.title }}</span>
                       </div>
