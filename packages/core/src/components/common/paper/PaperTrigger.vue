@@ -1,6 +1,7 @@
 <script lang="tsx" setup>
 import { FileIcon } from 'lucide-vue-next'
 import PaperDialog from './PaperDialog.vue'
+
 const PaperDialogRef = useTemplateRef('PaperDialogEl')
 </script>
 
