@@ -1,6 +1,6 @@
 import type { Format } from './components/FormatDialog/common'
-import type { DataSchema } from '~/db/types'
 import type { PagerSetting } from '~/components/common'
+import type { DataSchema } from '~/db/types'
 
 export interface TemplateData {
   content: string

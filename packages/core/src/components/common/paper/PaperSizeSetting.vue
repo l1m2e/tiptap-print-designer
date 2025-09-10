@@ -16,26 +16,26 @@ const { PAPER_SIZE_MAP } = inject(TIPTAP_PRINT_DESIGNER_CONST, {
 })
 
 const sizeSetting = reactive({
-  type: paperSetting.paperType || PAPER_SIZE_MAP!.keys().next().value!,
-  customSize: [paperSetting.style.width, paperSetting.style.height],
-  padding: paperSetting.style.padding,
+  type: paperSetting.value.paperType || PAPER_SIZE_MAP!.keys().next().value!,
+  customSize: [paperSetting.value.style.width, paperSetting.value.style.height],
+  padding: paperSetting.value.style.padding,
 })
 
 const { toast } = useToast()
 
 function save() {
   if (sizeSetting.type === 'custom') {
-    paperSetting.style.width = sizeSetting.customSize[0]
-    paperSetting.style.height = sizeSetting.customSize[1]
+    paperSetting.value.style.width = sizeSetting.customSize[0]
+    paperSetting.value.style.height = sizeSetting.customSize[1]
   }
   else {
     const [w, h] = PAPER_SIZE_MAP?.get(sizeSetting.type) || ['210mm', '297mm']
-    paperSetting.style.width = w
-    paperSetting.style.height = h
+    paperSetting.value.style.width = w
+    paperSetting.value.style.height = h
   }
-  paperSetting.paperType = sizeSetting.type
-  paperSetting.style.padding = sizeSetting.padding
-  toast({ title: '纸张尺寸已更新', description: `宽度${paperSetting.style.width}，高度${paperSetting.style.height} 边距${sizeSetting.padding}` })
+  paperSetting.value.paperType = sizeSetting.type
+  paperSetting.value.style.padding = sizeSetting.padding
+  toast({ title: '纸张尺寸已更新', description: `宽度${paperSetting.value.style.width}，高度${paperSetting.value.style.height} 边距${sizeSetting.padding}` })
 }
 </script>
 
