@@ -10,6 +10,7 @@ const paperSetting = ref({
     lineHeight: '1.5',
     letterSpacing: '0pt',
   },
+  customStyle: '',
 })
 
 provide(PAPER_KEY, paperSetting)
