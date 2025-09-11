@@ -51,7 +51,7 @@ export default defineConfig({
       fileName: 'index',
     },
     rollupOptions: {
-      external: ['vue', 'monaco-editor'],
+      external: ['vue', 'monaco-editor', '@tiptap/vue-3', '@tiptap/starter-kit', '@tiptap/pm'],
       output: {
         globals: {
           'vue': 'Vue',
