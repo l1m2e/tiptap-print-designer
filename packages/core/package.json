@@ -44,6 +44,9 @@
     "publish:npm": "npm publish"
   },
   "peerDependencies": {
+    "@tiptap/pm": "^2.11.7",
+    "@tiptap/starter-kit": "^2.11.7",
+    "@tiptap/vue-3": "^2.11.7",
     "monaco-editor": "0.52.0",
     "vue": "^3.5.13"
   },
@@ -65,10 +68,7 @@
     "@tiptap/extension-table-row": "^2.11.7",
     "@tiptap/extension-text-align": "^2.11.7",
     "@tiptap/extension-text-style": "^2.11.7",
-    "@tiptap/pm": "^2.11.7",
-    "@tiptap/starter-kit": "^2.11.7",
     "@tiptap/suggestion": "^2.11.7",
-    "@tiptap/vue-3": "^2.11.7",
     "@vee-validate/zod": "^4.15.0",
     "@vueuse/components": "^13.1.0",
     "@vueuse/core": "^13.1.0",
