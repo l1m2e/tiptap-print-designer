@@ -23,7 +23,9 @@ onMounted(() => {
 <template>
   <div class="tpd-flex tpd-items-center tpd-justify-center">
     <div ref="zoomEl" :style="paperSetting.style" class="tpd-bg-white dark:tpd-bg-black">
-      <slot />
+      <ScopedStyle :scoped-css="paperSetting.customStyle">
+        <slot />
+      </ScopedStyle>
     </div>
   </div>
 </template>
