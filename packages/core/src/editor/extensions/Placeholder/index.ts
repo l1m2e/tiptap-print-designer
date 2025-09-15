@@ -1,4 +1,4 @@
-import TiptapPlaceholder from '@tiptap/extension-placeholder'
+import { Placeholder as TiptapPlaceholder } from '@tiptap/extensions'
 
 const Placeholder = TiptapPlaceholder.configure({
   placeholder: '输入 / 唤起更多',

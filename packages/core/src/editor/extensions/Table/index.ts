@@ -1,10 +1,8 @@
-import TiptapTable from '@tiptap/extension-table'
-import TiptapTableCell from '@tiptap/extension-table-cell'
-import TiptapTableHeade from '@tiptap/extension-table-header'
+import { Table as TiptapTable, TableCell as TiptapTableCell, TableHeader as TiptapTableHeader } from '@tiptap/extension-table'
 
-export { default as TableRow } from '@tiptap/extension-table-row'
+export { TableRow } from '@tiptap/extension-table'
 
-export const TableHeader = TiptapTableHeade.extend({
+export const TableHeader = TiptapTableHeader.extend({
   addAttributes() {
     return {
       ...this.parent?.(),
