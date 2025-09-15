@@ -8,4 +8,5 @@ export interface ActionButtonProps {
   title: string
   icon: FunctionalComponent | Component
   fn: () => any
+  variant?: 'default' | 'link' | 'destructive' | 'outline' | 'secondary' | 'ghost' | null | undefined
 }

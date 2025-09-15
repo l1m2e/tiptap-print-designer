@@ -1,4 +1,4 @@
-import TiptapTextStyle from '@tiptap/extension-text-style'
+import { TextStyle as TiptapTextStyle } from '@tiptap/extension-text-style'
 
 const TextStyle = TiptapTextStyle.configure({
   mergeNestedSpanStyles: true,

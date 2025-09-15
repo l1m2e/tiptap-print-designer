@@ -14,7 +14,15 @@
   "bugs": {
     "url": "https://github.com/l1m2e/tiptap-print-designer/issues"
   },
-  "keywords": ["tiptap", "vue3", "print", "designer", "rich-text", "template", "editor"],
+  "keywords": [
+    "tiptap",
+    "vue3",
+    "print",
+    "designer",
+    "rich-text",
+    "template",
+    "editor"
+  ],
   "exports": {
     ".": {
       "types": "./dist/src/index.d.ts",
@@ -44,31 +52,31 @@
     "publish:npm": "npm publish"
   },
   "peerDependencies": {
-    "@tiptap/pm": "^2.11.7",
-    "@tiptap/starter-kit": "^2.11.7",
-    "@tiptap/vue-3": "^2.11.7",
+    "@tiptap/pm": "^3.4.2",
+    "@tiptap/starter-kit": "^3.4.2",
+    "@tiptap/vue-3": "^3.4.2",
     "monaco-editor": "0.52.0",
     "vue": "^3.5.13"
   },
   "peerDependenciesMeta": {
-    "monaco-editor": { "optional": true }
+    "monaco-editor": {
+      "optional": true
+    }
   },
   "dependencies": {
     "@apidevtools/swagger-parser": "^10.1.1",
     "@dagrejs/dagre": "^1.1.4",
+    "@floating-ui/dom": "^1.6.0",
     "@shikijs/monaco": "^3.2.2",
     "@tanstack/vue-table": "^8.21.3",
-    "@tiptap/extension-bubble-menu": "^2.11.7",
-    "@tiptap/extension-dropcursor": "^2.11.7",
-    "@tiptap/extension-image": "^2.11.7",
-    "@tiptap/extension-placeholder": "^2.11.7",
-    "@tiptap/extension-table": "^2.11.7",
-    "@tiptap/extension-table-cell": "^2.11.7",
-    "@tiptap/extension-table-header": "^2.11.7",
-    "@tiptap/extension-table-row": "^2.11.7",
-    "@tiptap/extension-text-align": "^2.11.7",
-    "@tiptap/extension-text-style": "^2.11.7",
-    "@tiptap/suggestion": "^2.11.7",
+    "@tiptap/extension-image": "^3.4.2",
+    "@tiptap/extension-list": "^3.4.2",
+    "@tiptap/extension-table": "^3.4.2",
+    "@tiptap/extension-text-align": "^3.4.2",
+    "@tiptap/extension-text-style": "^3.4.2",
+    "@tiptap/extensions": "^3.4.2",
+    "@tiptap/starter-kit": "^3.4.2",
+    "@tiptap/suggestion": "^3.4.2",
     "@vee-validate/zod": "^4.15.0",
     "@vueuse/components": "^13.1.0",
     "@vueuse/core": "^13.1.0",

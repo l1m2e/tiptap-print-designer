@@ -1,4 +1,4 @@
-import TiptapTextAlign from '@tiptap/extension-text-align'
+import { TextAlign as TiptapTextAlign } from '@tiptap/extension-text-align'
 
 const TextAlign = TiptapTextAlign.configure({
   types: ['heading', 'paragraph'],
