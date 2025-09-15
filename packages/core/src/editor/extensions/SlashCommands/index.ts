@@ -1,10 +1,9 @@
 import type { Editor } from '@tiptap/core'
 import type { SuggestionOptions } from '@tiptap/suggestion'
-import type { Instance, Props } from 'tippy.js'
+import { autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom'
 import { Extension } from '@tiptap/core'
 import Suggestion from '@tiptap/suggestion'
 import { VueRenderer } from '@tiptap/vue-3'
-import tippy from 'tippy.js'
 import SlashCommands from './SlashCommands.vue'
 
 interface CommandProps {
@@ -42,12 +41,10 @@ const slashCommands = Extension.create({
 
 export default slashCommands.configure({
   suggestion: {
-    render: (): {
-      onStart: (props: RenderProps) => void
-      onExit: () => void
-    } => {
-      let component: VueRenderer
-      let popup: Instance<Props>[]
+    render: () => {
+      let component: VueRenderer | null = null
+      let popupEl: HTMLElement | null = null
+      let cleanup: (() => void) | null = null
 
       return {
         onStart: (props: RenderProps) => {
@@ -56,23 +53,52 @@ export default slashCommands.configure({
             editor: props.editor,
           })
 
-          if (!props.clientRect) {
-            return
+          popupEl = document.createElement('div')
+          popupEl.appendChild(component.element!)
+          document.body.appendChild(popupEl)
+
+          if (props.clientRect) {
+            cleanup = autoUpdate(popupEl, popupEl, () => {
+              const rect = props.clientRect?.()
+              if (!rect) return
+              computePosition(
+                {
+                  getBoundingClientRect: props.clientRect!,
+                },
+                popupEl!,
+                {
+                  placement: 'bottom-start',
+                  middleware: [offset(4), flip(), shift()],
+                },
+              ).then(({ x, y }) => {
+                Object.assign(popupEl!.style, {
+                  left: `${x}px`,
+                  top: `${y}px`,
+                  position: 'absolute',
+                  zIndex: 9999,
+                })
+              })
+            })
           }
-          // @ts-expect-error 类型定义错误暂时忽略
-          popup = tippy('body', {
-            getReferenceClientRect: props.clientRect,
-            appendTo: () => document.body,
-            content: component.element,
-            showOnCreate: true,
-            interactive: true,
-            trigger: 'manual',
-            placement: 'bottom-start',
-          })
+        },
+
+        onUpdate(props: RenderProps) {
+          component?.updateProps(props)
+        },
+
+        onKeyDown(props: { event: KeyboardEvent }) {
+          if (props.event.key === 'Escape') {
+            cleanup?.()
+            popupEl?.remove()
+            component?.destroy()
+            return true
+          }
+          return component?.ref?.onKeyDown?.(props) ?? false
         },
 
         onExit() {
-          popup?.[0]?.destroy()
+          cleanup?.()
+          popupEl?.remove()
           component?.destroy()
         },
       }
