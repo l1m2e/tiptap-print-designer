@@ -78,17 +78,14 @@ async function copy() {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger as-child>
-                <template v-if="!isFormat">
-                  {{ text }}
-                </template>
-                <FormatNode v-else :value="text" />
+                <span>
+                  <template v-if="!isFormat">{{ text }}</template>
+                  <FormatNode v-else :value="text" />
+                </span>
               </TooltipTrigger>
               <TooltipContent>
                 <div class="tpd-flex tpd-items-center">
-                  <component
-                    :is="icon || Link" class="tpd-mr-1"
-                    :style="{ width: props.node.attrs.fontSize, height: props.node.attrs.fontSize }"
-                  />
+                  <component :is="icon || Link" class="tpd-mr-1 tpd-w-4 tpd-h-4" />
                   <span class="tpd-ml-1">{{ props.node.attrs.label }}</span>
                 </div>
               </TooltipContent>
