@@ -88,12 +88,6 @@ importers:
       '@tiptap/core':
         specifier: 3.4.3
         version: 3.4.3(@tiptap/pm@3.4.3)
-      '@tiptap/extension-image':
-        specifier: 3.4.3
-        version: 3.4.3(@tiptap/core@3.4.3(@tiptap/pm@3.4.3))
-      '@tiptap/extension-list':
-        specifier: 3.4.3
-        version: 3.4.3(@tiptap/core@3.4.3(@tiptap/pm@3.4.3))(@tiptap/pm@3.4.3)
       '@tiptap/extension-table':
         specifier: 3.4.3
         version: 3.4.3(@tiptap/core@3.4.3(@tiptap/pm@3.4.3))(@tiptap/pm@3.4.3)
@@ -245,6 +239,39 @@ importers:
 
   packages/examples:
     dependencies:
+      '@floating-ui/dom':
+        specifier: 1.6.0
+        version: 1.6.0
+      '@tiptap/core':
+        specifier: 3.4.3
+        version: 3.4.3(@tiptap/pm@3.4.3)
+      '@tiptap/extension-table':
+        specifier: ^3.4.3
+        version: 3.4.3(@tiptap/core@3.4.3(@tiptap/pm@3.4.3))(@tiptap/pm@3.4.3)
+      '@tiptap/extension-text-align':
+        specifier: ^3.4.3
+        version: 3.4.3(@tiptap/core@3.4.3(@tiptap/pm@3.4.3))
+      '@tiptap/extension-text-style':
+        specifier: ^3.4.3
+        version: 3.4.3(@tiptap/core@3.4.3(@tiptap/pm@3.4.3))
+      '@tiptap/extensions':
+        specifier: ^3.4.3
+        version: 3.4.3(@tiptap/core@3.4.3(@tiptap/pm@3.4.3))(@tiptap/pm@3.4.3)
+      '@tiptap/pm':
+        specifier: 3.4.3
+        version: 3.4.3
+      '@tiptap/starter-kit':
+        specifier: ^3.4.3
+        version: 3.4.3
+      '@tiptap/suggestion':
+        specifier: ^3.4.3
+        version: 3.4.3(@tiptap/core@3.4.3(@tiptap/pm@3.4.3))(@tiptap/pm@3.4.3)
+      '@tiptap/vue-3':
+        specifier: 3.4.3
+        version: 3.4.3(@floating-ui/dom@1.6.0)(@tiptap/core@3.4.3(@tiptap/pm@3.4.3))(@tiptap/pm@3.4.3)(vue@3.5.21(typescript@5.8.3))
+      monaco-editor:
+        specifier: 0.52.0
+        version: 0.52.0
       tiptap-print-designer:
         specifier: workspace:*
         version: link:../core
@@ -1321,11 +1348,6 @@ packages:
     peerDependencies:
       '@tiptap/core': ^3.4.3
       '@tiptap/pm': ^3.4.3
-
-  '@tiptap/extension-image@3.4.3':
-    resolution: {integrity: sha512-SP2ZbF/DUpmTYmbDlVnUV3MBD6a8Tblzljp6rf7IwWyMQ2UsRh5re3fNggYpuzTpnGDimfeJiCAIhgrQXQgSaw==}
-    peerDependencies:
-      '@tiptap/core': ^3.4.3
 
   '@tiptap/extension-italic@3.4.3':
     resolution: {integrity: sha512-fS3uyhyxrTRpkLnr/rAjjRBChg9B/5HKyCzP2B/vT1N6wRm8cnHl/eZZy4fOXN7Q694eCBO6n1HNm6o4jBW2ZA==}
@@ -6095,10 +6117,6 @@ snapshots:
       '@tiptap/core': 3.4.3(@tiptap/pm@3.4.3)
       '@tiptap/pm': 3.4.3
 
-  '@tiptap/extension-image@3.4.3(@tiptap/core@3.4.3(@tiptap/pm@3.4.3))':
-    dependencies:
-      '@tiptap/core': 3.4.3(@tiptap/pm@3.4.3)
-
   '@tiptap/extension-italic@3.4.3(@tiptap/core@3.4.3(@tiptap/pm@3.4.3))':
     dependencies:
       '@tiptap/core': 3.4.3(@tiptap/pm@3.4.3)
@@ -6219,6 +6237,16 @@ snapshots:
       '@tiptap/core': 3.4.3(@tiptap/pm@3.4.3)
       '@tiptap/pm': 3.4.3
       vue: 3.5.13(typescript@5.8.3)
+    optionalDependencies:
+      '@tiptap/extension-bubble-menu': 3.4.3(@tiptap/core@3.4.3(@tiptap/pm@3.4.3))(@tiptap/pm@3.4.3)
+      '@tiptap/extension-floating-menu': 3.4.3(@floating-ui/dom@1.6.0)(@tiptap/core@3.4.3(@tiptap/pm@3.4.3))(@tiptap/pm@3.4.3)
+
+  '@tiptap/vue-3@3.4.3(@floating-ui/dom@1.6.0)(@tiptap/core@3.4.3(@tiptap/pm@3.4.3))(@tiptap/pm@3.4.3)(vue@3.5.21(typescript@5.8.3))':
+    dependencies:
+      '@floating-ui/dom': 1.6.0
+      '@tiptap/core': 3.4.3(@tiptap/pm@3.4.3)
+      '@tiptap/pm': 3.4.3
+      vue: 3.5.21(typescript@5.8.3)
     optionalDependencies:
       '@tiptap/extension-bubble-menu': 3.4.3(@tiptap/core@3.4.3(@tiptap/pm@3.4.3))(@tiptap/pm@3.4.3)
       '@tiptap/extension-floating-menu': 3.4.3(@floating-ui/dom@1.6.0)(@tiptap/core@3.4.3(@tiptap/pm@3.4.3))(@tiptap/pm@3.4.3)
