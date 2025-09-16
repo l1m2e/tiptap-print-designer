@@ -24,6 +24,7 @@ async function openFormat() {
 }
 
 const text = computed<string>(() => get(data.value, props.node.attrs.path))
+const { FormatNode, isFormat } = useFormat(props)
 
 async function copy() {
   const view = props.editor.view
@@ -77,7 +78,10 @@ async function copy() {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger as-child>
-                <span>{{ text }}</span>
+                <template v-if="!isFormat">
+                  {{ text }}
+                </template>
+                <FormatNode v-else :value="text" />
               </TooltipTrigger>
               <TooltipContent>
                 <div class="tpd-flex tpd-items-center">

@@ -12,7 +12,7 @@ const { template = {
       height: '297mm',
       padding: '6mm',
       lineHeight: '1.5',
-      letterSpacing: '0.5px',
+      letterSpacing: '0',
     },
     customStyle: '',
   },
