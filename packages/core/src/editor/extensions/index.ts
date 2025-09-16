@@ -1,4 +1,3 @@
-import BubbleMenu from '@tiptap/extension-bubble-menu'
 import StarterKit from '@tiptap/starter-kit'
 import { DesignerDateTableNode, RenderDateTableNode } from './DateTableNode'
 import { DesignerFieldNode, RenderFieldNode } from './FieldNode'
@@ -33,7 +32,6 @@ const designerExtensions = [
   DesignerSFCNode,
   DesignerResizableImageNode,
   DesignerSFCInlineNode,
-  BubbleMenu,
 ]
 
 const renderExtensions = [
