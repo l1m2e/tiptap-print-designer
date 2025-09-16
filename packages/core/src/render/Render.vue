@@ -5,10 +5,16 @@ import { EditorContent, EditorRoot } from '~/editor'
 
 const { template = {
   content: '',
-  page: {
-    size: ['210mm', '297mm'],
+  paperSetting: {
     paperType: 'A4',
-    padding: 6,
+    style: {
+      width: '210mm',
+      height: '297mm',
+      padding: '6mm',
+      lineHeight: '1.5',
+      letterSpacing: '0.5px',
+    },
+    customStyle: '',
   },
   dataSources: [],
   mockData: {},
@@ -23,9 +29,7 @@ const { handlePrint } = useVueToPrint({ content: () => print.value! })
 
 onMounted(() => {
   if (PaperRef.value) {
-    PaperRef.value.size = template.page.size
-    PaperRef.value.paperType = template.page.paperType
-    PaperRef.value.padding = template.page.padding || 0
+    PaperRef.value.paperSetting = template.paperSetting
   }
 })
 
@@ -35,10 +39,10 @@ defineExpose({
 </script>
 
 <template>
-  <Paper v-bind="template.page" ref="PaperEl">
+  <Paper v-bind="template.paperSetting" ref="PaperEl">
     <PaperContent>
       <EditorRoot :model-value="template.content" mode="viewer" :data>
-        <EditorContent ref="print" class="tpd-pointer-events-none tpd-select-none" :style="{ padding: `${PaperRef?.padding || 0}mm` }" />
+        <EditorContent ref="print" class="tpd-pointer-events-none tpd-select-none" />
       </EditorRoot>
     </PaperContent>
   </Paper>

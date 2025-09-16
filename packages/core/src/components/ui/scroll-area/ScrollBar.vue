@@ -17,9 +17,9 @@ const delegatedProps = reactiveOmit(props, "class")
     v-bind="delegatedProps"
     :class="
       cn('tpd-flex tpd-touch-none tpd-select-none tpd-transition-colors',
-         orientation === 'tpd-vertical'
+         orientation === 'vertical'
            && 'tpd-h-full tpd-w-2.5 tpd-border-l tpd-border-l-transparent tpd-p-px',
-         orientation === 'tpd-horizontal'
+         orientation === 'horizontal'
            && 'tpd-h-2.5 tpd-flex-col tpd-border-t tpd-border-t-transparent tpd-p-px',
          props.class)"
   >
