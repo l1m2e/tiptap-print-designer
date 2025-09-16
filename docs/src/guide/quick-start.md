@@ -22,24 +22,24 @@
 
    :::
 
-2. 设计器需要 `monaco-editor` 来支持代码编辑功能
+2. 设计器基于 Vue 3、Tiptap 和 Floating UI，因此需要手动安装以下依赖：
 
    ::: code-group
 
    ```sh [pnpm]
-   pnpm add monaco-editor
+   pnpm add vue monaco-editor @floating-ui/dom @tiptap/core @tiptap/vue-3 @tiptap/pm @tiptap/extension-table @tiptap/extension-text-align @tiptap/extension-text-style @tiptap/extensions @tiptap/starter-kit @tiptap/suggestion
    ```
 
    ```sh [npm]
-   npm install monaco-editor
+   npm install vue monaco-editor @floating-ui/dom @tiptap/core @tiptap/vue-3 @tiptap/pm @tiptap/extension-table @tiptap/extension-text-align @tiptap/extension-text-style @tiptap/extensions @tiptap/starter-kit @tiptap/suggestion
    ```
 
    ```sh [yarn]
-   yarn add monaco-editor
+   yarn add vue monaco-editor @floating-ui/dom @tiptap/core @tiptap/vue-3 @tiptap/pm @tiptap/extension-table @tiptap/extension-text-align @tiptap/extension-text-style @tiptap/extensions @tiptap/starter-kit @tiptap/suggestion
    ```
 
    ```sh [bun]
-   bun add monaco-editor
+   bun add vue monaco-editor @floating-ui/dom @tiptap/core @tiptap/vue-3 @tiptap/pm @tiptap/extension-table @tiptap/extension-text-align @tiptap/extension-text-style @tiptap/extensions @tiptap/starter-kit @tiptap/suggestion
    ```
 
    :::
