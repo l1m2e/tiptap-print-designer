@@ -54,8 +54,6 @@
   "peerDependencies": {
     "@floating-ui/dom": "1.6.0",
     "@tiptap/core": "3.4.3",
-    "@tiptap/extension-image": "3.4.3",
-    "@tiptap/extension-list": "3.4.3",
     "@tiptap/extension-table": "3.4.3",
     "@tiptap/extension-text-align": "3.4.3",
     "@tiptap/extension-text-style": "3.4.3",
