@@ -4,8 +4,6 @@ export interface PagerSetting {
     width: string
     height: string
     padding: string
-    lineHeight: string
-    letterSpacing: string
   }
   customStyle: string
 }
