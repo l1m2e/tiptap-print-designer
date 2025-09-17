@@ -1,5 +1,6 @@
 <script lang="tsx" setup>
 import panzoom from 'panzoom'
+import { useInjectPageStyle } from '~/composables'
 import { PAPER_KEY } from '.'
 
 const { zoom } = defineProps<{
@@ -18,11 +19,19 @@ onMounted(() => {
     initialY: 500,
   })
 })
+
+const pageStyle = computed(() => ({
+  width: paperSetting.value.style.width,
+  height: paperSetting.value.style.height,
+  margin: paperSetting.value.style.padding,
+}))
+
+useInjectPageStyle('tiptap-designer-page', pageStyle)
 </script>
 
 <template>
   <div class="tpd-flex tpd-items-center tpd-justify-center">
-    <div ref="zoomEl" :style="paperSetting.style" class="tpd-bg-white dark:tpd-bg-black">
+    <div ref="zoomEl" :style="paperSetting.style" class="tpd-bg-white dark:tpd-bg-black print:!tpd-p-0">
       <ScopedStyle :scoped-css="paperSetting.customStyle">
         <slot />
       </ScopedStyle>
