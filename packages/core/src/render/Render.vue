@@ -11,8 +11,6 @@ const { template = {
       width: '210mm',
       height: '297mm',
       padding: '6mm',
-      lineHeight: '1.5',
-      letterSpacing: '0pt',
     },
     customStyle: '',
   },
