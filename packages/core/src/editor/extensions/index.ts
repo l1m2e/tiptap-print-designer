@@ -9,10 +9,11 @@ import SlashCommands from './SlashCommands'
 import { Table, TableCell, TableHeader, TableRow } from './Table'
 import TextAlign from './TextAlign'
 import TextStyle from './TextStyle'
-// import TrailingNode from './TrailingNode'
 
 const baseExtensions = [
-  StarterKit,
+  StarterKit.configure({
+    trailingNode: false, // 彻底禁用自动 trailing node
+  }),
   TextAlign,
   FontSize,
   TextStyle,
@@ -25,7 +26,6 @@ const baseExtensions = [
 const designerExtensions = [
   ...baseExtensions,
   Placeholder,
-  // TrailingNode,
   SlashCommands,
   DesignerFieldNode,
   DesignerDateTableNode,
