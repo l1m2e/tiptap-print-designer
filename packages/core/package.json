@@ -1,7 +1,7 @@
 {
   "name": "tiptap-print-designer",
   "type": "module",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "private": false,
   "description": "一个开箱即用的富文本打印设计器，基于 tiptap 和 Vue3 开发",
   "author": "l1m2e",
