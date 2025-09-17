@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { DesignerEmits, TemplateData } from '.'
 import type { Format } from './components/FormatDialog/common'
-import Toaster from '@/components/ui/toast/Toaster.vue'
 import { Database, Settings } from 'lucide-vue-next'
 import { useVueToPrint } from 'vue-to-print'
+import Toaster from '@/components/ui/toast/Toaster.vue'
 import { ResizablePanel } from '~/components/ui/resizable'
 import { getDataSource, getMockData, updateDataSource, updateMockData } from '~/db/services/printDesigner'
 import { EditorContent, EditorRoot } from '~/editor'
