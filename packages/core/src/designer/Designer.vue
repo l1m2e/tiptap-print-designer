@@ -90,8 +90,8 @@ defineExpose({
 <template>
   <Paper ref="PaperEl">
     <EditorRoot v-model="text" :data="mockData">
-      <div class="tpd-grid tpd-grid-cols-2 gap-x-4 tpd-items-center tpd-border-b tpd-border-neutral-200 tpd-p-2 dark:tpd-border-neutral-800 tpd-h-[54px]">
-        <EditTopMenu />
+      <div class="tpd-grid tpd-grid-cols-4 gap-x-4 tpd-items-center tpd-border-b tpd-border-neutral-200 tpd-p-2 dark:tpd-border-neutral-800 tpd-h-[54px]">
+        <EditTopMenu class="tpd-col-span-3" />
         <div class="tpd-flex tpd-items-center tpd-justify-end tpd-gap-2">
           <PaperTrigger />
           <Button variant="outline" size="icon" @click="SettingDialogRef?.open">
