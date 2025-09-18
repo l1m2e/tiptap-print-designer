@@ -32,9 +32,7 @@ useInjectPageStyle('tiptap-designer-page', pageStyle)
 <template>
   <div class="tpd-flex tpd-items-center tpd-justify-center">
     <div ref="zoomEl" :style="paperSetting.style" class="tpd-bg-white dark:tpd-bg-black print:!tpd-p-0">
-      <ScopedStyle :scoped-css="paperSetting.customStyle">
-        <slot />
-      </ScopedStyle>
+      <slot />
     </div>
   </div>
 </template>

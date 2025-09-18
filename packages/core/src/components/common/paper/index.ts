@@ -5,7 +5,6 @@ export interface PagerSetting {
     height: string
     padding: string
   }
-  customStyle: string
 }
 export const PAPER_KEY = Symbol('PAPER_KEY') as InjectionKey<Ref<PagerSetting>>
 

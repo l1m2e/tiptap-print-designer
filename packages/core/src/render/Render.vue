@@ -12,7 +12,6 @@ const { template = {
       height: '297mm',
       padding: '6mm',
     },
-    customStyle: '',
   },
   dataSources: [],
   mockData: {},

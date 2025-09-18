@@ -8,7 +8,6 @@ const paperSetting = ref({
     height: '297mm',
     padding: '6mm',
   },
-  customStyle: '',
 })
 
 provide(PAPER_KEY, paperSetting)
