@@ -3,6 +3,7 @@ import { BetweenHorizonalEnd, BetweenHorizontalStart, BetweenVerticalEnd, Betwee
 import DeleteColumn from '~/components/icons/DeleteColumn.vue'
 import DeleteRow from '~/components/icons/DeleteRow.vue'
 import { EDITOR_CONTEXT } from '~/editor/constants'
+import TableCellStylePanel from './TableCellStylePanel.vue'
 
 const { editor } = inject(EDITOR_CONTEXT)!
 
@@ -15,8 +16,8 @@ const btns = [
   { title: '删除当前列', icon: DeleteColumn, fn: () => editor.value?.chain().focus().deleteColumn().run() },
   { title: '合并单元格', icon: TableCellsMerge, fn: () => editor.value?.chain().focus().mergeCells().run() },
   { title: '拆分单元格', icon: TableCellsSplit, fn: () => editor.value?.chain().focus().splitCell().run() },
-  { title: '隐藏单元格边框', icon: SquareDashedMousePointer, fn: () => editor.value?.chain().focus().setCellAttribute('class', 'no-border').run() },
-  { title: '显示单元格边框', icon: Square, fn: () => editor.value?.chain().focus().setCellAttribute('class', '').run() },
+  // { title: '隐藏单元格边框', icon: SquareDashedMousePointer, fn: () => editor.value?.chain().focus().setCellAttribute('class', 'no-border').run() },
+  // { title: '显示单元格边框', icon: Square, fn: () => editor.value?.chain().focus().setCellAttribute('class', '').run() },
   { title: '删除表格', icon: ListX, fn: () => editor.value?.chain().focus().deleteTable().run() },
 ]
 
@@ -49,5 +50,6 @@ defineExpose({
 <template>
   <div v-if="isShow">
     <ActionButton v-for="item in btns" :key="item.title" v-bind="item" />
+    <TableCellStylePanel />
   </div>
 </template>

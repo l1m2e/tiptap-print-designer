@@ -91,7 +91,6 @@ declare module 'vue' {
     PaperContent: typeof import('./src/components/common/paper/PaperContent.vue')['default']
     PaperCustomStyleSetting: typeof import('./src/components/common/paper/PaperCustomStyleSetting.vue')['default']
     PaperDialog: typeof import('./src/components/common/paper/PaperDialog.vue')['default']
-    PaperLayoutSetting: typeof import('./src/components/common/paper/PaperLayoutSetting.vue')['default']
     PaperSizeSetting: typeof import('./src/components/common/paper/PaperSizeSetting.vue')['default']
     PaperTrigger: typeof import('./src/components/common/paper/PaperTrigger.vue')['default']
     Popover: typeof import('./src/components/ui/popover/Popover.vue')['default']

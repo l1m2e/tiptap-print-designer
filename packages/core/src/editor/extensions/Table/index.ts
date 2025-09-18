@@ -7,6 +7,16 @@ export const TableHeader = TiptapTableHeader.extend({
     return {
       ...this.parent?.(),
       class: null,
+      // allow inline style string so we can control padding and border sides per header cell
+      style: {
+        default: null,
+        parseHTML: element => element.getAttribute('style'),
+        renderHTML: (attributes) => {
+          if (!attributes.style)
+            return {}
+          return { style: attributes.style }
+        },
+      },
     }
   },
 })
@@ -16,6 +26,16 @@ export const TableCell = TiptapTableCell.extend({
     return {
       ...this.parent?.(),
       class: null,
+      // allow inline style string so we can control padding and border sides per cell
+      style: {
+        default: null,
+        parseHTML: element => element.getAttribute('style'),
+        renderHTML: (attributes) => {
+          if (!attributes.style)
+            return {}
+          return { style: attributes.style }
+        },
+      },
     }
   },
 })
