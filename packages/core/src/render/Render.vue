@@ -25,9 +25,7 @@ const print = ref <HTMLElement>()
 const { handlePrint } = useVueToPrint({ content: () => print.value! })
 
 onMounted(() => {
-  if (PaperRef.value) {
-    PaperRef.value.paperSetting = template.paperSetting
-  }
+  PaperRef.value!.updatePaperSetting(template.paperSetting)
 })
 
 defineExpose({
@@ -36,7 +34,7 @@ defineExpose({
 </script>
 
 <template>
-  <Paper v-bind="template.paperSetting" ref="PaperEl">
+  <Paper ref="PaperEl">
     <PaperContent>
       <EditorRoot :model-value="template.content" mode="viewer" :data>
         <EditorContent ref="print" class="tpd-pointer-events-none tpd-select-none" />
