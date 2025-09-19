@@ -62,38 +62,24 @@ function onMouseDown(e: MouseEvent) {
 }
 
 function toggleInlineBlock() {
-  const getPos = (props as any).getPos?.()
-  if (typeof getPos !== 'number') return
+  const getPos = (props as any).getPos
+  if (typeof getPos !== 'function') return
+
+  const pos = getPos()
+  if (typeof pos !== 'number') return
 
   const { state, view } = props.editor
   const { schema } = state
   const attrs = { ...props.node.attrs }
 
-  if (props.node.type.name === 'sfc-node') {
-    const inlineType = schema.nodes['sfc-inline']
-    const paragraph = schema.nodes.paragraph
-    if (!inlineType) return
-    const inlineNode = inlineType.create(attrs)
-    const replacement = paragraph ? paragraph.create(null, inlineNode) : inlineNode
-    const tr = state.tr.replaceWith(getPos, getPos + props.node.nodeSize, replacement)
-    view.dispatch(tr)
-    props.editor.commands.focus()
-  }
-  else if (props.node.type.name === 'sfc-inline') {
-    const blockType = schema.nodes['sfc-node']
-    if (!blockType) return
-    const blockNode = blockType.create(attrs)
+  const currentType = props.node.type.name
+  const newTypeName = currentType === 'sfc-node' ? 'sfc-inline' : 'sfc-node'
+  const newType = schema.nodes[newTypeName]
+  if (!newType) return
 
-    const pos = getPos
-    const $pos = state.doc.resolve(pos)
-    // 将块级节点插入到父段落之后
-    const insertPos = $pos.after($pos.depth)
-    let tr = state.tr.insert(insertPos, blockNode)
-    // 删除原内联节点
-    tr = tr.deleteRange(pos, pos + props.node.nodeSize)
-    view.dispatch(tr)
-    props.editor.commands.focus()
-  }
+  const tr = state.tr.setNodeMarkup(pos, newType, attrs)
+  view.dispatch(tr)
+  props.editor.commands.focus()
 }
 </script>
 
