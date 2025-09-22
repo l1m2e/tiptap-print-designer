@@ -1,4 +1,6 @@
 .tiptap-editor {
+  @apply tpd-leading-[1.5];
+  
   .ProseMirror-focused {
     @apply tpd-outline-none;
   }
@@ -6,10 +8,6 @@
   /* 使节点绝对定位基于编辑器容器 */
   .ProseMirror {
     @apply tpd-relative;
-  }
-
-  @media print {
-    font-size: 12pt;
   }
 }
 
