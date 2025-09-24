@@ -35,10 +35,12 @@ provide(EDITOR_CONTEXT, {
   data: computed(() => data),
   editor,
 })
+
+const isReady = computed(() => data !== undefined && data !== null)
 </script>
 
 <template>
-  <div>
+  <div v-if="isReady">
     <slot />
   </div>
 </template>
