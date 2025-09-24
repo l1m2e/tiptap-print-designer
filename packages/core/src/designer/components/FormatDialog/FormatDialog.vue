@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Format } from './common'
 import { Box, Clock, Maximize2Icon, Minimize2Icon } from 'lucide-vue-next'
+import { usePromiseDialog } from '~/composables/usePromiseDialog'
 import Custom from './common/Custom.vue'
 import Timestamp from './common/Timestamp.vue'
 
@@ -29,39 +30,24 @@ const items = [
   },
 ] as const
 
-let resolve: (value: Format) => void | undefined
-let reject: (reason?: unknown) => void | undefined
-
-async function open(options: { format?: Format, mockData: any, customTemplate?: string }) {
+const { open, confirm, closed } = usePromiseDialog<Format, [{ format?: Format, mockData: any, customTemplate?: string }]>(show, (options) => {
   nodeMockData.value = options.mockData
   customTemplate.value = options.customTemplate || 'DefaultTemplate'
   format.value = options.format
   componentType.value = options.format?.type || 'Timestamp'
-  show.value = true
   setFormat()
-  const { resolve: resolvePromise, reject: rejectPromise, promise } = Promise.withResolvers<Format>()
-  resolve = resolvePromise
-  reject = rejectPromise
-  return promise
-}
+})
 
 watch(componentType, setFormat)
 
 async function setFormat() {
-  await nextTick()
   const { template = 'DefaultTemplate', expands, type = 'Timestamp' } = format.value || {}
   CommonRef.value?.setFormat({ type, template, expands })
 }
 
-function confirm() {
+function onConfirm() {
   const format = CommonRef.value!.getFormat()
-  resolve(format)
-  show.value = false
-}
-
-function cancel() {
-  reject()
-  show.value = false
+  confirm(format)
 }
 
 const isFullscreen = ref(false)
@@ -71,7 +57,7 @@ defineExpose({ open })
 </script>
 
 <template>
-  <Dialog v-model:open="show">
+  <Dialog v-model:open="show" @update:open="(val) => { if (!val) closed() }">
     <DialogContent class="tpd-overflow-hidden !tpd-max-h-[700px] !tpd-max-w-[1300px] !tpd-p-0" :class="isFullscreen ? '!tpd-max-h-[100vh] !tpd-max-w-[100vw]' : '!tpd-max-h-[700px] !tpd-max-w-[1300px]'">
       <SidebarProvider>
         <Sidebar collapsible="none">
@@ -110,10 +96,10 @@ defineExpose({ open })
             :custom-template="customTemplate"
           />
           <DialogFooter class="tpd-mt-4">
-            <Button variant="outline" @click="cancel">
+            <Button variant="outline" @click="closed">
               取消
             </Button>
-            <Button @click="confirm">
+            <Button @click="onConfirm">
               确定
             </Button>
           </DialogFooter>
