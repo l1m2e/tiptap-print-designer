@@ -2,33 +2,36 @@
 import type { Format } from './common'
 import { Box, Clock, Maximize2Icon, Minimize2Icon } from 'lucide-vue-next'
 import { usePromiseDialog } from '~/composables/usePromiseDialog'
+import { TIPTAP_PRINT_DESIGNER_CUSTOM_FORMAT } from '~/constants'
 import Custom from './common/Custom.vue'
 import Timestamp from './common/Timestamp.vue'
 
-const componentMap = {
-  Custom,
-  Timestamp,
-}
-
 const show = ref(false)
-const componentType = ref<keyof typeof componentMap>('Timestamp')
+const componentType = ref<string>('Timestamp')
 const format = ref<Format | undefined>()
 const nodeMockData = ref()
 const CommonRef = useTemplateRef('CommonEl')
 const customTemplate = ref('DefaultTemplate')
 
+const customFormatList = inject(TIPTAP_PRINT_DESIGNER_CUSTOM_FORMAT, [])
+
 const items = [
   {
+    type: 'Timestamp',
     title: '格式化时间戳',
-    component: 'Timestamp',
+    component: Timestamp,
     icon: Clock,
   },
+  ...customFormatList,
   {
+    type: 'Custom',
     title: '自定义格式化',
-    component: 'Custom',
+    component: Custom,
     icon: Box,
   },
-] as const
+]
+
+const FormatComponent = computed(() => items.find(i => i.type === componentType.value)?.component || Timestamp)
 
 const { open, confirm, closed } = usePromiseDialog<Format, [{ format?: Format, mockData: any, customTemplate?: string }]>(show, (options) => {
   nodeMockData.value = options.mockData
@@ -58,7 +61,7 @@ defineExpose({ open })
 
 <template>
   <Dialog v-model:open="show" @update:open="(val) => { if (!val) closed() }">
-    <DialogContent class="tpd-overflow-hidden !tpd-max-h-[700px] !tpd-max-w-[1300px] !tpd-p-0" :class="isFullscreen ? '!tpd-max-h-[100vh] !tpd-max-w-[100vw]' : '!tpd-max-h-[700px] !tpd-max-w-[1300px]'">
+    <DialogContent class="tpd-overflow-hidden !tpd-p-0" :class="isFullscreen ? '!tpd-max-h-[100vh] !tpd-max-w-[100vw]' : '!tpd-max-h-[700px] !tpd-max-w-[1300px]'">
       <SidebarProvider>
         <Sidebar collapsible="none">
           <SidebarContent>
@@ -69,8 +72,8 @@ defineExpose({ open })
               <SidebarGroupContent>
                 <SidebarMenu>
                   <SidebarMenuItem v-for="item in items" :key="item.title">
-                    <SidebarMenuButton as-child :is-active="componentType === item.component">
-                      <div @click="componentType = item.component">
+                    <SidebarMenuButton as-child :is-active="componentType === item.type">
+                      <div @click="componentType = item.type">
                         <component :is="item.icon" />
                         <span>{{ item.title }}</span>
                       </div>
@@ -89,7 +92,7 @@ defineExpose({ open })
             </div>
           </div>
           <component
-            :is="componentMap[componentType]"
+            :is="FormatComponent"
             ref="CommonEl"
             v-model:show="show"
             :node-mock-data="nodeMockData"
