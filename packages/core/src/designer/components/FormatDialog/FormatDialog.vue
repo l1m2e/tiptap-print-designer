@@ -53,6 +53,10 @@ function onConfirm() {
   confirm(format)
 }
 
+watch(show, (val) => {
+  if (val === false) closed()
+})
+
 const isFullscreen = ref(false)
 const toggle = () => (isFullscreen.value = !isFullscreen.value)
 
@@ -60,7 +64,7 @@ defineExpose({ open })
 </script>
 
 <template>
-  <Dialog v-model:open="show" @update:open="(val) => { if (!val) closed() }">
+  <Dialog v-model:open="show">
     <DialogContent class="tpd-overflow-hidden !tpd-p-0" :class="isFullscreen ? '!tpd-max-h-[100vh] !tpd-max-w-[100vw]' : '!tpd-max-h-[700px] !tpd-max-w-[1300px]'">
       <SidebarProvider>
         <Sidebar collapsible="none">
@@ -100,7 +104,7 @@ defineExpose({ open })
             @ready="setFormat"
           />
           <DialogFooter class="tpd-mt-4">
-            <Button variant="outline" @click="closed">
+            <Button variant="outline" @click="show = false">
               取消
             </Button>
             <Button @click="onConfirm">
