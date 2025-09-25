@@ -12,8 +12,8 @@ const { text } = defineProps<{ text: string }>()
 
 const interiorModuleCache = {
   'vue': Vue,
-  '~/constants': { EDITOR_CONTEXT },
-  '@vueuse/core': { formatDate },
+  'TIPTAP_PRINT_DESIGNER/constants': { EDITOR_CONTEXT },
+  'TIPTAP_PRINT_DESIGNER/utils': { formatDate },
 }
 const externalModuleCache = inject(TIPTAP_PRINT_DESIGNER_SFCLOADER_MODULE_CACHE, {})
 const moduleCache = Object.assign({}, interiorModuleCache, externalModuleCache)
