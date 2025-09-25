@@ -74,7 +74,7 @@ async function copy() {
   <NodeViewWrapper as="span" :style="{ fontSize: props.node.attrs.fontSize }">
     <ContextMenu class="tpd-w-full">
       <ContextMenuTrigger>
-        <div class="tpd-inline-flex tpd-items-center tpd-justify-center tpd-text-purple-500 tpd-rounded tpd-cursor-pointer">
+        <div class="tpd-inline-flex tpd-items-center tpd-justify-center  tpd-rounded tpd-cursor-pointer" :class="isFormat ? 'tpd-text-green-500' : 'tpd-text-purple-500'">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger as-child>
