@@ -10,6 +10,8 @@ const {
   readOnly = false,
 } = defineProps<MonacoEditorProps>()
 
+const emits = defineEmits<{ ready: [] }>()
+
 const editContainer = ref<HTMLElement | null>(null)
 const modelValue = defineModel<string>()
 
@@ -63,6 +65,7 @@ async function initEditor() {
   monaco.languages.register({ id: 'typescript' })
   monaco.languages.register({ id: 'javascript' })
   shikiToMonaco(highlighter, monaco)
+  emits('ready')
 }
 
 defineExpose({

@@ -5,7 +5,7 @@ import { DefaultTemplate, FiledNodeTemplate, TableColumnTemplate } from '~/compo
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '~/components/ui/resizable'
 
 const { nodeMockData, customTemplate } = defineProps<{ nodeMockData: any, customTemplate: string }>()
-
+const emits = defineEmits<{ ready: [] }>()
 const editorEl = ref()
 const template = ref('')
 
@@ -38,7 +38,7 @@ defineExpose({
 <template>
   <ResizablePanelGroup direction="horizontal" class="tpd-w-full tpd-bg-white dark:tpd-bg-neutral-950">
     <ResizablePanel>
-      <MonacoEditor ref="editorEl" v-model="template" language="vue" class="tpd-h-full tpd-rounded-sm tpd-overflow-hidden" />
+      <MonacoEditor ref="editorEl" v-model="template" language="vue" class="tpd-h-full tpd-rounded-sm tpd-overflow-hidden" @ready="emits('ready')" />
     </ResizablePanel>
 
     <ResizableHandle class="tpd-mx-2" />

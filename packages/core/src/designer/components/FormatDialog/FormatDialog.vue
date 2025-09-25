@@ -94,6 +94,7 @@ defineExpose({ open })
             v-model:show="show"
             :node-mock-data="nodeMockData"
             :custom-template="customTemplate"
+            @ready="setFormat"
           />
           <DialogFooter class="tpd-mt-4">
             <Button variant="outline" @click="closed">
