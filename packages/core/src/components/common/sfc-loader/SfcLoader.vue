@@ -20,6 +20,7 @@ const moduleCache = Object.assign({}, interiorModuleCache, externalModuleCache)
 
 const sfcComponent = shallowRef()
 
+const parentInstance = getCurrentInstance()
 function generateComponent() {
   // 随机生成文件名解决缓存问题
   const randomFileName = `${Date.now()}.vue`
@@ -57,7 +58,12 @@ function generateComponent() {
       errors.length > 0 && new Error(errors.join('\n'))
     }
 
-    sfcComponent.value = defineAsyncComponent(() => loadModule(randomFileName, options as any))
+    sfcComponent.value = defineAsyncComponent(async () => {
+      const comp: any = await loadModule(randomFileName, options)
+      if (parentInstance?.appContext && !comp.appContext)
+        comp.appContext = parentInstance.appContext
+      return comp
+    })
   }
   catch (error) {
     console.error('编译失败:', error)
