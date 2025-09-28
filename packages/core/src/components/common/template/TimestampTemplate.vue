@@ -5,5 +5,5 @@ const { value } = defineProps(['value'])
 </script>
 
 <template>
-  {{ formatDate(new Date(value), '$format') }}
+  {{ value ? formatDate(new Date(value), '$format') : '' }}
 </template>
