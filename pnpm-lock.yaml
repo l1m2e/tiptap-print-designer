@@ -172,7 +172,7 @@ importers:
       vue-to-print:
         specifier: 1.4.0
         version: 1.4.0(vue@3.5.13(typescript@5.8.3))
-      vue3-sfc-loader:
+      vue3-sfc-loader-chrome64:
         specifier: 0.9.5
         version: 0.9.5(lodash@4.17.21)(vue@3.5.13(typescript@5.8.3))
       zod:
@@ -4759,8 +4759,8 @@ packages:
     peerDependencies:
       typescript: '>=5.0.0'
 
-  vue3-sfc-loader@0.9.5:
-    resolution: {integrity: sha512-RuzFftbFjdYV81zKnL1/SsaOhq5DXtxuclU3auo8pyI3uprvyD9ssgvxNQ5otBYnqePGCD8P+qgDlVaRPyMvfg==}
+  vue3-sfc-loader-chrome64@0.9.5:
+    resolution: {integrity: sha512-ugYtOMRDkzTi8ob8Tq8cw/XEQmMJZq3s3XhbB0MRaVn2sKUOj1f/pztPAMz9beKlbhKAhKOJiGz1F6ZtszT9dQ==}
 
   vue@3.5.13:
     resolution: {integrity: sha512-wmeiSMxkZCSc+PM2w2VRsOYAZC8GdipNFRTsLSfodVqI9mbejKeXEGr8SckuLnrQPGe3oJN5c3K0vpoU9q/wCQ==}
@@ -10006,7 +10006,7 @@ snapshots:
       '@vue/language-core': 2.2.8(typescript@5.8.3)
       typescript: 5.8.3
 
-  vue3-sfc-loader@0.9.5(lodash@4.17.21)(vue@3.5.13(typescript@5.8.3)):
+  vue3-sfc-loader-chrome64@0.9.5(lodash@4.17.21)(vue@3.5.13(typescript@5.8.3)):
     dependencies:
       '@babel/code-frame': 7.27.1
       '@babel/core': 7.28.4

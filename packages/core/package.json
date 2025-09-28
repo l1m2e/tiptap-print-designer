@@ -95,7 +95,7 @@
     "vee-validate": "4.15.0",
     "vue-draggable-plus": "0.6.0",
     "vue-to-print": "1.4.0",
-    "vue3-sfc-loader": "0.9.5",
+    "vue3-sfc-loader-chrome64": "0.9.5",
     "zod": "3.24.3"
   },
   "devDependencies": {
