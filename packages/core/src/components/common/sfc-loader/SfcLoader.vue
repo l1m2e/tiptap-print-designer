@@ -4,7 +4,7 @@ import { formatDate } from '@vueuse/core'
 import { defineAsyncComponent } from 'vue'
 import * as Vue from 'vue'
 // @ts-expect-error 忽略此类型问题
-import { loadModule } from 'vue3-sfc-loader'
+import { loadModule } from 'vue3-sfc-loader-chrome64'
 import { TIPTAP_PRINT_DESIGNER_SFCLOADER_MODULE_CACHE } from '~/constants'
 import { EDITOR_CONTEXT } from '~/editor/constants'
 
