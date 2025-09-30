@@ -32,8 +32,12 @@ const dataSource = ref<{ path: string, schema: SchemaTree, description: string }
 const columns = ref<ColumnDef<Columns>[]>([
   {
     accessorKey: '#',
-    cell: () => <GripVerticalIcon class="tpd-text-gray-500 tpd-cursor-move handle" />,
-    size: 40,
+    cell: () => (
+      <div class="tpd-rounded-sm tpd-bg-gray-100 tpd-p-0.5 tpd-flex tpd-items-center tpd-justify-center handle tpd-cursor-move">
+        <GripVerticalIcon class="tpd-text-gray-500 tpd-size-4" />
+      </div>
+    ),
+    size: 30,
   },
   {
     accessorKey: 'header',
