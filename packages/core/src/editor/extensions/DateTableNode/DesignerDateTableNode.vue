@@ -10,11 +10,17 @@ import DataTable from './DataTable.vue'
 
 const props = defineProps(nodeViewProps)
 const { data } = inject(EDITOR_CONTEXT)!
-const { openDateTableDialog } = inject(DESIGNER_KEY)!
+const { openDateTableDialog, openDataTableStyleDialog } = inject(DESIGNER_KEY)!
 
 const DataTableRef = useTemplateRef('DataTableEl')
+
 function edit() {
   openDateTableDialog({ path: props.node.attrs.path, columns: props.node.attrs.columns })
+}
+
+async function editStyle() {
+  const res = await openDataTableStyleDialog(props.node.attrs.tableStyle)
+  res && props.updateAttributes({ tableStyle: res })
 }
 
 interface Columns { header: string, accessorKey: string, id: string, format: Format | undefined }
@@ -30,7 +36,7 @@ const columns = computed(() => {
     },
   }))
 })
-
+const tableStyle = computed(() => JSON.parse(props.node.attrs?.tableStyle || '{}'))
 function ddelete() {
   props.deleteNode()
 }
@@ -52,13 +58,17 @@ watchImmediate(() => props.node.attrs.columnSizingState, async () => {
         <div class="tpd-border tpd-border-dashed tpd-border-violet-500 tpd-rounded tpd-p-2 tpd-w-full">
           <DataTable
             ref="DataTableEl" :columns="columns" :data="tableList"
+            :pt="tableStyle"
             @column-sizing-change="handleColumnSizingChange"
           />
         </div>
       </ContextMenuTrigger>
       <ContextMenuContent>
         <ContextMenuItem @select="edit">
-          编辑组件
+          编辑数据
+        </ContextMenuItem>
+        <ContextMenuItem @select="editStyle">
+          编辑样式
         </ContextMenuItem>
         <ContextMenuItem @select="ddelete">
           删除

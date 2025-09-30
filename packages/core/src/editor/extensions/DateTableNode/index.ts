@@ -22,6 +22,7 @@ function CreateNode(Component: Component) {
         columnSizingState: { default: '{}' },
         columns: { default: '[]' },
         path: { default: '' },
+        tableStyle: { default: '{}' },
       }
     },
     addNodeView() {

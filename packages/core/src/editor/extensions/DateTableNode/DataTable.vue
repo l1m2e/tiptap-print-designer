@@ -7,10 +7,18 @@ import {
 } from '@tanstack/vue-table'
 import { useTanstackFullTableResize } from '~/composables'
 
-const { columns, data, rowId = 'id' } = defineProps<{
+const { columns, data, rowId = 'id', pt } = defineProps<{
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   rowId?: string
+  pt?: {
+    table?: string
+    thead?: string
+    tbody?: string
+    th?: string
+    tr?: string
+    td?: string
+  }
 }>()
 
 const emits = defineEmits<{ columnSizingChange: [val: ColumnSizingState] }>()
@@ -45,10 +53,10 @@ defineExpose({
 
 <template>
   <div class="tpd-max-w-full tpd-overflow-y-hidden">
-    <table ref="tableEl" class="tpd-w-full">
-      <thead>
-        <tr v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
-          <th v-for="header in headerGroup.headers" :key="header.id" class="tpd-relative group" :style="{ width: `${header.column.getSize()}%` }">
+    <table ref="tableEl" class="tpd-w-full" :style="pt?.table">
+      <thead :style="pt?.thead">
+        <tr v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id" :style="pt?.tr">
+          <th v-for="header in headerGroup.headers" :key="header.id" class="tpd-relative group" :style="[pt?.th, { width: `${header.getSize()}%` }]">
             <FlexRender
               v-if="!header.isPlaceholder" :render="header.column.columnDef.header"
               :props="header.getContext()"
@@ -62,20 +70,21 @@ defineExpose({
           </th>
         </tr>
       </thead>
-      <tbody>
+      <tbody :style="pt?.tbody">
         <template v-if="table.getRowModel().rows?.length">
           <tr
             v-for="row in table.getRowModel().rows" :key="row.id"
             :data-state="row.getIsSelected() ? 'selected' : undefined"
+            :style="pt?.tr"
           >
-            <td v-for="cell in row.getVisibleCells()" :key="cell.id" :style="{ width: `${cell.column.getSize()}%` }">
+            <td v-for="cell in row.getVisibleCells()" :key="cell.id" :style="[{ width: `${cell.column.getSize()}%` }, pt?.td]">
               <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
             </td>
           </tr>
         </template>
         <template v-else>
-          <tr>
-            <td :colspan="columns.length">
+          <tr :style="pt?.tr">
+            <td :colspan="columns.length" :style="pt?.td">
               <slot name="no-data">
                 暂无数据
               </slot>

@@ -10,6 +10,7 @@ import { EditorContent, EditorRoot } from '~/editor'
 import { DESIGNER_KEY } from '.'
 import DataSourcesDialog from './components/DataSourcesDialog/DataSourcesDialog.vue'
 import DataTableDialog from './components/DataTableDialog/DataTableDialog.vue'
+import DateTableStyleDialog from './components/DataTableStyleDialog/DateTableStyleDialog.vue'
 import EditSFCDialog from './components/EditSFCDialog/EditSFCDialog.vue'
 import EditTopMenu from './components/EditTopMenu/EditTopMenu.vue'
 import FormatDialog from './components/FormatDialog/FormatDialog.vue'
@@ -31,6 +32,8 @@ const SelectFieldDialogRef = useTemplateRef('SelectFieldDialogEl')
 const EditSFCDialogRef = useTemplateRef('EditSFCDialogEl')
 const DataTableDialogRef = useTemplateRef('DataTableDialogEl')
 const FormatDialogRef = useTemplateRef('FormatDialogEl')
+const DateTableStyleDialogRef = useTemplateRef('DateTableStyleDialogEl')
+
 const print = ref<HTMLElement>()
 
 const { handlePrint } = useVueToPrint({ content: () => print.value! })
@@ -49,6 +52,10 @@ function openDateTableDialog(data?: { columns: string, path: string }) {
 
 async function openFormatDialog(options: { format?: Format, mockData: any, customTemplate?: string }) {
   return await FormatDialogRef.value?.open(options)
+}
+
+async function openDataTableStyleDialog(styleText: string) {
+  return await DateTableStyleDialogRef.value?.open(styleText)
 }
 
 async function save() {
@@ -79,7 +86,7 @@ async function setTemplate(template: TemplateData) {
   mockData.value = template.mockData
 }
 
-provide(DESIGNER_KEY, { openSelectFieldDialog, openEditSFCDialog, openDateTableDialog, openFormatDialog })
+provide(DESIGNER_KEY, { openSelectFieldDialog, openEditSFCDialog, openDateTableDialog, openFormatDialog, openDataTableStyleDialog })
 
 defineExpose({
   setTemplate,
@@ -138,6 +145,7 @@ defineExpose({
       <EditSFCDialog ref="EditSFCDialogEl" />
       <DataTableDialog ref="DataTableDialogEl" />
       <FormatDialog ref="FormatDialogEl" />
+      <DateTableStyleDialog ref="DateTableStyleDialogEl" />
     </EditorRoot>
     <Toaster />
   </Paper>

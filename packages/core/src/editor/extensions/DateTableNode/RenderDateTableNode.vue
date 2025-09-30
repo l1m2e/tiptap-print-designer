@@ -25,6 +25,7 @@ const columns = computed(() => {
     },
   }))
 })
+const tableStyle = computed(() => JSON.parse(props.node.attrs.tableStyle || '{}'))
 
 watchImmediate(() => props.node.attrs.columnSizingState, async () => {
   await nextTick()
@@ -34,6 +35,6 @@ watchImmediate(() => props.node.attrs.columnSizingState, async () => {
 
 <template>
   <NodeViewWrapper as="div">
-    <DataTable ref="DataTableEl" :columns="columns" :data="tableList" />
+    <DataTable ref="DataTableEl" :columns="columns" :data="tableList" :pt="tableStyle" />
   </NodeViewWrapper>
 </template>
