@@ -33,7 +33,7 @@ const items = [
 
 const FormatComponent = computed(() => items.find(i => i.type === componentType.value)?.component || Timestamp)
 
-const { open, confirm, closed } = usePromiseDialog<Format, [{ format?: Format, mockData: any, customTemplate?: string }]>(show, (options) => {
+const { open, confirm } = usePromiseDialog<Format, [{ format?: Format, mockData: any, customTemplate?: string }]>(show, (options) => {
   nodeMockData.value = options.mockData
   customTemplate.value = options.customTemplate || 'DefaultTemplate'
   format.value = options.format
@@ -52,10 +52,6 @@ function onConfirm() {
   const format = CommonRef.value!.getFormat()
   confirm(format)
 }
-
-watch(show, (val) => {
-  if (val === false) closed()
-})
 
 const isFullscreen = ref(false)
 const toggle = () => (isFullscreen.value = !isFullscreen.value)

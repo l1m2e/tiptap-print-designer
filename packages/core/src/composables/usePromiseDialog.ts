@@ -29,5 +29,9 @@ export function usePromiseDialog<T, OpenParams extends any[] = []>(show: Ref<boo
     resolve(clone(value))
   }
 
+  watch(show, (val) => {
+    if (val === false) closed()
+  })
+
   return { confirm, open, closed }
 }
