@@ -23,3 +23,7 @@
 ::-webkit-scrollbar-track {
   @apply tpd-bg-transparent;
 }
+
+hr{
+  @apply tpd-border-black;
+}
