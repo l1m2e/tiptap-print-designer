@@ -14,7 +14,7 @@ const stylesText = computed(() => {
 
 const show = ref(false)
 
-const { open, confirm } = usePromiseDialog(show, (styleText: string) => {
+const { open, confirm } = usePromiseDialog<string, [string]>(show, (styleText: string) => {
   const { 'font-size': fontSize = 12, padding = 2 } = parseSimpleInlineStyle(JSON.parse(styleText || '{}')?.td) || {}
   styles.fontSize = [fontSize]
   styles.padding = [padding]

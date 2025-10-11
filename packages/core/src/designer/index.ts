@@ -17,7 +17,7 @@ export const DESIGNER_KEY = Symbol('DESIGNER_KEY') as InjectionKey<{
   openSelectFieldDialog: () => void
   openEditSFCDialog: (text?: string) => void
   openDateTableDialog: (data?: { columns: string, path: string }) => void
-  openDataTableStyleDialog: (data: string) => Promise<Record<string, string>>
+  openDataTableStyleDialog: (data: string) => Promise<string>
   openFormatDialog: (options: { format?: Format, mockData: any, customTemplate?: string }) => Promise<Format | undefined>
 }>
 

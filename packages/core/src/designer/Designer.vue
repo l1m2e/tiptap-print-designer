@@ -55,7 +55,7 @@ async function openFormatDialog(options: { format?: Format, mockData: any, custo
 }
 
 async function openDataTableStyleDialog(styleText: string) {
-  return await DateTableStyleDialogRef.value?.open(styleText)
+  return await DateTableStyleDialogRef.value!.open(styleText)
 }
 
 async function save() {
