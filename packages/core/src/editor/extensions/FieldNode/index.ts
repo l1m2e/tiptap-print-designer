@@ -10,6 +10,8 @@ function CreateNode(Component: Component) {
     group: 'inline',
     inline: true,
     content: 'text*',
+    selectable: false,
+    draggable: false,
 
     parseHTML() {
       return [{ tag: 'field-node' }]
