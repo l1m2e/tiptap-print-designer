@@ -4,10 +4,8 @@ import { DesignerDateTableNode, RenderDateTableNode } from './DateTableNode'
 import { DesignerFieldNode, RenderFieldNode } from './FieldNode'
 import FontSize from './FontSize'
 import Paragraph from './Paragraph'
-import Placeholder from './Placeholder'
 import { DesignerResizableImageNode, RenderResizableImageNode } from './ResizableImageNode'
 import { DesignerSFCInlineNode, DesignerSFCNode, RenderSFCInlineNode, RenderSFCNode } from './SFCNode'
-import SlashCommands from './SlashCommands'
 import { Table, TableCell, TableHeader, TableRow } from './Table'
 import TextAlign from './TextAlign'
 import TextStyle from './TextStyle'
@@ -30,8 +28,6 @@ const baseExtensions = [
 
 const designerExtensions = [
   ...baseExtensions,
-  Placeholder,
-  SlashCommands,
   DesignerFieldNode,
   DesignerDateTableNode,
   DesignerSFCNode,
