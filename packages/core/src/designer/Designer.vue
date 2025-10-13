@@ -14,6 +14,7 @@ import DateTableStyleDialog from './components/DataTableStyleDialog/DateTableSty
 import EditSFCDialog from './components/EditSFCDialog/EditSFCDialog.vue'
 import EditTopMenu from './components/EditTopMenu/EditTopMenu.vue'
 import FormatDialog from './components/FormatDialog/FormatDialog.vue'
+import RightClickMenu from './components/RightClickMenu/RightClickMenu.vue'
 import SelectFieldDialog from './components/SelectFieldDialog/SelectFieldDialog.vue'
 import SettingDialog from './components/SettingDialog/SettingDialog.vue'
 
@@ -118,11 +119,13 @@ defineExpose({
       <ResizablePanelGroup direction="horizontal" class="tpd-min-h-[calc(100vh-75px)] dark:tpd-bg-black">
         <!-- 设计器 -->
         <ResizablePanel>
-          <div class="tpd-overflow-y-auto tpd-h-[calc(100vh-54px)]">
-            <PaperContent>
-              <EditorContent />
-            </PaperContent>
-          </div>
+          <RightClickMenu>
+            <div class="tpd-overflow-y-auto tpd-h-[calc(100vh-54px)]">
+              <PaperContent>
+                <EditorContent />
+              </PaperContent>
+            </div>
+          </RightClickMenu>
         </ResizablePanel>
 
         <ResizableHandle />
