@@ -145,7 +145,7 @@ defineExpose({
 
 <template>
   <Dialog v-model:open="show">
-    <DialogContent class="tpd-max-w-6xl tpd-flex tpd-flex-col">
+    <DialogContent class="!tpd-max-w-[1200px] tpd-flex tpd-flex-col">
       <DialogHeader>
         <DialogTitle>导入模板</DialogTitle>
       </DialogHeader>
