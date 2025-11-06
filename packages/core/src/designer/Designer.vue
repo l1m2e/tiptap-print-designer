@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { DesignerEmits, TemplateData } from '.'
 import type { Format } from './components/FormatDialog/common'
-import { Database, Settings } from 'lucide-vue-next'
+import { Database, Download, Settings, Upload } from 'lucide-vue-next'
 import { useVueToPrint } from 'vue-to-print'
 import Toaster from '@/components/ui/toast/Toaster.vue'
 import { ResizablePanel } from '~/components/ui/resizable'
@@ -13,7 +13,9 @@ import DataTableDialog from './components/DataTableDialog/DataTableDialog.vue'
 import DateTableStyleDialog from './components/DataTableStyleDialog/DateTableStyleDialog.vue'
 import EditSFCDialog from './components/EditSFCDialog/EditSFCDialog.vue'
 import EditTopMenu from './components/EditTopMenu/EditTopMenu.vue'
+import ExportDialog from './components/ExportDialog/ExportDialog.vue'
 import FormatDialog from './components/FormatDialog/FormatDialog.vue'
+import ImportDialog from './components/ImportDialog/ImportDialog.vue'
 import RightClickMenu from './components/RightClickMenu/RightClickMenu.vue'
 import SelectFieldDialog from './components/SelectFieldDialog/SelectFieldDialog.vue'
 import SettingDialog from './components/SettingDialog/SettingDialog.vue'
@@ -34,6 +36,8 @@ const EditSFCDialogRef = useTemplateRef('EditSFCDialogEl')
 const DataTableDialogRef = useTemplateRef('DataTableDialogEl')
 const FormatDialogRef = useTemplateRef('FormatDialogEl')
 const DateTableStyleDialogRef = useTemplateRef('DateTableStyleDialogEl')
+const ImportDialogRef = useTemplateRef('ImportDialogEl')
+const ExportDialogRef = useTemplateRef('ExportDialogEl')
 
 const print = ref<HTMLElement>()
 
@@ -58,6 +62,17 @@ async function openFormatDialog(options: { format?: Format, mockData: any, custo
 async function openDataTableStyleDialog(styleText: string) {
   return await DateTableStyleDialogRef.value!.open(styleText)
 }
+
+// #region 导入导出功能
+async function handleImport() {
+  ImportDialogRef.value?.open()
+}
+
+async function handleExport() {
+  const templateData = await getTemplate()
+  ExportDialogRef.value?.open(templateData)
+}
+// #endregion
 
 async function save() {
   const templateData = await getTemplate()
@@ -87,7 +102,7 @@ async function setTemplate(template: TemplateData) {
   mockData.value = template.mockData
 }
 
-provide(DESIGNER_KEY, { openSelectFieldDialog, openEditSFCDialog, openDateTableDialog, openFormatDialog, openDataTableStyleDialog })
+provide(DESIGNER_KEY, { getTemplate, setTemplate, openSelectFieldDialog, openEditSFCDialog, openDateTableDialog, openFormatDialog, openDataTableStyleDialog })
 
 defineExpose({
   setTemplate,
@@ -107,6 +122,12 @@ defineExpose({
           </Button>
           <Button variant="outline" size="icon" @click="DataSourcesDialogRef?.open ">
             <Settings />
+          </Button>
+          <Button variant="outline" size="icon" @click="handleImport">
+            <Download />
+          </Button>
+          <Button variant="outline" size="icon" @click="handleExport">
+            <Upload />
           </Button>
           <Button @click="handlePrint">
             打印
@@ -149,6 +170,8 @@ defineExpose({
       <DataTableDialog ref="DataTableDialogEl" />
       <FormatDialog ref="FormatDialogEl" />
       <DateTableStyleDialog ref="DateTableStyleDialogEl" />
+      <ImportDialog ref="ImportDialogEl" />
+      <ExportDialog ref="ExportDialogEl" />
     </EditorRoot>
     <Toaster />
   </Paper>

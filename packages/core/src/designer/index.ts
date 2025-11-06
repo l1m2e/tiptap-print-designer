@@ -14,6 +14,8 @@ export type DesignerEmits = {
 }
 
 export const DESIGNER_KEY = Symbol('DESIGNER_KEY') as InjectionKey<{
+  getTemplate: () => Promise<TemplateData>
+  setTemplate: (template: TemplateData) => void
   openSelectFieldDialog: () => void
   openEditSFCDialog: (text?: string) => void
   openDateTableDialog: (data?: { columns: string, path: string }) => void
