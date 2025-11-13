@@ -102,7 +102,7 @@ async function setTemplate(template: TemplateData) {
   mockData.value = template.mockData
 }
 
-provide(DESIGNER_KEY, { getTemplate, setTemplate, openSelectFieldDialog, openEditSFCDialog, openDateTableDialog, openFormatDialog, openDataTableStyleDialog })
+provide(DESIGNER_KEY, { getTemplate, setTemplate, fetchMockData, openSelectFieldDialog, openEditSFCDialog, openDateTableDialog, openFormatDialog, openDataTableStyleDialog })
 
 defineExpose({
   setTemplate,

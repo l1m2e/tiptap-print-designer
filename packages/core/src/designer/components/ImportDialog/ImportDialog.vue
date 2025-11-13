@@ -20,7 +20,7 @@ const show = ref(false)
 const { toast } = useToast()
 
 const jsonContent = ref<string>('')
-const { setTemplate } = inject(DESIGNER_KEY)!
+const { setTemplate, fetchMockData } = inject(DESIGNER_KEY)!
 // #endregion
 
 // #region 剪贴板功能
@@ -115,6 +115,7 @@ async function onlyImportDataSources() {
 
     await updateDataSource(data.dataSources)
     await updateMockData(data.mockData)
+    await fetchMockData()
 
     toast({
       title: '导入成功',
