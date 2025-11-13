@@ -1,41 +1,63 @@
 <script lang="ts" setup>
+import type { EditSFCDialogOptions } from '~/designer'
 import MonacoEditor from '~/components/common/monaco-editor/MonacoEditor.vue'
 import SFCLoader from '~/components/common/sfc-loader/SfcLoader.vue'
 import defaultTemplate from '~/components/common/template/defaultTemplate.vue?raw'
 import { ResizablePanel } from '~/components/ui/resizable'
 import { EDITOR_CONTEXT } from '~/editor/constants'
 
+// #region state
 const show = ref(false)
 const template = ref('')
-const type = ref<'add' | 'edit'>('add')
+const mode = ref<'add' | 'edit'>('add')
+const submitHandler = ref<((text: string) => void | Promise<void>) | null>(null)
 const editorContent = inject(EDITOR_CONTEXT)
 const editor = useTemplateRef('editorEl')
+// #endregion
 
-function confirm() {
-  editorContent?.editor?.value?.chain().focus().insertContent({ type: 'sfc-node', attrs: { text: template.value } }).run()
-  show.value = false
+// #region helpers
+function defaultAddHandler(text: string) {
+  editorContent?.editor?.value?.chain().focus().insertContent({ type: 'sfc-node', attrs: { text } }).run()
 }
 
-function update() {
-  editorContent?.editor?.value?.chain().focus().updateAttributes('sfc-node', { text: template.value }).run()
-  show.value = false
+function defaultEditHandler(text: string) {
+  const ed = editorContent?.editor?.value
+  if (!ed) return
+
+  const { state } = ed
+  const { selection } = state
+  const node = state.doc.nodeAt(selection.from) ?? (selection.from > 0 ? state.doc.nodeAt(selection.from - 1) : null)
+  const nodeTypeName = node?.type.name ?? 'sfc-node'
+
+  ed.chain().focus().updateAttributes(nodeTypeName, { text }).run()
 }
 
-async function open(text?: string) {
+function close() {
+  show.value = false
+  submitHandler.value = null
+}
+
+async function handleSubmit() {
+  const handler = submitHandler.value ?? (mode.value === 'edit' ? defaultEditHandler : defaultAddHandler)
+  await Promise.resolve(handler(template.value))
+  close()
+}
+
+async function open(options?: string | EditSFCDialogOptions) {
+  const normalized = typeof options === 'string' ? { text: options } : options ?? {}
+  const hasText = Object.prototype.hasOwnProperty.call(normalized, 'text')
+
+  mode.value = normalized.mode ?? (hasText ? 'edit' : 'add')
+  submitHandler.value = normalized.onConfirm ?? null
+
+  const initialTemplate = hasText ? (normalized.text ?? '') : defaultTemplate
+  template.value = initialTemplate
+
   show.value = true
   await nextTick()
-
-  if (text) {
-    type.value = 'edit'
-    template.value = text
-    editor.value?.setValue(text)
-  }
-  else {
-    type.value = 'add'
-    template.value = defaultTemplate
-    editor.value?.setValue(defaultTemplate)
-  }
+  editor.value?.setValue(initialTemplate)
 }
+// #endregion
 
 defineExpose({
   open,
@@ -46,7 +68,7 @@ defineExpose({
   <Dialog v-model:open="show">
     <DialogContent class="tpd-max-w-screen-xl">
       <DialogHeader>
-        <DialogTitle>{{ type === 'add' ? '添加组件' : '编辑组件' }}</DialogTitle>
+        <DialogTitle>{{ mode === 'add' ? '添加组件' : '编辑组件' }}</DialogTitle>
       </DialogHeader>
 
       <ResizablePanelGroup direction="horizontal">
@@ -67,10 +89,10 @@ defineExpose({
         <Button variant="outline" @click="show = false">
           取消
         </Button>
-        <Button v-if="type === 'add'" @click="confirm">
+        <Button v-if="mode === 'add'" @click="handleSubmit">
           确定
         </Button>
-        <Button v-else @click="update">
+        <Button v-else @click="handleSubmit">
           更新
         </Button>
       </DialogFooter>

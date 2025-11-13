@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { DesignerEmits, TemplateData } from '.'
+import type { DesignerEmits, EditSFCDialogOptions, TemplateData } from '.'
 import type { Format } from './components/FormatDialog/common'
 import { Database, Download, Settings, Upload } from 'lucide-vue-next'
 import { useVueToPrint } from 'vue-to-print'
@@ -47,8 +47,8 @@ function openSelectFieldDialog() {
   SelectFieldDialogRef.value?.open()
 }
 
-function openEditSFCDialog(text?: string) {
-  EditSFCDialogRef.value?.open(text)
+function openEditSFCDialog(options?: string | EditSFCDialogOptions) {
+  EditSFCDialogRef.value?.open(options)
 }
 
 function openDateTableDialog(data?: { columns: string, path: string }) {

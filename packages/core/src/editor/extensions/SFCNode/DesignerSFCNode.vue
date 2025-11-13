@@ -6,11 +6,14 @@ import { DESIGNER_KEY } from '~/designer'
 const props = defineProps(nodeViewProps)
 const { openEditSFCDialog } = inject(DESIGNER_KEY)!
 
+// #region state
 const isInline = computed(() => props.node.type.name === 'sfc-inline')
 
 const isDragging = ref(false)
 const dragStart = ref<{ sx: number, sy: number, x: number, y: number } | null>(null)
 
+// #endregion
+// #region computed
 const wrapperStyle = computed(() => {
   if (props.node.attrs.isFloating) {
     return {
@@ -26,8 +29,32 @@ const wrapperStyle = computed(() => {
   }
 })
 
+// #endregion
+// #region handlers
 function edit() {
-  openEditSFCDialog(props.node.attrs.text)
+  // ensure the node is selected in the editor before opening the dialog
+  // so that the dialog's `update` can target the correct node even when it's floating
+  const getPos = (props as any).getPos
+  if (typeof getPos === 'function') {
+    const pos = getPos()
+    if (typeof pos === 'number') {
+      // focus editor and set node selection at the node position
+      props.editor.commands.focus()
+      // setNodeSelection accepts the node position
+      if (props.editor.commands.setNodeSelection) {
+        props.editor.commands.setNodeSelection(pos)
+      }
+    }
+  }
+
+  openEditSFCDialog({
+    text: props.node.attrs.text,
+    mode: 'edit',
+    onConfirm: (nextText) => {
+      props.updateAttributes({ text: nextText })
+      props.editor.commands.focus()
+    },
+  })
 }
 
 function ddelete() {
@@ -81,6 +108,7 @@ function toggleInlineBlock() {
   view.dispatch(tr)
   props.editor.commands.focus()
 }
+// #endregion
 </script>
 
 <template>
