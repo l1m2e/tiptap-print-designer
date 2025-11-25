@@ -17,7 +17,7 @@ const { wrapperStyle } = useFloating(props)
 </script>
 
 <template>
-  <NodeViewWrapper as="span" :style="wrapperStyle" class="tpd-break-all tpd-whitespace-normal">
+  <NodeViewWrapper as="span" :style="wrapperStyle" class="tpd-break-all tpd-whitespace-normal [text-decoration:inherit]">
     <template v-if="!isFormat">
       {{ text }}
     </template>

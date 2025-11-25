@@ -84,16 +84,22 @@ async function copy() {
 </script>
 
 <template>
-  <NodeViewWrapper as="span" :style="wrapperStyle" @mousedown="onMouseDown">
+  <NodeViewWrapper
+    as="span"
+    :style="wrapperStyle"
+    :class="isFormat ? 'tpd-text-green-500' : 'tpd-text-purple-500'"
+    class="tpd-cursor-pointer tpd-rounded tpd-inline tpd-break-all tpd-whitespace-normal [text-decoration:inherit]"
+    @mousedown="onMouseDown"
+  >
     <TooltipProvider>
       <ContextMenu>
         <ContextMenuTrigger>
           <Tooltip>
             <TooltipTrigger as-child>
-              <span class="tpd-cursor-pointer tpd-rounded tpd-inline tpd-break-all tpd-whitespace-normal" :class="isFormat ? 'tpd-text-green-500' : 'tpd-text-purple-500'">
-                <template v-if="!isFormat">{{ text }}</template>
-                <FormatNode v-else :value="text" />
-              </span>
+              <template v-if="!isFormat">
+                {{ text }}
+              </template>
+              <FormatNode v-else :value="text" />
             </TooltipTrigger>
             <TooltipContent>
               <div class="tpd-flex tpd-items-center">
