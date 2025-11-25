@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Bold, Italic, Strikethrough } from 'lucide-vue-next'
+import { Bold, Italic, Strikethrough, Underline } from 'lucide-vue-next'
 import { EDITOR_CONTEXT } from '~/editor/constants'
 
 const { editor } = inject(EDITOR_CONTEXT)!
@@ -16,6 +16,12 @@ const btns = [
     icon: Italic,
     fn: () => editor.value?.chain().focus().toggleItalic().run(),
     isActive: () => editor.value?.isActive('italic'),
+  },
+  {
+    title: '下划线',
+    icon: Underline,
+    fn: () => editor.value?.chain().focus().toggleUnderline().run(),
+    isActive: () => editor.value?.isActive('underline'),
   },
   {
     title: '中划线',

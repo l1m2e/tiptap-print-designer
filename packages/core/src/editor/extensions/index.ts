@@ -1,4 +1,5 @@
 import { LineHeight } from '@tiptap/extension-text-style'
+import Underline from '@tiptap/extension-underline'
 import StarterKit from '@tiptap/starter-kit'
 import { DesignerDateTableNode, RenderDateTableNode } from './DateTableNode'
 import { DesignerFieldNode, RenderFieldNode } from './FieldNode'
@@ -21,6 +22,7 @@ const baseExtensions = [
   TextAlign,
   FontSize,
   TextStyle,
+  Underline,
   Table,
   TableCell,
   TableHeader,

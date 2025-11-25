@@ -10,7 +10,11 @@ const tree = ref<SchemaTree>([])
 const editorContent = inject(EDITOR_CONTEXT)
 
 function insertField() {
-  editorContent?.editor?.value?.chain().focus().insertContent({ type: 'field-node', attrs: { label: node.value?.description || node.value?.field, path: node.value?.path } }).run()
+  editorContent?.editor?.value?.chain().focus().insertContent({
+    type: 'field-node',
+    attrs: { label: node.value?.description || node.value?.field, path: node.value?.path },
+    content: [{ type: 'text', text: ' ' }],
+  }).run()
   show.value = false
 }
 

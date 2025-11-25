@@ -9,8 +9,10 @@ function CreateNode(Component: Component) {
     name: 'field-node',
     group: 'inline',
     inline: true,
+    atom: false,
     content: 'text*',
-    selectable: false,
+    marks: '_',
+    selectable: true,
     draggable: false,
 
     parseHTML() {
