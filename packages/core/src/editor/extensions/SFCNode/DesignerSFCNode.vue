@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
-import { computed, inject, ref } from 'vue'
+import { computed, inject } from 'vue'
 import { DESIGNER_KEY } from '~/designer'
+import { useFloating } from '../../composables/useFloating'
 
 const props = defineProps(nodeViewProps)
 const { openEditSFCDialog } = inject(DESIGNER_KEY)!
@@ -9,25 +10,8 @@ const { openEditSFCDialog } = inject(DESIGNER_KEY)!
 // #region state
 const isInline = computed(() => props.node.type.name === 'sfc-inline')
 
-const isDragging = ref(false)
-const dragStart = ref<{ sx: number, sy: number, x: number, y: number } | null>(null)
-
-// #endregion
-// #region computed
-const wrapperStyle = computed(() => {
-  if (props.node.attrs.isFloating) {
-    return {
-      position: 'absolute',
-      left: `${props.node.attrs.x || 0}pt`,
-      top: `${props.node.attrs.y || 0}pt`,
-      zIndex: props.node.attrs.zIndex || 1,
-      cursor: isDragging.value ? 'grabbing' : 'grab',
-    } as Record<string, string | number>
-  }
-  return {
-    display: isInline.value ? 'inline-block' : 'block',
-  }
-})
+// 使用浮动定位组合式函数
+const { wrapperStyle, toggleFloating, onMouseDown } = useFloating(props)
 
 // #endregion
 // #region handlers
@@ -59,33 +43,6 @@ function edit() {
 
 function ddelete() {
   props.deleteNode()
-}
-
-function toggleFloating() {
-  props.updateAttributes({ isFloating: !props.node.attrs.isFloating })
-}
-
-function onMouseDown(e: MouseEvent) {
-  if (!props.node.attrs.isFloating) return
-  e.preventDefault()
-  e.stopPropagation()
-  isDragging.value = true
-  dragStart.value = { sx: e.clientX, sy: e.clientY, x: props.node.attrs.x || 0, y: props.node.attrs.y || 0 }
-
-  const onMove = (ev: MouseEvent) => {
-    if (!dragStart.value) return
-    const dx = ev.clientX - dragStart.value.sx
-    const dy = ev.clientY - dragStart.value.sy
-    props.updateAttributes({ x: dragStart.value.x + dx, y: dragStart.value.y + dy })
-  }
-  const onUp = () => {
-    isDragging.value = false
-    dragStart.value = null
-    window.removeEventListener('mousemove', onMove)
-    window.removeEventListener('mouseup', onUp)
-  }
-  window.addEventListener('mousemove', onMove)
-  window.addEventListener('mouseup', onUp)
 }
 
 function toggleInlineBlock() {

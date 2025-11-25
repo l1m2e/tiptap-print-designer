@@ -24,6 +24,11 @@ function CreateNode(Component: Component) {
         label: { default: '' },
         path: { default: '' },
         format: { default: '' },
+        // 浮动定位相关属性
+        isFloating: { default: false },
+        x: { default: 0 },
+        y: { default: 0 },
+        zIndex: { default: 1 },
       }
     },
     addNodeView() {

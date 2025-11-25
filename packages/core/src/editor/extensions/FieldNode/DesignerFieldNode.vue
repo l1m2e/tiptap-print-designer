@@ -5,6 +5,7 @@ import { NodeSelection, TextSelection } from 'prosemirror-state'
 import { get } from 'radash'
 import { computed, inject } from 'vue'
 import { DESIGNER_KEY } from '~/designer'
+import { useFloating } from '../../composables/useFloating'
 import { useFormat } from '../../composables/useFormat'
 import { EDITOR_CONTEXT } from '../../constants'
 
@@ -13,6 +14,9 @@ const { data } = inject(EDITOR_CONTEXT)!
 const { openFormatDialog, openSelectFieldDialog } = inject(DESIGNER_KEY)!
 
 const { icon } = useFormat(props)
+
+// 使用浮动定位组合式函数
+const { wrapperStyle, toggleFloating, onMouseDown } = useFloating(props)
 
 async function openFormat() {
   const format = await openFormatDialog({
@@ -80,7 +84,7 @@ async function copy() {
 </script>
 
 <template>
-  <NodeViewWrapper as="span">
+  <NodeViewWrapper as="span" :style="wrapperStyle" @mousedown="onMouseDown">
     <TooltipProvider>
       <ContextMenu>
         <ContextMenuTrigger>
@@ -108,6 +112,9 @@ async function copy() {
           </ContextMenuItem>
           <ContextMenuItem @select="openFormat">
             格式化
+          </ContextMenuItem>
+          <ContextMenuItem @select="toggleFloating">
+            {{ props.node.attrs.isFloating ? '关闭自由拖拽' : '开启自由拖拽' }}
           </ContextMenuItem>
           <ContextMenuItem @select="copy">
             复制

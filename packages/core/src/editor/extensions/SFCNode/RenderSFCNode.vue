@@ -1,23 +1,14 @@
 <script setup lang="ts">
 import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
 import { computed } from 'vue'
+import { useFloating } from '../../composables/useFloating'
 
 const props = defineProps(nodeViewProps)
 
 const isInline = computed(() => props.node.type.name === 'sfc-inline')
-const wrapperStyle = computed(() => {
-  if (props.node.attrs.isFloating) {
-    return {
-      position: 'absolute',
-      left: `${props.node.attrs.x || 0}pt`,
-      top: `${props.node.attrs.y || 0}pt`,
-      zIndex: props.node.attrs.zIndex || 1,
-    } as Record<string, string | number>
-  }
-  return {
-    display: isInline.value ? 'inline-block' : 'block',
-  }
-})
+
+// 使用浮动定位组合式函数
+const { wrapperStyle } = useFloating(props)
 </script>
 
 <template>
