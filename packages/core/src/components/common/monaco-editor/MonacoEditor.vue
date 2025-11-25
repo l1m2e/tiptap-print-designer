@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { MonacoEditorProps } from './index'
-import { defineEmits, defineExpose, defineModel, defineProps, onMounted, ref, watch } from 'vue'
 
 const {
   language = 'json',
