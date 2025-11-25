@@ -13,7 +13,7 @@ const text = computed(() => get(data.value, props.node.attrs.path))
 const { FormatNode, isFormat } = useFormat(props)
 
 // 使用浮动定位组合式函数
-const { wrapperStyle } = useFloating(props)
+const { wrapperStyle } = useFloating(props, ['inline', 'inline-block'])
 </script>
 
 <template>

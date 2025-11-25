@@ -10,8 +10,10 @@ const PX_TO_PT = 0.75
 /**
  * 浮动定位组合式函数
  * 为节点提供脱离文档流的绝对定位和拖拽功能
+ * @param props 节点视图属性
+ * @param display 浮动状态和非浮动状态下的 display 值 [非浮动状态,浮动状态]
  */
-export function useFloating(props: NodeViewProps) {
+export function useFloating(props: NodeViewProps, display: [string, string] = ['inline-block', 'block']) {
   // 拖拽状态
   const isDragging = ref(false)
   const dragStart = ref<{ sx: number, sy: number, x: number, y: number } | null>(null)
@@ -39,7 +41,7 @@ export function useFloating(props: NodeViewProps) {
     }
     // 非浮动状态:根据节点类型设置 display
     return {
-      display: isInline.value ? 'inline-block' : 'block',
+      display: isInline.value ? display[0] : display[1],
     }
   })
 

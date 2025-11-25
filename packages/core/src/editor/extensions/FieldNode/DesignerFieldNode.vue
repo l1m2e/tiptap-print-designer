@@ -16,7 +16,7 @@ const { openFormatDialog, openSelectFieldDialog } = inject(DESIGNER_KEY)!
 const { icon } = useFormat(props)
 
 // 使用浮动定位组合式函数
-const { wrapperStyle, toggleFloating, onMouseDown } = useFloating(props)
+const { wrapperStyle, toggleFloating, onMouseDown } = useFloating(props, ['inline', 'inline-block'])
 
 async function openFormat() {
   const format = await openFormatDialog({
