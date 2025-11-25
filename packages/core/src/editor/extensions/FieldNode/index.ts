@@ -9,22 +9,21 @@ function CreateNode(Component: Component) {
     name: 'field-node',
     group: 'inline',
     inline: true,
-    content: 'text*',
-    selectable: false,
+    atom: true,
+    selectable: true,
     draggable: false,
 
     parseHTML() {
       return [{ tag: 'field-node' }]
     },
     renderHTML({ HTMLAttributes }) {
-      return ['field-node', mergeAttributes(HTMLAttributes), 0]
+      return ['field-node', mergeAttributes(HTMLAttributes)]
     },
     addAttributes() {
       return {
         label: { default: '' },
         path: { default: '' },
         format: { default: '' },
-        fontSize: { default: 'inherit' },
       }
     },
     addNodeView() {

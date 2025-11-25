@@ -71,42 +71,40 @@ async function copy() {
 </script>
 
 <template>
-  <NodeViewWrapper as="span" :style="{ fontSize: props.node.attrs.fontSize }">
-    <ContextMenu class="tpd-w-full">
-      <ContextMenuTrigger>
-        <div class="tpd-inline-flex tpd-items-center tpd-justify-center  tpd-rounded tpd-cursor-pointer" :class="isFormat ? 'tpd-text-green-500' : 'tpd-text-purple-500'">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger as-child>
-                <span>
-                  <template v-if="!isFormat">{{ text }}</template>
-                  <FormatNode v-else :value="text" />
-                </span>
-              </TooltipTrigger>
-              <TooltipContent>
-                <div class="tpd-flex tpd-items-center">
-                  <component :is="icon || Link" class="tpd-mr-1 tpd-w-4 tpd-h-4" />
-                  <span class="tpd-ml-1">{{ props.node.attrs.label }}</span>
-                </div>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
-      </ContextMenuTrigger>
-      <ContextMenuContent>
-        <ContextMenuItem v-if="props.node.attrs.format" @select="props.updateAttributes({ format: '' })">
-          清除格式化
-        </ContextMenuItem>
-        <ContextMenuItem @select="openFormat">
-          格式化
-        </ContextMenuItem>
-        <ContextMenuItem @select="copy">
-          复制
-        </ContextMenuItem>
-        <ContextMenuItem @select="props.deleteNode">
-          删除
-        </ContextMenuItem>
-      </ContextMenuContent>
-    </ContextMenu>
+  <NodeViewWrapper as="span">
+    <TooltipProvider>
+      <ContextMenu>
+        <ContextMenuTrigger>
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <span class="tpd-cursor-pointer tpd-rounded tpd-inline tpd-break-all tpd-whitespace-normal" :class="isFormat ? 'tpd-text-green-500' : 'tpd-text-purple-500'">
+                <template v-if="!isFormat">{{ text }}</template>
+                <FormatNode v-else :value="text" />
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>
+              <div class="tpd-flex tpd-items-center">
+                <component :is="icon || Link" class="tpd-mr-1 tpd-w-3 tpd-h-3" />
+                <span class="tpd-ml-1">{{ props.node.attrs.label }} <span class="tpd-text-purple-300 tpd-font-bold">{{ props.node.attrs.path }}</span></span>
+              </div>
+            </TooltipContent>
+          </Tooltip>
+        </ContextMenuTrigger>
+        <ContextMenuContent>
+          <ContextMenuItem v-if="props.node.attrs.format" @select="props.updateAttributes({ format: '' })">
+            清除格式化
+          </ContextMenuItem>
+          <ContextMenuItem @select="openFormat">
+            格式化
+          </ContextMenuItem>
+          <ContextMenuItem @select="copy">
+            复制
+          </ContextMenuItem>
+          <ContextMenuItem @select="props.deleteNode">
+            删除
+          </ContextMenuItem>
+        </ContextMenuContent>
+      </ContextMenu>
+    </TooltipProvider>
   </NodeViewWrapper>
 </template>

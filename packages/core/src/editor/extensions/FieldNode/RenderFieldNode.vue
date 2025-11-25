@@ -13,7 +13,7 @@ const { FormatNode, isFormat } = useFormat(props)
 </script>
 
 <template>
-  <NodeViewWrapper as="span" :style="{ fontSize: props.node.attrs.fontSize }">
+  <NodeViewWrapper as="span" class="tpd-break-all tpd-whitespace-normal">
     <template v-if="!isFormat">
       {{ text }}
     </template>
