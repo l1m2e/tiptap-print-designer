@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { DesignerEmits, EditSFCDialogOptions, TemplateData } from '.'
+import type { DesignerEmits, EditSFCDialogOptions, SelectFieldDialogOptions, TemplateData } from '.'
 import type { Format } from './components/FormatDialog/common'
 import { Database, Download, Settings, Upload } from 'lucide-vue-next'
 import { useVueToPrint } from 'vue-to-print'
@@ -43,8 +43,8 @@ const print = ref<HTMLElement>()
 
 const { handlePrint } = useVueToPrint({ content: () => print.value! })
 
-function openSelectFieldDialog() {
-  SelectFieldDialogRef.value?.open()
+function openSelectFieldDialog(options?: SelectFieldDialogOptions) {
+  SelectFieldDialogRef.value?.open(options)
 }
 
 function openEditSFCDialog(options?: string | EditSFCDialogOptions) {

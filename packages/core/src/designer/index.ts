@@ -19,10 +19,15 @@ export type DesignerEmits = {
   save: [val: TemplateData]
 }
 
+export interface SelectFieldDialogOptions {
+  mode?: 'insert' | 'update'
+  onConfirm?: (data: { label: string, path: string }) => void | Promise<void>
+}
+
 export const DESIGNER_KEY = Symbol('DESIGNER_KEY') as InjectionKey<{
   getTemplate: () => Promise<TemplateData>
   setTemplate: (template: TemplateData) => void
-  openSelectFieldDialog: () => void
+  openSelectFieldDialog: (options?: SelectFieldDialogOptions) => void
   openEditSFCDialog: (options?: string | EditSFCDialogOptions) => void
   openDateTableDialog: (data?: { columns: string, path: string }) => void
   openDataTableStyleDialog: (data: string) => Promise<string>

@@ -10,7 +10,7 @@ import { EDITOR_CONTEXT } from '../../constants'
 
 const props = defineProps(nodeViewProps)
 const { data } = inject(EDITOR_CONTEXT)!
-const { openFormatDialog } = inject(DESIGNER_KEY)!
+const { openFormatDialog, openSelectFieldDialog } = inject(DESIGNER_KEY)!
 
 const { icon } = useFormat(props)
 
@@ -21,6 +21,15 @@ async function openFormat() {
     customTemplate: 'FiledNodeTemplate',
   })
   props.updateAttributes({ format: JSON.stringify(format) })
+}
+
+function changeField() {
+  openSelectFieldDialog({
+    mode: 'update',
+    onConfirm: ({ label, path }) => {
+      props.updateAttributes({ label, path })
+    },
+  })
 }
 
 const text = computed<string>(() => get(data.value, props.node.attrs.path))
@@ -91,6 +100,9 @@ async function copy() {
           </Tooltip>
         </ContextMenuTrigger>
         <ContextMenuContent>
+          <ContextMenuItem @select="changeField">
+            更换字段
+          </ContextMenuItem>
           <ContextMenuItem v-if="props.node.attrs.format" @select="props.updateAttributes({ format: '' })">
             清除格式化
           </ContextMenuItem>
