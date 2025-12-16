@@ -47,16 +47,47 @@ const columns = ref<ColumnDef<Columns>[]>([
   {
     accessorKey: 'accessorKey',
     header: '列键',
-    cell: ({ row }) => (
-      <Select v-model={row.original.accessorKey}>
-        <SelectTrigger><SelectValue placeholder="请选择字段" /></SelectTrigger>
-        <SelectContent>
-          {dataSource.value.schema.map(item => (
-            <SelectItem onSelect={() => onSelectAccessorKey(row, item)} value={item.field}>{item.description}</SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    ),
+    cell: ({ row }) => {
+      const schema = dataSource.value?.schema || []
+      const selected = schema.find(item => item.field === row.original.accessorKey)
+      const search = ref('')
+      const filtered = computed(() => {
+        const q = String(search.value || '').toLowerCase()
+        if (!q) return schema
+        return schema.filter((item) => {
+          return (item.field || '').toLowerCase().includes(q) || (item.description || '').toLowerCase().includes(q)
+        })
+      })
+
+      function handleSelect(item: Schema) {
+        row.original.accessorKey = item.field
+        if (!row.original.header) row.original.header = item.description
+      }
+
+      return (
+        <Select v-model={row.original.accessorKey}>
+          <SelectTrigger>
+            <SelectValue placeholder="请选择字段">
+              <span>{selected?.description}</span>
+              <span class="tpd-text-gray-500 tpd-ml-2">{selected?.field}</span>
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            <div class="tpd-p-2">
+              <Input v-model={search.value} placeholder="搜索字段或描述" />
+            </div>
+            <div class="tpd-max-h-48 tpd-overflow-auto">
+              {filtered.value.map(item => (
+                <SelectItem key={item.field} onSelect={() => handleSelect(item)} value={item.field}>
+                  <span>{item.description}</span>
+                  <span class="tpd-text-gray-500 tpd-ml-2">{item.field}</span>
+                </SelectItem>
+              ))}
+            </div>
+          </SelectContent>
+        </Select>
+      )
+    },
   },
   {
     accessorKey: 'format',
@@ -93,10 +124,6 @@ async function setFormat(row: Row<Columns>) {
     customTemplate: 'TableColumnTemplate',
   })
   row.original.format = format
-}
-
-function onSelectAccessorKey(row: Row<Columns>, item: Schema) {
-  !row.original.header && (row.original.header = item.description)
 }
 
 function onSelect(selectData: { schema: SchemaTree, path: string, description: string }) {
