@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import type { DesignerEmits, EditSFCDialogOptions, SelectFieldDialogOptions, TemplateData } from '.'
 import type { Format } from './components/FormatDialog/common'
-import { Database, Download, Settings, Upload } from 'lucide-vue-next'
+import { Database, Download, RefreshCw, Settings, Upload } from 'lucide-vue-next'
 import { useVueToPrint } from 'vue-to-print'
 import Toaster from '@/components/ui/toast/Toaster.vue'
 import { ResizablePanel } from '~/components/ui/resizable'
-import { getDataSource, getMockData, updateDataSource, updateMockData } from '~/db/services/printDesigner'
+import { useToast } from '~/components/ui/toast/use-toast'
+import { updateDoc } from '~/db/services/openapiDoc'
+import { generateMockData, getDataSource, getMockData, updateDataSource, updateMockData } from '~/db/services/printDesigner'
 import { EditorContent, EditorRoot } from '~/editor'
 import { DESIGNER_KEY } from '.'
 import DataSourcesDialog from './components/DataSourcesDialog/DataSourcesDialog.vue'
@@ -22,6 +24,7 @@ import SettingDialog from './components/SettingDialog/SettingDialog.vue'
 
 const emits = defineEmits<DesignerEmits>()
 const text = useSessionStorage('text', '')
+const { toast } = useToast()
 
 const { state: mockData, execute: fetchMockData } = useAsyncState(async () => {
   const data = await getMockData()
@@ -62,6 +65,21 @@ async function openFormatDialog(options: { format?: Format, mockData: any, custo
 async function openDataTableStyleDialog(styleText: string) {
   return await DateTableStyleDialogRef.value!.open(styleText)
 }
+
+// #region 一键更新数据源
+const { execute: refreshDataSource, isLoading: refreshLoading } = useAsyncState(async () => {
+  const openapiDocUrl = localStorage.getItem('TIPTAP_PRINT_DESIGNER_OPENAPIDOCURL')
+  if (!openapiDocUrl) {
+    toast({ title: '提示', description: '请先配置接口文档地址', variant: 'destructive' })
+    return
+  }
+  await updateDoc(openapiDocUrl)
+  const newMockData = await generateMockData()
+  await updateMockData(newMockData)
+  await fetchMockData()
+  toast({ title: '提示', description: '数据源更新成功' })
+}, null, { immediate: false })
+// #endregion
 
 // #region 导入导出功能
 async function handleImport() {
@@ -122,6 +140,9 @@ defineExpose({
           </Button>
           <Button variant="outline" size="icon" @click="DataSourcesDialogRef?.open ">
             <Settings />
+          </Button>
+          <Button variant="outline" size="icon" :loading="refreshLoading" @click="() => refreshDataSource()">
+            <RefreshCw />
           </Button>
           <Button variant="outline" size="icon" @click="handleImport">
             <Download />
