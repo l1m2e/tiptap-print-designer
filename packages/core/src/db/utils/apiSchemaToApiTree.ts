@@ -7,23 +7,31 @@ import { v4 as uuidv4 } from 'uuid'
  * 使用生成器模式，更简洁高效
  */
 export function apiSchemaToApiTree(schema: ApiSchema, path: string = '', parentType: FieldType | '' = ''): SchemaTree {
-  return [...generateSchemaNodes(schema, path, parentType)]
+  return [...generateSchemaNodes(schema, path, parentType, new Set())]
 }
 
 /**
  * 生成器函数：逐个生成 schema 节点
  */
-function* generateSchemaNodes(schema: ApiSchema, path: string, parentType: FieldType | ''): Generator<SchemaTree[number]> {
+function* generateSchemaNodes(schema: ApiSchema, path: string, parentType: FieldType | '', visited: Set<ApiSchema>): Generator<SchemaTree[number]> {
+  if (visited.has(schema)) return
+  visited.add(schema)
+
   const properties = getProperties(schema)
-  if (!properties) return
+  if (!properties) {
+    visited.delete(schema)
+    return
+  }
 
   for (const [key, value] of Object.entries(properties)) {
     const newPath = buildPath(path, key)
     const node = createSchemaNode(key, value, newPath, parentType)
 
-    node.children = generateChildren(value, newPath)
+    node.children = generateChildren(value, newPath, visited)
     yield node
   }
+
+  visited.delete(schema)
 }
 
 /**
@@ -42,9 +50,9 @@ function getProperties(schema: ApiSchema): Record<string, ApiSchema> | null {
 /**
  * 生成子节点
  */
-function generateChildren(value: ApiSchema, parentPath: string): SchemaTree | undefined {
+function generateChildren(value: ApiSchema, parentPath: string, visited: Set<ApiSchema>): SchemaTree | undefined {
   if (value.properties) {
-    return [...generateSchemaNodes(value, parentPath, value.type)]
+    return [...generateSchemaNodes(value, parentPath, value.type, visited)]
   }
 
   if (value.type === 'array' && value.items) {
@@ -52,7 +60,7 @@ function generateChildren(value: ApiSchema, parentPath: string): SchemaTree | un
     const itemsNode = createSchemaNode('ARRAY_ITEMS', value.items, itemsPath, value.type)
 
     if (value.items.properties) {
-      itemsNode.children = [...generateSchemaNodes(value.items, itemsPath, 'array')]
+      itemsNode.children = [...generateSchemaNodes(value.items, itemsPath, 'array', visited)]
     }
 
     return [itemsNode]
