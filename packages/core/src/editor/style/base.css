@@ -1,6 +1,6 @@
 .tiptap-editor {
   @apply tpd-leading-[1.5];
-  
+
   .ProseMirror-focused {
     @apply tpd-outline-none;
   }
@@ -24,6 +24,6 @@
   @apply tpd-bg-transparent;
 }
 
-hr{
+hr {
   @apply tpd-border-black;
 }

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { useMouseState } from '@/composables/useMouseState'
 import type { Ref } from 'vue'
-import { cn } from '@/lib/utils'
+import type { useMouseState } from '@/composables/useMouseState'
 import { inject, ref, watch } from 'vue'
+import { cn } from '@/lib/utils'
 
 const props = defineProps({
   as: { type: String, default: 'div' },

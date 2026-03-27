@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { BetweenHorizonalEnd, BetweenHorizontalStart, BetweenVerticalEnd, BetweenVerticalStart, ListX, Square, SquareDashedMousePointer, TableCellsMerge, TableCellsSplit } from 'lucide-vue-next'
+import { BetweenHorizonalEnd, BetweenHorizontalStart, BetweenVerticalEnd, BetweenVerticalStart, ListX, TableCellsMerge, TableCellsSplit } from 'lucide-vue-next'
 import DeleteColumn from '~/components/icons/DeleteColumn.vue'
 import DeleteRow from '~/components/icons/DeleteRow.vue'
 import { EDITOR_CONTEXT } from '~/editor/constants'

@@ -1,19 +1,18 @@
 /**
  * Colors: Solid
  * -------------------------------------------------------------------------- */
-.is-home .container{
+.is-home .container {
   min-width: 100%;
   padding: 0px;
 }
-.VPContent.is-home{
+.VPContent.is-home {
   padding: 0 0px;
 }
-.VPHome{
-
+.VPHome {
   margin-bottom: 0px !important;
 }
 
-button{
+button {
   border: inherit;
 }
 

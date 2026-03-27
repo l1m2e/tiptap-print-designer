@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useMouseState } from '@/composables/useMouseState'
 import { provide, ref } from 'vue'
+import { useMouseState } from '@/composables/useMouseState'
 
 defineProps<{
   class?: string

@@ -1,3 +1,11 @@
+<script setup lang="ts">
+import { cn } from '@/lib/utils'
+
+defineProps({
+  class: String,
+})
+</script>
+
 <template>
   <div
     :class="cn('h-96 w-96', $props.class)"
@@ -6,11 +14,3 @@
     <slot />
   </div>
 </template>
-
-<script setup lang="ts">
-import { cn } from '@/lib/utils';
-
-defineProps({
-  class: String,
-});
-</script>
