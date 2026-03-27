@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import type { DesignerEmits, EditSFCDialogOptions, SelectFieldDialogOptions, TemplateData } from '.'
 import type { Format } from './components/FormatDialog/common'
-import { Database, Download, Settings, Upload } from 'lucide-vue-next'
+import { Database, Download, RefreshCw, Settings, Upload } from 'lucide-vue-next'
 import { useVueToPrint } from 'vue-to-print'
 import Toaster from '@/components/ui/toast/Toaster.vue'
 import { ResizablePanel } from '~/components/ui/resizable'
-import { getDataSource, getMockData, updateDataSource, updateMockData } from '~/db/services/printDesigner'
+import { useToast } from '~/components/ui/toast/use-toast'
+import { getApiList, updateDoc } from '~/db/services/openapiDoc'
+import { generateMockData, getDataSource, getMockData, updateDataSource, updateMockData } from '~/db/services/printDesigner'
 import { EditorContent, EditorRoot } from '~/editor'
 import { DESIGNER_KEY } from '.'
 import DataSourcesDialog from './components/DataSourcesDialog/DataSourcesDialog.vue'
@@ -22,11 +24,48 @@ import SettingDialog from './components/SettingDialog/SettingDialog.vue'
 
 const emits = defineEmits<DesignerEmits>()
 const text = useSessionStorage('text', '')
+const { toast } = useToast()
 
 const { state: mockData, execute: fetchMockData } = useAsyncState(async () => {
   const data = await getMockData()
   return data
 }, null)
+
+const { isLoading: isRefreshing, execute: handleRefresh } = useAsyncState(async () => {
+  try {
+    const openapiDocUrl = localStorage.getItem('TIPTAP_PRINT_DESIGNER_OPENAPIDOCURL')
+    if (openapiDocUrl) {
+      await updateDoc(openapiDocUrl)
+    }
+
+    const apiList = await getApiList()
+    const dataSources = await getDataSource()
+
+    let isUpdated = false
+    for (const ds of dataSources) {
+      if (ds.api) {
+        const match = apiList.find(a => a.path === ds.api!.path && a.method === ds.api!.method)
+        if (match) {
+          ds.api.operation = match.operation
+          isUpdated = true
+        }
+      }
+    }
+
+    if (isUpdated) {
+      await updateDataSource(dataSources)
+    }
+
+    const mockDataResult = await generateMockData()
+    await updateMockData(mockDataResult)
+    await fetchMockData()
+
+    toast({ title: '刷新成功', description: '接口文档和Mock数据已更新' })
+  }
+  catch (error: any) {
+    toast({ title: '刷新失败', description: error.message || '未知错误', variant: 'destructive' })
+  }
+}, null, { immediate: false })
 
 const PaperRef = useTemplateRef('PaperEl')
 const DataSourcesDialogRef = useTemplateRef('DataSourcesDialogEl')
@@ -122,6 +161,9 @@ defineExpose({
           </Button>
           <Button variant="outline" size="icon" @click="DataSourcesDialogRef?.open ">
             <Settings />
+          </Button>
+          <Button variant="outline" size="icon" @click="handleRefresh">
+            <RefreshCw :class="{ 'tpd-animate-spin': isRefreshing }" />
           </Button>
           <Button variant="outline" size="icon" @click="handleImport">
             <Download />
