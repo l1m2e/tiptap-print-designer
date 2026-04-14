@@ -37,6 +37,7 @@ function changeField() {
 }
 
 const text = computed<string>(() => get(data.value, props.node.attrs.path))
+const pathLastSegment = computed<string>(() => props.node.attrs.path?.split('.').slice(-1)[0] ?? '')
 const { FormatNode, isFormat } = useFormat(props)
 
 async function copy() {
@@ -96,10 +97,12 @@ async function copy() {
         <ContextMenuTrigger>
           <Tooltip>
             <TooltipTrigger as-child>
-              <template v-if="!isFormat">
-                {{ text }}
-              </template>
-              <FormatNode v-else :value="text" />
+              <span>
+                <template v-if="!isFormat">
+                  {{ text ?? pathLastSegment ?? props.node.attrs.label }}
+                </template>
+                <FormatNode v-else :value="text ?? props.node.attrs.label" />
+              </span>
             </TooltipTrigger>
             <TooltipContent>
               <div class="tpd-flex tpd-items-center">
