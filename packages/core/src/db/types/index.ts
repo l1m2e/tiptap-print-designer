@@ -14,6 +14,10 @@ export type ApiSchema = {
   operation?: any
   path?: string
   method?: OpenAPIV3.HttpMethods
+  example?: any
+  default?: any
+  enum?: any[]
+  format?: string
 }
 
 /** 数据源 */

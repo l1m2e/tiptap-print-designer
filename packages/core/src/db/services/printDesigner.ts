@@ -3,6 +3,7 @@ import { get } from '~/utils'
 import { db } from '../database'
 import { apiSchemaToApiTree } from '../utils/apiSchemaToApiTree'
 import { getApiSchemaByPath } from '../utils/getApiSchemaByPath'
+import { schemaToMock } from '../utils/schemaToMock'
 
 /** 更新数据源 */
 export async function updateDataSource(dataSource: DataSchema[]) {
@@ -43,7 +44,7 @@ export async function getApiTree(): Promise<SchemaTree> {
   return tree
 }
 
-/** 生成Mock数据 */
+/** 生成Mock数据（未配置Mock服务时，从接口文档Schema本地生成示例数据） */
 export async function generateMockData() {
   const mockData: Record<string, any> = {}
   const baseMockUrl = localStorage.getItem('TIPTAP_PRINT_DESIGNER_MOCKURL')
@@ -52,9 +53,25 @@ export async function generateMockData() {
   const apiRequests = apis
     .filter(item => item.api)
     .map(async ({ key, api, path }) => {
+      // 无Mock服务或拉取失败时的本地回退，保证只依赖接口文档也能完整预览
+      const localMock = () => {
+        try {
+          return schemaToMock(getApiSchemaByPath(api!.operation, path))
+        }
+        catch (error) {
+          console.error(`Failed to generate mock from schema for ${key}:`, error)
+          return null
+        }
+      }
+
+      if (!baseMockUrl) {
+        mockData[key] = localMock()
+        return
+      }
+
       try {
         const { path: url, method } = api!
-        const mockUrl = baseMockUrl! + url
+        const mockUrl = baseMockUrl + url
         const response = await fetch(mockUrl, { method })
 
         if (!response.ok)
@@ -65,7 +82,7 @@ export async function generateMockData() {
       }
       catch (error) {
         console.error(`Failed to fetch mock data for ${key}:`, error)
-        mockData[key] = null
+        mockData[key] = localMock()
       }
     })
 

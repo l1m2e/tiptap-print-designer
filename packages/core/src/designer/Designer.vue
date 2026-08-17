@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { DesignerEmits, EditSFCDialogOptions, SelectFieldDialogOptions, TemplateData } from '.'
 import type { Format } from './components/FormatDialog/common'
-import { Database, Download, RefreshCw, Settings, Upload } from 'lucide-vue-next'
+import { Database, Download, FileJson, RefreshCw, Settings, Upload } from 'lucide-vue-next'
 import { useVueToPrint } from 'vue-to-print'
 import Toaster from '@/components/ui/toast/Toaster.vue'
 import { ResizablePanel } from '~/components/ui/resizable'
@@ -18,6 +18,7 @@ import EditTopMenu from './components/EditTopMenu/EditTopMenu.vue'
 import ExportDialog from './components/ExportDialog/ExportDialog.vue'
 import FormatDialog from './components/FormatDialog/FormatDialog.vue'
 import ImportDialog from './components/ImportDialog/ImportDialog.vue'
+import MockDataDialog from './components/MockDataDialog/MockDataDialog.vue'
 import RightClickMenu from './components/RightClickMenu/RightClickMenu.vue'
 import SelectFieldDialog from './components/SelectFieldDialog/SelectFieldDialog.vue'
 import SettingDialog from './components/SettingDialog/SettingDialog.vue'
@@ -60,7 +61,8 @@ const { isLoading: isRefreshing, execute: handleRefresh } = useAsyncState(async 
     await updateMockData(mockDataResult)
     await fetchMockData()
 
-    toast({ title: '刷新成功', description: '接口文档和Mock数据已更新' })
+    const mockUrl = localStorage.getItem('TIPTAP_PRINT_DESIGNER_MOCKURL')
+    toast({ title: '刷新成功', description: mockUrl ? '接口文档和Mock数据已更新' : '接口文档已更新，示例数据由文档Schema生成' })
   }
   catch (error: any) {
     toast({ title: '刷新失败', description: error.message || '未知错误', variant: 'destructive' })
@@ -77,6 +79,7 @@ const FormatDialogRef = useTemplateRef('FormatDialogEl')
 const DateTableStyleDialogRef = useTemplateRef('DateTableStyleDialogEl')
 const ImportDialogRef = useTemplateRef('ImportDialogEl')
 const ExportDialogRef = useTemplateRef('ExportDialogEl')
+const MockDataDialogRef = useTemplateRef('MockDataDialogEl')
 
 const print = ref<HTMLElement>()
 
@@ -84,6 +87,10 @@ const { handlePrint } = useVueToPrint({ content: () => print.value! })
 
 function openSelectFieldDialog(options?: SelectFieldDialogOptions) {
   SelectFieldDialogRef.value?.open(options)
+}
+
+function openMockValueDialog(options: { label: string, path: string }) {
+  MockDataDialogRef.value?.open(options)
 }
 
 function openEditSFCDialog(options?: string | EditSFCDialogOptions) {
@@ -141,7 +148,7 @@ async function setTemplate(template: TemplateData) {
   mockData.value = template.mockData
 }
 
-provide(DESIGNER_KEY, { getTemplate, setTemplate, fetchMockData, openSelectFieldDialog, openEditSFCDialog, openDateTableDialog, openFormatDialog, openDataTableStyleDialog })
+provide(DESIGNER_KEY, { getTemplate, setTemplate, fetchMockData, openSelectFieldDialog, openMockValueDialog, openEditSFCDialog, openDateTableDialog, openFormatDialog, openDataTableStyleDialog })
 
 defineExpose({
   setTemplate,
@@ -161,6 +168,9 @@ defineExpose({
           </Button>
           <Button variant="outline" size="icon" @click="DataSourcesDialogRef?.open ">
             <Settings />
+          </Button>
+          <Button variant="outline" size="icon" @click="MockDataDialogRef?.open">
+            <FileJson />
           </Button>
           <Button variant="outline" size="icon" @click="handleRefresh">
             <RefreshCw :class="{ 'tpd-animate-spin': isRefreshing }" />
@@ -214,6 +224,7 @@ defineExpose({
       <DateTableStyleDialog ref="DateTableStyleDialogEl" />
       <ImportDialog ref="ImportDialogEl" />
       <ExportDialog ref="ExportDialogEl" />
+      <MockDataDialog ref="MockDataDialogEl" />
     </EditorRoot>
     <Toaster />
   </Paper>

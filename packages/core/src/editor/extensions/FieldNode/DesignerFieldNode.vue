@@ -2,16 +2,16 @@
 import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
 import { Link } from 'lucide-vue-next'
 import { NodeSelection, TextSelection } from 'prosemirror-state'
-import { get } from 'radash'
 import { computed, inject } from 'vue'
 import { DESIGNER_KEY } from '~/designer'
+import { get } from '~/utils'
 import { useFloating } from '../../composables/useFloating'
 import { useFormat } from '../../composables/useFormat'
 import { EDITOR_CONTEXT } from '../../constants'
 
 const props = defineProps(nodeViewProps)
 const { data } = inject(EDITOR_CONTEXT)!
-const { openFormatDialog, openSelectFieldDialog } = inject(DESIGNER_KEY)!
+const { openFormatDialog, openSelectFieldDialog, openMockValueDialog } = inject(DESIGNER_KEY)!
 
 const { icon } = useFormat(props)
 
@@ -34,6 +34,10 @@ function changeField() {
       props.updateAttributes({ label, path })
     },
   })
+}
+
+function editMockValue() {
+  openMockValueDialog({ label: props.node.attrs.label, path: props.node.attrs.path })
 }
 
 const text = computed<string>(() => get(data.value, props.node.attrs.path))
@@ -99,7 +103,7 @@ async function copy() {
             <TooltipTrigger as-child>
               <span>
                 <template v-if="!isFormat">
-                  {{ text ?? pathLastSegment ?? props.node.attrs.label }}
+                  {{ text || props.node.attrs.label || pathLastSegment }}
                 </template>
                 <FormatNode v-else :value="text ?? props.node.attrs.label" />
               </span>
@@ -115,6 +119,9 @@ async function copy() {
         <ContextMenuContent>
           <ContextMenuItem @select="changeField">
             更换字段
+          </ContextMenuItem>
+          <ContextMenuItem @select="editMockValue">
+            编辑数据
           </ContextMenuItem>
           <ContextMenuItem v-if="props.node.attrs.format" @select="props.updateAttributes({ format: '' })">
             清除格式化
