@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Code2Icon, Codepen, Image, List, ListOrdered, Table } from 'lucide-vue-next'
+import { Code2Icon, Codepen, Image, List, ListOrdered, SeparatorHorizontal, Table } from 'lucide-vue-next'
 import { inject } from 'vue'
 import { DESIGNER_KEY } from '~/designer'
 import { EDITOR_CONTEXT } from '~/editor/constants'
@@ -44,6 +44,11 @@ const commandList = [
     title: '组件',
     icon: Codepen,
     command: () => openEditSFCDialog?.(),
+  },
+  {
+    title: '分页符',
+    icon: SeparatorHorizontal,
+    command: () => editorContent?.editor.value?.chain().focus().insertContent({ type: 'page-break' }).run(),
   },
   {
     title: '有序列表',

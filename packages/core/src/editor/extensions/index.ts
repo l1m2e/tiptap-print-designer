@@ -3,6 +3,7 @@ import StarterKit from '@tiptap/starter-kit'
 import { DesignerDateTableNode, RenderDateTableNode } from './DateTableNode'
 import { DesignerFieldNode, RenderFieldNode } from './FieldNode'
 import FontSize from './FontSize'
+import PageBreak from './PageBreak'
 import Paragraph from './Paragraph'
 import Placeholder from './Placeholder'
 import { DesignerResizableImageNode, RenderResizableImageNode } from './ResizableImageNode'
@@ -17,6 +18,7 @@ const baseExtensions = [
     paragraph: false,
   }),
   Paragraph,
+  PageBreak,
   LineHeight,
   TextAlign,
   FontSize,

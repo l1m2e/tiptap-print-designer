@@ -27,3 +27,45 @@
 hr {
   @apply tpd-border-black;
 }
+
+/* 分页符：屏幕上显示为虚线标记，打印时仅保留分页作用 */
+[data-page-break] {
+  position: relative;
+  height: 0;
+  margin: 4px 0;
+  border-top: 1px dashed rgb(0 0 0 / 30%);
+  user-select: none;
+}
+
+[data-page-break]::after {
+  content: '分页符';
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 6px;
+  font-size: 12px;
+  line-height: 1;
+  color: rgb(0 0 0 / 45%);
+  background: #fff;
+  transform: translateY(-50%);
+}
+
+.dark [data-page-break] {
+  border-top-color: rgb(255 255 255 / 30%);
+}
+
+.dark [data-page-break]::after {
+  color: rgb(255 255 255 / 45%);
+  background: #000;
+}
+
+@media print {
+  [data-page-break] {
+    margin: 0;
+    border-top: none;
+  }
+
+  [data-page-break]::after {
+    content: none;
+  }
+}
