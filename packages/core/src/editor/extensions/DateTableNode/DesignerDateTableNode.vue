@@ -15,7 +15,12 @@ const { openDateTableDialog, openDataTableStyleDialog } = inject(DESIGNER_KEY)!
 const DataTableRef = useTemplateRef('DataTableEl')
 
 function edit() {
-  openDateTableDialog({ path: props.node.attrs.path, columns: props.node.attrs.columns })
+  openDateTableDialog({
+    path: props.node.attrs.path,
+    columns: props.node.attrs.columns,
+    tableStyle: props.node.attrs.tableStyle,
+    columnSizingState: props.node.attrs.columnSizingState,
+  })
 }
 
 async function editStyle() {

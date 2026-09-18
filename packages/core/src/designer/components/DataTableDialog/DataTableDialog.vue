@@ -28,6 +28,9 @@ interface Columns { header: string, accessorKey: string, id: string, format: For
 const show = ref(false)
 const data = ref<Columns[]>([])
 const dataSource = ref<{ path: string, schema: SchemaTree, description: string }>({ path: '', schema: [], description: '' })
+// 编辑已有表格时保留样式，否则 insertContent 重建节点会丢掉 tableStyle/columnSizingState
+const tableStyle = ref('{}')
+const columnSizingState = ref('{}')
 
 const columns = ref<ColumnDef<Columns>[]>([
   {
@@ -143,13 +146,15 @@ function removeRow(index: number) {
 }
 
 async function save() {
-  editor?.value?.chain().focus().insertContent({ type: 'data-table-node', attrs: { path: dataSource.value.path, columns: JSON.stringify(data.value) } }).run()
+  editor?.value?.chain().focus().insertContent({ type: 'data-table-node', attrs: { path: dataSource.value.path, columns: JSON.stringify(data.value), tableStyle: tableStyle.value, columnSizingState: columnSizingState.value } }).run()
   show.value = false
 }
 
-async function open(resetData?: { columns: string, path: string }) {
+async function open(resetData?: { columns: string, path: string, tableStyle: string, columnSizingState: string }) {
   dataSource.value = { path: '', schema: [], description: '' }
   data.value = []
+  tableStyle.value = resetData?.tableStyle || '{}'
+  columnSizingState.value = resetData?.columnSizingState || '{}'
   if (resetData) {
     const tree = await getApiTree()
     const { schema, description } = getTreeNodeByPath(tree, resetData.path)

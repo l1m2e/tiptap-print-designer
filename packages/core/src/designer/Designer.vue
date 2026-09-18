@@ -97,7 +97,7 @@ function openEditSFCDialog(options?: string | EditSFCDialogOptions) {
   EditSFCDialogRef.value?.open(options)
 }
 
-function openDateTableDialog(data?: { columns: string, path: string }) {
+function openDateTableDialog(data?: { columns: string, path: string, tableStyle: string, columnSizingState: string }) {
   DataTableDialogRef.value?.open(data)
 }
 
