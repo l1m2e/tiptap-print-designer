@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { DesignerEmits, EditSFCDialogOptions, SelectFieldDialogOptions, TemplateData } from '.'
 import type { Format } from './components/FormatDialog/common'
-import { Database, Download, FileJson, RefreshCw, Settings, Upload } from 'lucide-vue-next'
+import { Database, FileJson, FolderSync, RefreshCw, Settings } from 'lucide-vue-next'
 import { useVueToPrint } from 'vue-to-print'
 import Toaster from '@/components/ui/toast/Toaster.vue'
 import { ResizablePanel } from '~/components/ui/resizable'
@@ -15,7 +15,6 @@ import DataTableDialog from './components/DataTableDialog/DataTableDialog.vue'
 import DateTableStyleDialog from './components/DataTableStyleDialog/DateTableStyleDialog.vue'
 import EditSFCDialog from './components/EditSFCDialog/EditSFCDialog.vue'
 import EditTopMenu from './components/EditTopMenu/EditTopMenu.vue'
-import ExportDialog from './components/ExportDialog/ExportDialog.vue'
 import FormatDialog from './components/FormatDialog/FormatDialog.vue'
 import ImportDialog from './components/ImportDialog/ImportDialog.vue'
 import MockDataDialog from './components/MockDataDialog/MockDataDialog.vue'
@@ -78,7 +77,6 @@ const DataTableDialogRef = useTemplateRef('DataTableDialogEl')
 const FormatDialogRef = useTemplateRef('FormatDialogEl')
 const DateTableStyleDialogRef = useTemplateRef('DateTableStyleDialogEl')
 const ImportDialogRef = useTemplateRef('ImportDialogEl')
-const ExportDialogRef = useTemplateRef('ExportDialogEl')
 const MockDataDialogRef = useTemplateRef('MockDataDialogEl')
 
 const print = ref<HTMLElement>()
@@ -110,13 +108,8 @@ async function openDataTableStyleDialog(styleText: string) {
 }
 
 // #region 导入导出功能
-async function handleImport() {
+function handleImportExport() {
   ImportDialogRef.value?.open()
-}
-
-async function handleExport() {
-  const templateData = await getTemplate()
-  ExportDialogRef.value?.open(templateData)
 }
 // #endregion
 
@@ -175,11 +168,8 @@ defineExpose({
           <Button variant="outline" size="icon" @click="handleRefresh">
             <RefreshCw :class="{ 'tpd-animate-spin': isRefreshing }" />
           </Button>
-          <Button variant="outline" size="icon" @click="handleImport">
-            <Download />
-          </Button>
-          <Button variant="outline" size="icon" @click="handleExport">
-            <Upload />
+          <Button variant="outline" size="icon" @click="handleImportExport">
+            <FolderSync />
           </Button>
           <Button @click="handlePrint">
             打印
@@ -223,7 +213,6 @@ defineExpose({
       <FormatDialog ref="FormatDialogEl" />
       <DateTableStyleDialog ref="DateTableStyleDialogEl" />
       <ImportDialog ref="ImportDialogEl" />
-      <ExportDialog ref="ExportDialogEl" />
       <MockDataDialog ref="MockDataDialogEl" />
     </EditorRoot>
     <Toaster />

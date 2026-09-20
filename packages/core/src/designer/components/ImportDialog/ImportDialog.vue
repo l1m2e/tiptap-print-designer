@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { TemplateData } from '../../index'
-import { useClipboard, useFileDialog } from '@vueuse/core'
-import { Copy, Upload } from 'lucide-vue-next'
+import { useFileDialog } from '@vueuse/core'
+import { Download, Upload } from 'lucide-vue-next'
 import MonacoEditor from '~/components/common/monaco-editor/MonacoEditor.vue'
 import Button from '~/components/ui/button/Button.vue'
 import {
@@ -20,32 +20,10 @@ const show = ref(false)
 const { toast } = useToast()
 
 const jsonContent = ref<string>('')
-const { setTemplate, fetchMockData } = inject(DESIGNER_KEY)!
+const { getTemplate, setTemplate, fetchMockData } = inject(DESIGNER_KEY)!
 // #endregion
 
-// #region 剪贴板功能
-const { isSupported: clipboardSupported } = useClipboard()
-
-async function handlePasteFromClipboard() {
-  try {
-    const text = await navigator.clipboard.readText()
-    jsonContent.value = text
-    toast({
-      title: '粘贴成功',
-      description: '已从剪贴板粘贴内容',
-    })
-  }
-  catch {
-    toast({
-      title: '粘贴失败',
-      description: '请检查剪贴板权限',
-      variant: 'destructive',
-    })
-  }
-}
-// #endregion
-
-// #region 文件导入功能
+// #region 文件功能
 const { open: openFileDialog, onChange } = useFileDialog({
   accept: '.json',
   multiple: false,
@@ -76,9 +54,34 @@ onChange((files) => {
   }
 })
 
+function handleDownloadFile() {
+  try {
+    const blob = new Blob([jsonContent.value], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `template-${Date.now()}.json`
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+
+    toast({
+      title: '导出成功',
+      description: '文件已下载',
+    })
+  }
+  catch {
+    toast({
+      title: '导出失败',
+      description: '下载文件时出错',
+      variant: 'destructive',
+    })
+  }
+}
 // #endregion
 
-// #region 对话框控制
+// #region 导入功能
 function handleImport() {
   try {
     const data = JSON.parse(jsonContent.value) as TemplateData
@@ -91,8 +94,8 @@ function handleImport() {
     setTemplate(data)
 
     toast({
-      title: '导入成功',
-      description: '模板数据已成功导入',
+      title: '保存成功',
+      description: '模板数据已应用',
     })
   }
   catch (error) {
@@ -134,9 +137,11 @@ async function onlyImportDataSources() {
 }
 // #endregion
 
-function open() {
+async function open() {
   show.value = true
-  jsonContent.value = ''
+  // 打开时预填当前模板，便于直接导出；导入时可粘贴/上传覆盖
+  const templateData = await getTemplate()
+  jsonContent.value = JSON.stringify(templateData, null, 2)
 }
 
 defineExpose({
@@ -148,7 +153,7 @@ defineExpose({
   <Dialog v-model:open="show">
     <DialogContent class="!tpd-max-w-[1200px] tpd-flex tpd-flex-col">
       <DialogHeader>
-        <DialogTitle>导入模板</DialogTitle>
+        <DialogTitle>导入 / 导出模板</DialogTitle>
       </DialogHeader>
 
       <div class="tpd-flex-1 tpd-border tpd-rounded-md tpd-overflow-hidden tpd-h-[800px]">
@@ -159,28 +164,34 @@ defineExpose({
         />
       </div>
 
-      <DialogFooter>
-        <Button
-          variant="outline"
-          @click="openFileDialog"
-        >
-          <Upload class="tpd-mr-2 tpd-h-4 tpd-w-4" />
-          上传 JSON 文件
-        </Button>
-        <Button
-          variant="outline"
-          :disabled="!clipboardSupported"
-          @click="handlePasteFromClipboard"
-        >
-          <Copy class="tpd-mr-2 tpd-h-4 tpd-w-4" />
-          从剪贴板粘贴
-        </Button>
-        <Button @click="onlyImportDataSources">
-          仅导入数据源
-        </Button>
-        <Button @click="handleImport">
-          导入
-        </Button>
+      <DialogFooter class="sm:tpd-justify-between sm:tpd-gap-x-0">
+        <!-- 左侧：JSON 文件读取/下载 -->
+        <div class="tpd-flex tpd-flex-wrap tpd-items-center tpd-gap-2">
+          <Button
+            variant="outline"
+            @click="handleDownloadFile"
+          >
+            <Download class="tpd-mr-2 tpd-h-4 tpd-w-4" />
+            下载 JSON 文件
+          </Button>
+          <Button
+            variant="outline"
+            @click="openFileDialog"
+          >
+            <Upload class="tpd-mr-2 tpd-h-4 tpd-w-4" />
+            上传 JSON 文件
+          </Button>
+        </div>
+
+        <!-- 右侧：保存 -->
+        <div class="tpd-flex tpd-flex-wrap tpd-items-center tpd-gap-2">
+          <Button variant="outline" @click="onlyImportDataSources">
+            仅导入数据源
+          </Button>
+          <Button @click="handleImport">
+            保存
+          </Button>
+        </div>
       </DialogFooter>
     </DialogContent>
   </Dialog>
