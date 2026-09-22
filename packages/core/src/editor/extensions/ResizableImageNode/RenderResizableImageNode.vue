@@ -1,21 +1,24 @@
 <script setup lang="ts">
 import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
 import { computed } from 'vue'
+import { useFloating } from '../../composables/useFloating'
 
 const props = defineProps(nodeViewProps)
+const { wrapperStyle, layout } = useFloating(props)
 
 // 计算图片样式
 const imageStyle = computed(() => ({
-  width: props.node.attrs.width === 'auto' ? 'auto' : props.node.attrs.width,
-  height: props.node.attrs.height === 'auto' ? 'auto' : props.node.attrs.height,
+  width: layout.value.width === 'auto' ? 'auto' : layout.value.width,
+  height: layout.value.height === 'auto' ? 'auto' : layout.value.height,
   display: props.node.attrs.display === 'inline' ? 'inline-block' : 'block',
-  maxWidth: '100%',
+  maxWidth: layout.value.isFloating ? 'none' : '100%',
 }))
 
 // 容器样式
 const containerStyle = computed(() => ({
   display: props.node.attrs.display === 'inline' ? 'inline-block' : 'block',
   maxWidth: props.node.attrs.display === 'inline' ? 'none' : '100%',
+  ...(layout.value.isFloating ? { ...wrapperStyle.value, width: layout.value.width, margin: 0, lineHeight: 0 } : {}),
 }))
 </script>
 

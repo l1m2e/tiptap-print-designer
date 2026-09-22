@@ -17,7 +17,7 @@ function insertField() {
   const path = node.value?.path || ''
 
   if (mode.value === 'insert') {
-    editorContent?.editor?.value?.chain().focus().insertContent({ type: 'field-node', attrs: { label, path } }).run()
+    editorContent?.editor?.value?.chain().focus().insertContent({ type: 'field-node', attrs: { label, path, floatingVersion: 2 } }).run()
   }
   else {
     onConfirmCallback.value?.({ label, path })

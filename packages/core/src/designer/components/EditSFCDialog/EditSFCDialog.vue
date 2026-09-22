@@ -17,7 +17,7 @@ const editor = useTemplateRef('editorEl')
 
 // #region helpers
 function defaultAddHandler(text: string) {
-  editorContent?.editor?.value?.chain().focus().insertContent({ type: 'sfc-node', attrs: { text } }).run()
+  editorContent?.editor?.value?.chain().focus().insertContent({ type: 'sfc-node', attrs: { text, floatingVersion: 2 } }).run()
 }
 
 function defaultEditHandler(text: string) {

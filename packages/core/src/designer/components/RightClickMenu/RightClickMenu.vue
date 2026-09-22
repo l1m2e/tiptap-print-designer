@@ -20,6 +20,7 @@ const commandList = [
       editorContent?.editor.value?.chain().focus().insertContent({
         type: 'resizable-image',
         attrs: {
+          floatingVersion: 2,
           src: '',
           alt: '',
           title: '',

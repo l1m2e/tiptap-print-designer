@@ -2,6 +2,7 @@ import { LineHeight } from '@tiptap/extension-text-style'
 import StarterKit from '@tiptap/starter-kit'
 import { DesignerDateTableNode, RenderDateTableNode } from './DateTableNode'
 import { DesignerFieldNode, RenderFieldNode } from './FieldNode'
+import Floating from './Floating'
 import FontSize from './FontSize'
 import PageBreak from './PageBreak'
 import Paragraph from './Paragraph'
@@ -22,6 +23,7 @@ const baseExtensions = [
   LineHeight,
   TextAlign,
   FontSize,
+  Floating,
   TextStyle,
   Table,
   TableCell,
