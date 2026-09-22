@@ -25,6 +25,8 @@ const editor = useEditor({
 })
 
 watch(content, (val) => {
+  // 编辑器自身更新后的回写无需重新建文档，否则会中断节点拖拽并丢失选区。
+  if (!editor.value || editor.value.getHTML() === val) return
   const { from, to } = editor.value!.state.selection
   editor.value?.commands.setContent(val, { parseOptions: { preserveWhitespace: true }, emitUpdate: false })
   editor.value?.commands.setTextSelection({ from, to })

@@ -1,6 +1,12 @@
 .tiptap {
   .tableWrapper {
-    @apply tpd-my-2 first:tpd-mt-0 last:tpd-mb-0 tpd-overflow-x-auto;
+    @apply tpd-my-2 first:tpd-mt-0 last:tpd-mb-0;
+    > table {
+      /* 列宽作为布局期望值，旧模板的超宽列由浏览器收缩到纸张内。 */
+      table-layout: auto;
+      max-width: 100%;
+      min-width: 0 !important;
+    }
   }
 
   table {
@@ -9,6 +15,7 @@
     td,
     th {
       @apply tpd-border-[1pt] tpd-border-black tpd-box-border tpd-min-w-[1em] tpd-p-[2pt_4pt] tpd-relative tpd-align-top dark:tpd-border-neutral-700;
+      overflow-wrap: anywhere;
       > * {
         @apply tpd-mb-0;
       }

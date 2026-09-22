@@ -1,38 +1,37 @@
 import type { Table } from '@tanstack/vue-table'
-import { useElementSize } from '@vueuse/core'
+import type { Ref } from 'vue'
 
 export function useTanstackFullTableResize(table: Table<any>, tableEl: Ref<HTMLTableElement | null>) {
-  const { width: tableWidth } = useElementSize(tableEl)
   const activeResizeCol = ref<string | null>(null)
+  let stopResize = () => {}
+  onUnmounted(() => stopResize())
 
   function updateColumnSizes(colId: string, event: MouseEvent) {
     event.preventDefault()
     event.stopPropagation()
-    activeResizeCol.value = colId
 
     const cols = table.getAllColumns()
     const currentCol = table.getColumn(colId)!
     const currentIndex = cols.findIndex(col => col.id === colId)
     const nextCol = cols[currentIndex + 1]
 
-    if (!currentCol || !nextCol) return
+    const tableWidth = tableEl.value?.getBoundingClientRect().width
+    if (!currentCol || !nextCol || !tableWidth) return
 
-    const startX = event.pageX
+    stopResize()
+    activeResizeCol.value = colId
+    const startX = event.clientX
     const currentSize = currentCol.getSize()
     const nextSize = nextCol.getSize()
 
     const mousemoveHandler = (e: MouseEvent) => {
       e.preventDefault()
-      const deltaX = ((e.pageX - startX) / tableWidth.value) * 100
-      const absDeltaX = Math.abs(deltaX)
-
-      if (deltaX > 0 && currentSize + absDeltaX > currentSize + nextSize) return
-      if (deltaX < 0 && currentSize - absDeltaX <= (currentCol.columnDef.minSize || 0)) return
+      const deltaX = Math.max((currentCol.columnDef.minSize ?? 0) - currentSize, Math.min(nextSize - (nextCol.columnDef.minSize ?? 0), ((e.clientX - startX) / tableWidth) * 100))
 
       table.setColumnSizing({
         ...table.getState().columnSizing,
-        [colId]: deltaX > 0 ? currentSize + absDeltaX : currentSize - absDeltaX,
-        [nextCol.id]: deltaX > 0 ? nextSize - absDeltaX : nextSize + absDeltaX,
+        [colId]: currentSize + deltaX,
+        [nextCol.id]: nextSize - deltaX,
       })
     }
 
@@ -45,7 +44,7 @@ export function useTanstackFullTableResize(table: Table<any>, tableEl: Ref<HTMLT
     document.addEventListener('mousemove', mousemoveHandler)
     document.addEventListener('mouseup', mouseupHandler)
 
-    onUnmounted(mouseupHandler)
+    stopResize = mouseupHandler
   }
 
   return {
