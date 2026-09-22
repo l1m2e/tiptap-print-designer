@@ -183,11 +183,9 @@ defineExpose({
         <!-- 设计器 -->
         <ResizablePanel>
           <RightClickMenu>
-            <div class="tpd-overflow-y-auto tpd-h-[calc(100vh-54px)]">
-              <PaperContent>
-                <EditorContent />
-              </PaperContent>
-            </div>
+            <PaperContent zoom="editor" class="tpd-h-[calc(100vh-54px)]">
+              <EditorContent />
+            </PaperContent>
           </RightClickMenu>
         </ResizablePanel>
 

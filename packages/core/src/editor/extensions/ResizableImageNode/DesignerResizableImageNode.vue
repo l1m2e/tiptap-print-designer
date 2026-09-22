@@ -2,6 +2,7 @@
 import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
 import { useFileDialog } from '@vueuse/core'
 import { Image, Move, RotateCcw, Trash2 } from 'lucide-vue-next'
+import { getElementScale } from '~/utils'
 
 const props = defineProps(nodeViewProps)
 
@@ -102,12 +103,13 @@ function handleMouseDown(event: MouseEvent, direction: 'se' | 'e' | 's') {
 
   const rect = imageRef.value?.getBoundingClientRect()
   if (!rect) return
+  const scale = getElementScale(props.editor.view.dom)
 
   resizeStartData.value = {
     startX: event.clientX,
     startY: event.clientY,
-    startWidth: rect.width,
-    startHeight: rect.height,
+    startWidth: rect.width / scale,
+    startHeight: rect.height / scale,
   }
 
   // 添加全局样式类来禁用选择
@@ -116,8 +118,8 @@ function handleMouseDown(event: MouseEvent, direction: 'se' | 'e' | 's') {
   function handleMouseMove(e: MouseEvent) {
     if (!resizeStartData.value) return
 
-    const deltaX = e.clientX - resizeStartData.value.startX
-    const deltaY = e.clientY - resizeStartData.value.startY
+    const deltaX = (e.clientX - resizeStartData.value.startX) / scale
+    const deltaY = (e.clientY - resizeStartData.value.startY) / scale
 
     let newWidth = resizeStartData.value.startWidth
     let newHeight = resizeStartData.value.startHeight

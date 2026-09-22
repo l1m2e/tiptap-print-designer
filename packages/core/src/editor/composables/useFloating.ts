@@ -1,6 +1,7 @@
 import type { NodeViewProps } from '@tiptap/vue-3'
 import type { CSSProperties } from 'vue'
 import { computed, readonly, ref } from 'vue'
+import { getElementScale } from '~/utils'
 
 /**
  * 像素转 pt (1pt ≈ 1.333px, 或 1px ≈ 0.75pt)
@@ -62,6 +63,7 @@ export function useFloating(props: NodeViewProps, display: [string, string] = ['
     e.preventDefault()
     e.stopPropagation()
 
+    const scale = getElementScale(props.editor.view.dom)
     isDragging.value = true
     dragStart.value = {
       sx: e.clientX,
@@ -75,8 +77,8 @@ export function useFloating(props: NodeViewProps, display: [string, string] = ['
       if (!dragStart.value) return
 
       // 计算像素偏移量
-      const dxPx = ev.clientX - dragStart.value.sx
-      const dyPx = ev.clientY - dragStart.value.sy
+      const dxPx = (ev.clientX - dragStart.value.sx) / scale
+      const dyPx = (ev.clientY - dragStart.value.sy) / scale
 
       // 转换为 pt 单位
       const dxPt = dxPx * PX_TO_PT
